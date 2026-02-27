@@ -5,6 +5,6 @@ import ru.lebedev.dealership.domain.user.UserType;
 public class CarAddPermission implements Permission {
     @Override
     public boolean check(UserType userType) {
-        return userType == UserType.WAREHOUSE_ADMIN || userType == UserType.SYSTEM_ADMINISTRATOR;
+        return userType == UserType.STORAGE_ADMIN || userType == UserType.SYSTEM_ADMINISTRATOR;
     }
 }

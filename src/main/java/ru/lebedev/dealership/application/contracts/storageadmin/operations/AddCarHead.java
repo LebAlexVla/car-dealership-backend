@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.application.contracts.warehouseadmin.operations;
+package ru.lebedev.dealership.application.contracts.storageadmin.operations;
 
 import ru.lebedev.dealership.domain.car.enums.BodyType;
 import ru.lebedev.dealership.domain.car.valueobjects.CarModel;

@@ -4,21 +4,17 @@ import ru.lebedev.dealership.application.abstractions.identity.IdGenerator;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarHeadRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarVersionRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.UserRepository;
-import ru.lebedev.dealership.application.contracts.warehouseadmin.AddCarHeadUseCase;
-import ru.lebedev.dealership.application.contracts.warehouseadmin.AddCarVersionUseCase;
-import ru.lebedev.dealership.application.contracts.warehouseadmin.operations.AddCarHead;
-import ru.lebedev.dealership.application.contracts.warehouseadmin.operations.AddCarVersion;
+import ru.lebedev.dealership.application.contracts.storageadmin.AddCarHeadUseCase;
+import ru.lebedev.dealership.application.contracts.storageadmin.AddCarVersionUseCase;
+import ru.lebedev.dealership.application.contracts.storageadmin.operations.AddCarHead;
+import ru.lebedev.dealership.application.contracts.storageadmin.operations.AddCarVersion;
 import ru.lebedev.dealership.application.permissions.CarAddPermission;
 import ru.lebedev.dealership.application.permissions.Permission;
 import ru.lebedev.dealership.domain.car.entities.CarHead;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.car.valueobjects.CarHeadId;
-import ru.lebedev.dealership.domain.car.valueobjects.CarModel;
 import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
-import ru.lebedev.dealership.domain.shared.valueobjects.Brand;
 import ru.lebedev.dealership.domain.user.User;
-
-import java.util.UUID;
 
 public class AddCarService implements AddCarHeadUseCase, AddCarVersionUseCase {
     private final Permission permission = new CarAddPermission();
