@@ -60,7 +60,8 @@ public class AddCarService implements AddCarHeadUseCase, AddCarVersionUseCase {
                 request.carHeadId(),
                 request.engine(),
                 request.gearBoxType(),
-                request.carDrive()
+                request.carDrive(),
+                request.colors()
         );
 
         carVersion = carVersionRepository.save(carVersion);
