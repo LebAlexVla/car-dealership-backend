@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.domain.car.valueobjects;
+package ru.lebedev.dealership.domain.detail;
 
 public record DetailType(String name) {
     public DetailType {

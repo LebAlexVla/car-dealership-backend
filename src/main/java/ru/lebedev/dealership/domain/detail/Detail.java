@@ -1,8 +1,6 @@
-package ru.lebedev.dealership.domain.car.entities;
+package ru.lebedev.dealership.domain.detail;
 
 import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
-import ru.lebedev.dealership.domain.car.valueobjects.DetailId;
-import ru.lebedev.dealership.domain.car.valueobjects.DetailType;
 import ru.lebedev.dealership.domain.shared.valueobjects.Price;
 
 import java.util.Set;

@@ -4,13 +4,11 @@ import ru.lebedev.dealership.application.abstractions.identity.IdGenerator;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.DetailRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.UserRepository;
 import ru.lebedev.dealership.application.contracts.storageadmin.AddDetailUseCase;
-import ru.lebedev.dealership.application.contracts.storageadmin.operations.AddCarHead;
 import ru.lebedev.dealership.application.contracts.storageadmin.operations.AddDetail;
-import ru.lebedev.dealership.application.permissions.CarAddPermission;
 import ru.lebedev.dealership.application.permissions.DetailAddPermission;
 import ru.lebedev.dealership.application.permissions.Permission;
-import ru.lebedev.dealership.domain.car.entities.Detail;
-import ru.lebedev.dealership.domain.car.valueobjects.DetailId;
+import ru.lebedev.dealership.domain.detail.Detail;
+import ru.lebedev.dealership.domain.detail.DetailId;
 import ru.lebedev.dealership.domain.user.User;
 
 public class AddDetailService implements AddDetailUseCase {

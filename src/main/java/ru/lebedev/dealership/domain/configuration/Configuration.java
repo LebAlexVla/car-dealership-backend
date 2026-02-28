@@ -1,6 +1,6 @@
 package ru.lebedev.dealership.domain.configuration;
 
-import ru.lebedev.dealership.domain.car.entities.Detail;
+import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.shared.valueobjects.Price;
 
 import java.math.BigDecimal;

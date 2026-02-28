@@ -1,7 +1,7 @@
 package ru.lebedev.dealership.application.contracts.storageadmin.operations;
 
 import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
-import ru.lebedev.dealership.domain.car.valueobjects.DetailType;
+import ru.lebedev.dealership.domain.detail.DetailType;
 import ru.lebedev.dealership.domain.shared.valueobjects.Price;
 
 import java.util.Set;

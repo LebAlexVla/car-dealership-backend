@@ -1,8 +1,8 @@
 package ru.lebedev.dealership.domain.configuration;
 
-import ru.lebedev.dealership.domain.car.entities.Detail;
+import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
-import ru.lebedev.dealership.domain.car.valueobjects.DetailType;
+import ru.lebedev.dealership.domain.detail.DetailType;
 
 import java.util.HashMap;
 import java.util.Map;
