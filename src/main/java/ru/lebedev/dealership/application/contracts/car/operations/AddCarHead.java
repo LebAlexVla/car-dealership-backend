@@ -1,6 +1,7 @@
-package ru.lebedev.dealership.application.contracts.storageadmin.operations;
+package ru.lebedev.dealership.application.contracts.car.operations;
 
 import ru.lebedev.dealership.domain.car.enums.BodyType;
+import ru.lebedev.dealership.domain.car.valueobjects.CarHeadId;
 import ru.lebedev.dealership.domain.car.valueobjects.CarModel;
 import ru.lebedev.dealership.domain.shared.valueobjects.Brand;
 
@@ -18,7 +19,7 @@ public final class AddCarHead {
 
     public sealed interface Response permits Success, Failure {}
 
-    public record Success(long carHeadId) implements Response {}
+    public record Success(CarHeadId carHeadId) implements Response {}
 
     public record Failure(String message) implements Response {}
 }

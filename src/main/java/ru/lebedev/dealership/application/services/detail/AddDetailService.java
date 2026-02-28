@@ -1,10 +1,10 @@
-package ru.lebedev.dealership.application.services;
+package ru.lebedev.dealership.application.services.detail;
 
 import ru.lebedev.dealership.application.abstractions.identity.IdGenerator;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.DetailRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.UserRepository;
-import ru.lebedev.dealership.application.contracts.storageadmin.AddDetailUseCase;
-import ru.lebedev.dealership.application.contracts.storageadmin.operations.AddDetail;
+import ru.lebedev.dealership.application.contracts.detail.AddDetailUseCase;
+import ru.lebedev.dealership.application.contracts.detail.operations.AddDetail;
 import ru.lebedev.dealership.application.permissions.DetailAddPermission;
 import ru.lebedev.dealership.application.permissions.Permission;
 import ru.lebedev.dealership.domain.detail.Detail;
@@ -43,6 +43,6 @@ public class AddDetailService implements AddDetailUseCase {
 
         detail = detailRepository.save(detail);
 
-        return new AddDetail.Success(detail.getId().value());
+        return new AddDetail.Success(detail.getId());
     }
 }

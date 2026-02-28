@@ -1,13 +1,13 @@
-package ru.lebedev.dealership.application.services;
+package ru.lebedev.dealership.application.services.car;
 
 import ru.lebedev.dealership.application.abstractions.identity.IdGenerator;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarHeadRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarVersionRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.UserRepository;
-import ru.lebedev.dealership.application.contracts.storageadmin.AddCarHeadUseCase;
-import ru.lebedev.dealership.application.contracts.storageadmin.AddCarVersionUseCase;
-import ru.lebedev.dealership.application.contracts.storageadmin.operations.AddCarHead;
-import ru.lebedev.dealership.application.contracts.storageadmin.operations.AddCarVersion;
+import ru.lebedev.dealership.application.contracts.car.AddCarHeadUseCase;
+import ru.lebedev.dealership.application.contracts.car.AddCarVersionUseCase;
+import ru.lebedev.dealership.application.contracts.car.operations.AddCarHead;
+import ru.lebedev.dealership.application.contracts.car.operations.AddCarVersion;
 import ru.lebedev.dealership.application.permissions.CarAddPermission;
 import ru.lebedev.dealership.application.permissions.Permission;
 import ru.lebedev.dealership.domain.car.entities.CarHead;
@@ -43,7 +43,7 @@ public class AddCarService implements AddCarHeadUseCase, AddCarVersionUseCase {
         var carHead = new CarHead(carHeadId, request.brand(), request.model(), request.bodyType());
         carHead = carHeadRepository.save(carHead);
 
-        return new AddCarHead.Success(carHead.id().value());
+        return new AddCarHead.Success(carHead.id());
     }
 
     @Override
@@ -67,6 +67,6 @@ public class AddCarService implements AddCarHeadUseCase, AddCarVersionUseCase {
 
         carVersion = carVersionRepository.save(carVersion);
 
-        return new AddCarVersion.Success(carVersion.id().value());
+        return new AddCarVersion.Success(carVersion.id());
     }
 }
