@@ -1,5 +1,6 @@
 package ru.lebedev.dealership.application.contracts.car.operations;
 
+import ru.lebedev.dealership.application.contracts.car.models.CarHeadInputDto;
 import ru.lebedev.dealership.domain.car.enums.BodyType;
 import ru.lebedev.dealership.domain.car.valueobjects.CarHeadId;
 import ru.lebedev.dealership.domain.car.valueobjects.CarModel;
@@ -10,16 +11,11 @@ import java.util.UUID;
 public final class AddCarHead {
     private AddCarHead() {}
 
-    public record Request(
-            UUID userId,
-            Brand brand,
-            CarModel model,
-            BodyType bodyType
-    ) {}
+    public record Request(CarHeadInputDto inputDto) {}
 
     public sealed interface Response permits Success, Failure {}
 
-    public record Success(CarHeadId carHeadId) implements Response {}
+    public record Success(String carHeadId) implements Response {}
 
     public record Failure(String message) implements Response {}
 }

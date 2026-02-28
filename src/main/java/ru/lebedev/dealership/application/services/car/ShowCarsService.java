@@ -13,6 +13,7 @@ import ru.lebedev.dealership.application.permissions.Permission;
 import ru.lebedev.dealership.domain.car.entities.CarHead;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.user.User;
+import ru.lebedev.dealership.domain.user.UserId;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class ShowCarsService implements ShowCarsHeadsUseCase, ShowCarsVersionsUs
 
     @Override
     public ShowCarsHeads.Response show(ShowCarsHeads.Request request) {
-        User user = userRepository.findById(request.userId());
+        User user = userRepository.findById(new UserId(request.userId()));
         if (!permission.check(user.type())) {
             return new ShowCarsHeads.Failure("The user doesn't have the permission to show cars");
         }
@@ -43,7 +44,7 @@ public class ShowCarsService implements ShowCarsHeadsUseCase, ShowCarsVersionsUs
 
     @Override
     public ShowCarsVersions.Response show(ShowCarsVersions.Request request) {
-        User user = userRepository.findById(request.userId());
+        User user = userRepository.findById(new UserId(request.userId()));
         if (!permission.check(user.type())) {
             return new ShowCarsVersions.Failure("The user doesn't have the permission to show cars");
         }

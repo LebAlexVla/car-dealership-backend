@@ -8,6 +8,8 @@ import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
 import ru.lebedev.dealership.domain.car.valueobjects.Engine;
 import ru.lebedev.dealership.domain.shared.valueobjects.Price;
 
+import java.util.List;
+
 public record CarVersion(
         CarVersionId id,
         String name,
@@ -15,6 +17,6 @@ public record CarVersion(
         Engine engine,
         GearboxType gearboxType,
         CarDrive carDrive,
-        CarColor[] colors,
+        List<CarColor> colors,
         Price price
 ) {}

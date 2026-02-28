@@ -1,3 +1,5 @@
 package ru.lebedev.dealership.domain.detail;
 
-public record DetailId(long value) {}
+import java.util.UUID;
+
+public record DetailId(UUID value) {}

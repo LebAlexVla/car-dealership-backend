@@ -1,3 +1,5 @@
 package ru.lebedev.dealership.domain.car.valueobjects;
 
-public record CarVersionId(long value) {}
+import java.util.UUID;
+
+public record CarVersionId(UUID value) {}
