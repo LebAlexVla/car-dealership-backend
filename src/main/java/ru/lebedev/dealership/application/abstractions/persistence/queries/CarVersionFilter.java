@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.application.contracts.car.filters;
+package ru.lebedev.dealership.application.abstractions.persistence.queries;
 
 import ru.lebedev.dealership.domain.car.enums.CarDrive;
 import ru.lebedev.dealership.domain.car.enums.FuelType;

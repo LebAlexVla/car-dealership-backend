@@ -1,6 +1,6 @@
 package ru.lebedev.dealership.application.abstractions.persistence.repositories;
 
-import ru.lebedev.dealership.application.contracts.car.filters.CarVersionFilter;
+import ru.lebedev.dealership.application.abstractions.persistence.queries.CarVersionFilter;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
 

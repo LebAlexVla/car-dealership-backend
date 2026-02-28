@@ -3,7 +3,7 @@ package ru.lebedev.dealership.application.services.car;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarVersionRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.UserRepository;
 import ru.lebedev.dealership.application.contracts.car.AddCarVersionUseCase;
-import ru.lebedev.dealership.application.contracts.car.models.CarVersionDtoMapper;
+import ru.lebedev.dealership.application.contracts.car.mappers.CarVersionInputDtoMapper;
 import ru.lebedev.dealership.application.contracts.car.operations.AddCarVersion;
 import ru.lebedev.dealership.application.permissions.Permission;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
@@ -34,7 +34,7 @@ public class AddCarVersionService implements AddCarVersionUseCase {
         }
 
         var carVersionId = new CarVersionId(UUID.randomUUID());
-        CarVersion carVersion = CarVersionDtoMapper.map(carVersionId, request.inputDto());
+        CarVersion carVersion = CarVersionInputDtoMapper.map(carVersionId, request.inputDto());
 
         carVersion = carVersionRepository.save(carVersion);
 

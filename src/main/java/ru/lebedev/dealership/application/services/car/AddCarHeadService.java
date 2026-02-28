@@ -4,7 +4,7 @@ import ru.lebedev.dealership.application.abstractions.persistence.repositories.C
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarVersionRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.UserRepository;
 import ru.lebedev.dealership.application.contracts.car.AddCarHeadUseCase;
-import ru.lebedev.dealership.application.contracts.car.models.CarHeadDtoMapper;
+import ru.lebedev.dealership.application.contracts.car.mappers.CarHeadInputDtoMapper;
 import ru.lebedev.dealership.application.contracts.car.operations.AddCarHead;
 import ru.lebedev.dealership.application.permissions.Permission;
 import ru.lebedev.dealership.domain.car.entities.CarHead;
@@ -35,7 +35,7 @@ public class AddCarHeadService implements AddCarHeadUseCase {
         }
 
         var carHeadId = new CarHeadId(UUID.randomUUID());
-        CarHead carHead = CarHeadDtoMapper.map(carHeadId, request.inputDto());
+        CarHead carHead = CarHeadInputDtoMapper.map(carHeadId, request.inputDto());
         carHead = carHeadRepository.save(carHead);
 
         return new AddCarHead.Success(carHead.id().value().toString());

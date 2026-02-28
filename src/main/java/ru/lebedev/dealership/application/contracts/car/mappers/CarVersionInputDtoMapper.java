@@ -1,5 +1,6 @@
-package ru.lebedev.dealership.application.contracts.car.models;
+package ru.lebedev.dealership.application.contracts.car.mappers;
 
+import ru.lebedev.dealership.application.contracts.car.models.CarVersionInputDto;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.car.enums.CarDrive;
 import ru.lebedev.dealership.domain.car.enums.FuelType;
@@ -10,7 +11,7 @@ import ru.lebedev.dealership.domain.shared.valueobjects.Price;
 import java.util.List;
 import java.util.UUID;
 
-public class CarVersionDtoMapper {
+public class CarVersionInputDtoMapper {
     public static CarVersion map(CarVersionId id, CarVersionInputDto dto) {
         return new CarVersion(
                 id,

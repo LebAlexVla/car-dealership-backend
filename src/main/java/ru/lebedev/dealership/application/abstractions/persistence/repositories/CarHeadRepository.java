@@ -1,6 +1,6 @@
 package ru.lebedev.dealership.application.abstractions.persistence.repositories;
 
-import ru.lebedev.dealership.application.contracts.car.filters.CarHeadFilter;
+import ru.lebedev.dealership.application.abstractions.persistence.queries.CarHeadFilter;
 import ru.lebedev.dealership.domain.car.entities.CarHead;
 import ru.lebedev.dealership.domain.car.valueobjects.CarHeadId;
 
@@ -11,7 +11,7 @@ public interface CarHeadRepository {
 
     CarHead findById(CarHeadId carHeadId);
 
-    List<CarHead> findByFilter(CarHeadFilter filter);
+    List<CarHeadId> findByFilter(CarHeadFilter filter);
 
     List<CarHead> findAll();
 }
