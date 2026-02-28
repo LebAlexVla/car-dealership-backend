@@ -6,6 +6,7 @@ import ru.lebedev.dealership.domain.car.valueobjects.CarColor;
 import ru.lebedev.dealership.domain.car.valueobjects.CarHeadId;
 import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
 import ru.lebedev.dealership.domain.car.valueobjects.Engine;
+import ru.lebedev.dealership.domain.shared.valueobjects.Price;
 
 public record CarVersion(
         CarVersionId id,
@@ -14,5 +15,6 @@ public record CarVersion(
         Engine engine,
         GearboxType gearboxType,
         CarDrive carDrive,
-        CarColor[] colors
+        CarColor[] colors,
+        Price price
 ) {}

@@ -5,6 +5,7 @@ import ru.lebedev.dealership.domain.car.enums.GearboxType;
 import ru.lebedev.dealership.domain.car.valueobjects.CarColor;
 import ru.lebedev.dealership.domain.car.valueobjects.CarHeadId;
 import ru.lebedev.dealership.domain.car.valueobjects.Engine;
+import ru.lebedev.dealership.domain.shared.valueobjects.Price;
 
 import java.util.UUID;
 
@@ -18,7 +19,8 @@ public final class AddCarVersion {
             Engine engine,
             GearboxType gearBoxType,
             CarDrive carDrive,
-            CarColor[] colors
+            CarColor[] colors,
+            Price price
     ) {}
 
     public sealed interface Response permits Success, Failure {}
