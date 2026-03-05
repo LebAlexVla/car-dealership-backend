@@ -15,7 +15,7 @@ public final class ShowCarsHeads {
     public record Request(String userId, CarHeadFilterDto filterDto) {
     }
 
-    public record Success(List<CarHeadOutputDto> carHeads) implements Response {
+    public record Success(List<CarHeadOutputDto> carHeadsOutputDtos) implements Response {
     }
 
     public record Failure(String message) implements Response {

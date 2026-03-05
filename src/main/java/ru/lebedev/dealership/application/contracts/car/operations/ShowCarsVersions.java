@@ -15,7 +15,7 @@ public final class ShowCarsVersions {
     public record Request(String userId, CarVersionFilterDto filterDto) {
     }
 
-    public record Success(List<CarVersionOutputDto> carVersions) implements Response {
+    public record Success(List<CarVersionOutputDto> carVersionsOutputDtos) implements Response {
     }
 
     public record Failure(String message) implements Response {
