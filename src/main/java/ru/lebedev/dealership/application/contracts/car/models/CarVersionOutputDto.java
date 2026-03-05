@@ -3,7 +3,8 @@ package ru.lebedev.dealership.application.contracts.car.models;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record CarVersionInputDto(
+public record CarVersionOutputDto(
+        String carVersionId,
         String carVersionName,
         String carHeadId,
         String fuelType,

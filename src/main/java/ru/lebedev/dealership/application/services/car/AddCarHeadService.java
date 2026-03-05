@@ -28,7 +28,7 @@ public class AddCarHeadService implements AddCarHeadUseCase {
 
     @Override
     public AddCarHead.Response add(AddCarHead.Request request) {
-        var userId = new UserId(UUID.fromString(request.inputDto().userId()));
+        var userId = new UserId(UUID.fromString(request.userId()));
         User user = userRepository.findById(userId);
         if (!permission.check(user.type())) {
             return new AddCarHead.Failure("The user doesn't have the permission to create cars");

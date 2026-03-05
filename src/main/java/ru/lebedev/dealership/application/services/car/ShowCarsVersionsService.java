@@ -4,6 +4,7 @@ import ru.lebedev.dealership.application.abstractions.persistence.repositories.C
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.UserRepository;
 import ru.lebedev.dealership.application.contracts.car.ShowCarsVersionsUseCase;
 import ru.lebedev.dealership.application.contracts.car.mappers.CarVersionFilterDtoMapper;
+import ru.lebedev.dealership.application.contracts.car.mappers.CarVersionOutputDtoMapper;
 import ru.lebedev.dealership.application.contracts.car.operations.ShowCarsVersions;
 import ru.lebedev.dealership.application.permissions.Permission;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
@@ -37,6 +38,10 @@ public class ShowCarsVersionsService implements ShowCarsVersionsUseCase {
                 CarVersionFilterDtoMapper.map(request.filterDto())
         );
 
-        return new ShowCarsVersions.Success(carVersions);
+        return new ShowCarsVersions.Success(carVersions
+                .stream()
+                .map(CarVersionOutputDtoMapper::map)
+                .toList()
+        );
     }
 }

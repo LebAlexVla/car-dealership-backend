@@ -6,7 +6,7 @@ import ru.lebedev.dealership.domain.detail.DetailId;
 public final class AddDetail {
     private AddDetail() {}
 
-    public record Request(DetailInputDto inputDto) {}
+    public record Request(String userId, DetailInputDto inputDto) {}
 
     public sealed interface Response permits Success, Failure {}
 

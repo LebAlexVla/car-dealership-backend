@@ -25,11 +25,6 @@ dependencies {
     testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.13'
 }
 
-configurations {
-    integrationTestImplementation.extendsFrom testImplementation
-    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
-}
-
 sourceSets {
     integrationTest {
         java.srcDir file('src/integrationTest/java')

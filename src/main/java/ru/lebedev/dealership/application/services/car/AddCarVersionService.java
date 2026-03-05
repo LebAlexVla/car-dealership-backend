@@ -27,7 +27,7 @@ public class AddCarVersionService implements AddCarVersionUseCase {
 
     @Override
     public AddCarVersion.Response add(AddCarVersion.Request request) {
-        var userId = new UserId(UUID.fromString(request.inputDto().userId()));
+        var userId = new UserId(UUID.fromString(request.userId()));
         User user = userRepository.findById(userId);
         if (!permission.check(user.type())) {
             return new AddCarVersion.Failure("The user doesn't have the permission to create cars");

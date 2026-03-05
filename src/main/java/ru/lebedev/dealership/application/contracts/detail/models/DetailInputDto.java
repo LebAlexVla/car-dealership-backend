@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 public record DetailInputDto(
-        String userId,
         String detailName,
         String detailType,
         BigDecimal price,

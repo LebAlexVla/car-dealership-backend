@@ -4,10 +4,10 @@ import ru.lebedev.dealership.application.abstractions.persistence.repositories.C
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.UserRepository;
 import ru.lebedev.dealership.application.contracts.car.ShowCarsHeadsUseCase;
 import ru.lebedev.dealership.application.contracts.car.mappers.CarHeadFilterDtoMapper;
+import ru.lebedev.dealership.application.contracts.car.mappers.CarHeadOutputDtoMapper;
 import ru.lebedev.dealership.application.contracts.car.operations.ShowCarsHeads;
 import ru.lebedev.dealership.application.permissions.Permission;
 import ru.lebedev.dealership.domain.car.entities.CarHead;
-import ru.lebedev.dealership.domain.car.valueobjects.CarHeadId;
 import ru.lebedev.dealership.domain.user.User;
 import ru.lebedev.dealership.domain.user.UserId;
 
@@ -35,13 +35,13 @@ public class ShowCarsHeadsService implements ShowCarsHeadsUseCase {
             return new ShowCarsHeads.Failure("The user doesn't have the permission to show cars");
         }
 
-        List<CarHeadId> carHeads = carHeadRepository.findByFilter(
+        List<CarHead> carHeads = carHeadRepository.findByFilter(
                 CarHeadFilterDtoMapper.map(request.filterDto())
         );
 
         return new ShowCarsHeads.Success(carHeads
                 .stream()
-                .map(CarHeadId::value)
+                .map(CarHeadOutputDtoMapper::map)
                 .collect(Collectors.toList()));
     }
 }
