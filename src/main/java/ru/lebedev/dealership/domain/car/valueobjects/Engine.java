@@ -6,4 +6,5 @@ public record Engine(
         FuelType fuelType,
         EnginePower power,
         EngineCapacity capacity
-) {}
+) {
+}

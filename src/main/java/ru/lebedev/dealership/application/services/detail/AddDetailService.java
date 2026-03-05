@@ -38,6 +38,6 @@ public class AddDetailService implements AddDetailUseCase {
 
         detail = detailRepository.save(detail);
 
-        return new AddDetail.Success(detail.getId().value().toString());
+        return new AddDetail.Success(detail.id().value().toString());
     }
 }

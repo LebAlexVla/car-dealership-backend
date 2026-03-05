@@ -1,7 +1,7 @@
 package ru.lebedev.dealership.domain.configuration;
 
-import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.detail.DetailType;
 
 import java.util.HashMap;
@@ -25,11 +25,11 @@ public class ConfigurationBuilder {
             throw new IllegalArgumentException("Incompatible detail");
         }
 
-        if (!requiredDetails.containsKey(detail.getType())) {
+        if (!requiredDetails.containsKey(detail.type())) {
             throw new IllegalArgumentException("There is no such required detail type");
         }
 
-        requiredDetails.put(detail.getType(), detail);
+        requiredDetails.put(detail.type(), detail);
 
         return this;
     }
@@ -39,7 +39,7 @@ public class ConfigurationBuilder {
             throw new IllegalArgumentException("Incompatible detail");
         }
 
-        optionalDetails.put(detail.getType(), detail);
+        optionalDetails.put(detail.type(), detail);
 
         return this;
     }

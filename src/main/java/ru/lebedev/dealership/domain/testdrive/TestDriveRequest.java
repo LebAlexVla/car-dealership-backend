@@ -9,4 +9,5 @@ public record TestDriveRequest(
         UUID clientId,
         CarVersionId carVersionId,
         LocalDateTime dateTime
-) {}
+) {
+}

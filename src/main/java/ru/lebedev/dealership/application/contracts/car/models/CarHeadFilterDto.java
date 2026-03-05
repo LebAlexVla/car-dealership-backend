@@ -4,4 +4,5 @@ public record CarHeadFilterDto(
         String brand,
         String carModel,
         String bodyType
-) {}
+) {
+}

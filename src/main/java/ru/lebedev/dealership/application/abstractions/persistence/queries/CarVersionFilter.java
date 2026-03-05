@@ -17,4 +17,5 @@ public record CarVersionFilter(
         GearboxType gearboxType,
         CarDrive carDrive,
         CarColor color
-) {}
+) {
+}

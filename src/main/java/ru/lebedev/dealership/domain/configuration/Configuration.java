@@ -12,7 +12,7 @@ public record Configuration(
     public Price calculatePrice() {
         var result = new Price(BigDecimal.ZERO);
         for (var detail : details) {
-            result = result.add(detail.getPrice());
+            result = result.add(detail.price());
         }
 
         return result;

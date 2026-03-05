@@ -8,4 +8,5 @@ public record DetailInputDto(
         String detailType,
         BigDecimal price,
         Set<String> compatibleCars
-) {}
+) {
+}

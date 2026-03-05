@@ -19,4 +19,5 @@ public record CarVersion(
         CarDrive carDrive,
         List<CarColor> colors,
         Price price
-) {}
+) {
+}

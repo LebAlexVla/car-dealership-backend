@@ -12,6 +12,4 @@ public interface CarVersionRepository {
     CarVersion findById(CarVersionId carVersionId);
 
     List<CarVersion> findByFilter(CarVersionFilter filter);
-
-    List<CarVersion> findAll();
 }

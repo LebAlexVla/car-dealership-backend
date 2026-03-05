@@ -10,4 +10,5 @@ public record CarHead(
         Brand brand,
         CarModel model,
         BodyType bodyType
-) {}
+) {
+}

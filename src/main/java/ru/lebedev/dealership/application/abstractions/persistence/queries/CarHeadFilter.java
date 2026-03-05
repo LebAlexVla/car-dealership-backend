@@ -8,4 +8,5 @@ public record CarHeadFilter(
         Brand brand,
         CarModel carModel,
         BodyType bodyType
-) {}
+) {
+}

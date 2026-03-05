@@ -1,7 +1,7 @@
 package ru.lebedev.dealership.domain.configuration;
 
-import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.detail.DetailType;
 
 import java.util.HashMap;
@@ -17,11 +17,11 @@ public class ConfigurationBuilderFactory {
     }
 
     public void addRequiredDetail(Detail detail) {
-        requiredDetails.put(detail.getType(), detail);
+        requiredDetails.put(detail.type(), detail);
     }
 
     public void removeRequiredDetail(Detail detail) {
-        requiredDetails.remove(detail.getType());
+        requiredDetails.remove(detail.type());
     }
 
     public ConfigurationBuilder create() {

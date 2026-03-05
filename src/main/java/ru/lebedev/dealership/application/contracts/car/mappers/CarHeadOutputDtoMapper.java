@@ -6,10 +6,10 @@ import ru.lebedev.dealership.domain.car.entities.CarHead;
 public class CarHeadOutputDtoMapper {
     public static CarHeadOutputDto map(CarHead carHead) {
         return new CarHeadOutputDto(
-             carHead.id().value().toString(),
-             carHead.brand().name(),
-             carHead.model().name(),
-             carHead.bodyType().toString()
+                carHead.id().value().toString(),
+                carHead.brand().name(),
+                carHead.model().name(),
+                carHead.bodyType().toString()
         );
     }
 }

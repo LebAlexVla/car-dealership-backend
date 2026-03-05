@@ -12,6 +12,4 @@ public interface CarHeadRepository {
     CarHead findById(CarHeadId carHeadId);
 
     List<CarHead> findByFilter(CarHeadFilter filter);
-
-    List<CarHead> findAll();
 }
