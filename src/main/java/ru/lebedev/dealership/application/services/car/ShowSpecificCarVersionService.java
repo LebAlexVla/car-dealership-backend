@@ -2,7 +2,7 @@ package ru.lebedev.dealership.application.services.car;
 
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarVersionRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.UserRepository;
-import ru.lebedev.dealership.application.contracts.ShowSpecificCarVersionUseCase;
+import ru.lebedev.dealership.application.contracts.car.ShowSpecificCarVersionUseCase;
 import ru.lebedev.dealership.application.contracts.car.mappers.CarVersionOutputDtoMapper;
 import ru.lebedev.dealership.application.contracts.car.operations.ShowSpecificCarVersion;
 import ru.lebedev.dealership.application.permissions.Permission;

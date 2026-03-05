@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.application.contracts;
+package ru.lebedev.dealership.application.contracts.car;
 
 import ru.lebedev.dealership.application.contracts.car.operations.ShowSpecificCarVersion;
 

@@ -1,0 +1,28 @@
+package ru.lebedev.dealership.application.contracts.detail.mappers;
+
+import ru.lebedev.dealership.application.abstractions.persistence.queries.DetailFilter;
+import ru.lebedev.dealership.application.contracts.detail.models.DetailFilterDto;
+import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.detail.DetailType;
+import ru.lebedev.dealership.domain.shared.valueobjects.Price;
+
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+public class DetailFilterDtoMapper {
+    public static DetailFilter map(DetailFilterDto dto) {
+        return new DetailFilter(
+                new DetailType(dto.detailType()),
+                new Price(dto.price()),
+                mapCars(dto.compatibleCars())
+        );
+    }
+
+    private static Set<CarVersionId> mapCars(Set<String> rawCars) {
+        return rawCars
+                .stream()
+                .map(str -> new CarVersionId(UUID.fromString(str)))
+                .collect(Collectors.toSet());
+    }
+}
