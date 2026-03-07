@@ -39,6 +39,6 @@ public class AddStockOrderService implements AddStockOrderUseCase {
 
         stockOrder = stockOrderRepository.save(stockOrder);
 
-        return new AddStockOrder.Success(stockOrderId.value().toString());
+        return new AddStockOrder.Success(stockOrder.getOrderId().value().toString());
     }
 }
