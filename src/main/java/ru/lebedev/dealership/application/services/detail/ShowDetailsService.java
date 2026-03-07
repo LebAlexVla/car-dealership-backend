@@ -17,12 +17,13 @@ import java.util.List;
 import java.util.UUID;
 
 public class ShowDetailsService implements ShowDetailsUseCase {
-    private final Permission permission = new DetailAddPermission();
+    private final Permission permission;
 
     private final UserRepository userRepository;
     private final DetailRepository detailRepository;
 
-    public ShowDetailsService(UserRepository userRepository, DetailRepository detailRepository) {
+    public ShowDetailsService(Permission permission, UserRepository userRepository, DetailRepository detailRepository) {
+        this.permission = permission;
         this.userRepository = userRepository;
         this.detailRepository = detailRepository;
     }

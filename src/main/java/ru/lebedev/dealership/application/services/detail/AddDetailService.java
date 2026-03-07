@@ -15,12 +15,13 @@ import ru.lebedev.dealership.domain.user.UserId;
 import java.util.UUID;
 
 public class AddDetailService implements AddDetailUseCase {
-    private final Permission permission = new DetailAddPermission();
+    private final Permission permission;
 
     private final UserRepository userRepository;
     private final DetailRepository detailRepository;
 
-    public AddDetailService(UserRepository userRepository, DetailRepository detailRepository) {
+    public AddDetailService(Permission permission, UserRepository userRepository, DetailRepository detailRepository) {
+        this.permission = permission;
         this.userRepository = userRepository;
         this.detailRepository = detailRepository;
     }
