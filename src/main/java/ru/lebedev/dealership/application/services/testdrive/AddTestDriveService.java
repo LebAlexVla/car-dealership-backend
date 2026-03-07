@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.application.services.testdrives;
+package ru.lebedev.dealership.application.services.testdrive;
 
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.TestDriveRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.UserRepository;

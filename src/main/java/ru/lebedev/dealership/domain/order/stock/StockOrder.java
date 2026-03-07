@@ -1,17 +1,18 @@
 package ru.lebedev.dealership.domain.order.stock;
 
 import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
-
-import java.util.UUID;
+import ru.lebedev.dealership.domain.user.UserId;
 
 public class StockOrder {
-    private final UUID orderId;
+    private final StockOrderId orderId;
+    private final UserId clientId;
     private final CarVersionId carVersionId;
 
     private StockOrderStatus status = StockOrderStatus.PLACED;
 
-    public StockOrder(UUID orderId, CarVersionId carVersionId) {
+    public StockOrder(StockOrderId orderId, UserId clientId, CarVersionId carVersionId) {
         this.orderId = orderId;
+        this.clientId = clientId;
         this.carVersionId = carVersionId;
     }
 
@@ -48,7 +49,11 @@ public class StockOrder {
         return carVersionId;
     }
 
-    public UUID getOrderId() {
+    public StockOrderId getOrderId() {
         return orderId;
+    }
+
+    public UserId getClientId() {
+        return clientId;
     }
 }
