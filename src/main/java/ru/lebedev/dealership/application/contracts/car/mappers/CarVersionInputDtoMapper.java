@@ -5,18 +5,20 @@ import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.car.enums.CarDrive;
 import ru.lebedev.dealership.domain.car.enums.FuelType;
 import ru.lebedev.dealership.domain.car.enums.GearboxType;
-import ru.lebedev.dealership.domain.car.vo.*;
+import ru.lebedev.dealership.domain.car.vo.CarColor;
+import ru.lebedev.dealership.domain.car.vo.Engine;
+import ru.lebedev.dealership.domain.car.vo.EngineCapacity;
+import ru.lebedev.dealership.domain.car.vo.EnginePower;
 import ru.lebedev.dealership.domain.shared.vo.Price;
 
 import java.util.List;
-import java.util.UUID;
 
 public class CarVersionInputDtoMapper {
-    public static CarVersion map(CarVersionId id, CarVersionInputDto dto) {
+    public static CarVersion map(CarVersionInputDto dto) {
         return new CarVersion(
-                id,
+                0,
                 dto.carVersionName(),
-                new CarHeadId(UUID.fromString(dto.carHeadId())),
+                dto.carHeadId(),
                 mapEngine(dto),
                 GearboxType.valueOf(dto.gearBoxType().trim().toUpperCase()),
                 CarDrive.valueOf(dto.carDrive().trim().toUpperCase()),

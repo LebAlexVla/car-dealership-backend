@@ -5,7 +5,7 @@ import java.util.List;
 
 public record CarVersionInputDto(
         String carVersionName,
-        String carHeadId,
+        long carHeadId,
         String fuelType,
         long power,
         double capacity,
