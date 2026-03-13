@@ -1,5 +1,7 @@
 package ru.lebedev.dealership.domain.order.configuration;
 
+import ru.lebedev.dealership.domain.exceptions.OrderStatusTransitionException;
+
 import java.util.UUID;
 
 public class ConfigurationOrder {
@@ -39,7 +41,7 @@ public class ConfigurationOrder {
 
     private void checkStatus(ConfigurationOrderStatus expected) {
         if (this.status != expected) {
-            throw new IllegalArgumentException(
+            throw new OrderStatusTransitionException(
                     "Illegal transition from " + status
             );
         }

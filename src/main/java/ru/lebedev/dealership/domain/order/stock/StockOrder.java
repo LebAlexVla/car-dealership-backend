@@ -1,6 +1,7 @@
 package ru.lebedev.dealership.domain.order.stock;
 
 import ru.lebedev.dealership.domain.car.vo.CarVersionId;
+import ru.lebedev.dealership.domain.exceptions.OrderStatusTransitionException;
 import ru.lebedev.dealership.domain.user.UserId;
 
 public class StockOrder {
@@ -39,7 +40,7 @@ public class StockOrder {
 
     private void checkStatus(StockOrderStatus expected) {
         if (this.status != expected) {
-            throw new IllegalArgumentException(
+            throw new OrderStatusTransitionException(
                     "Illegal transition from " + status
             );
         }

@@ -3,6 +3,9 @@ package ru.lebedev.dealership.domain.configuration;
 import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.detail.DetailType;
+import ru.lebedev.dealership.domain.exceptions.IncompatibleDetailException;
+import ru.lebedev.dealership.domain.exceptions.WrongOptionalDetailException;
+import ru.lebedev.dealership.domain.exceptions.WrongRequiredDetailException;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,11 +25,15 @@ public class ConfigurationBuilder {
 
     public ConfigurationBuilder withRequiredDetail(Detail detail) {
         if (!detail.checkCompatibility(carVersionId)) {
-            throw new IllegalArgumentException("Incompatible detail");
+            throw new IncompatibleDetailException(
+                    detail.name() + " is not compatible to the car with id: " + carVersionId
+            );
         }
 
         if (!requiredDetails.containsKey(detail.type())) {
-            throw new IllegalArgumentException("There is no such required detail type");
+            throw new WrongRequiredDetailException(
+                    detail.type().name() + " is not a required detail"
+            );
         }
 
         requiredDetails.put(detail.type(), detail);
@@ -36,7 +43,15 @@ public class ConfigurationBuilder {
 
     public ConfigurationBuilder withOptionalDetail(Detail detail) {
         if (!detail.checkCompatibility(carVersionId)) {
-            throw new IllegalArgumentException("Incompatible detail");
+            throw new IncompatibleDetailException(
+                    detail.name() + " is not compatible to the car with id: " + carVersionId
+            );
+        }
+
+        if (requiredDetails.containsKey(detail.type())) {
+            throw new WrongOptionalDetailException(
+                    detail.type().name() + " is not an optional detail"
+            );
         }
 
         optionalDetails.put(detail.type(), detail);
