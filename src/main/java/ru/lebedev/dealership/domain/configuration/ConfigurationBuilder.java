@@ -1,6 +1,5 @@
 package ru.lebedev.dealership.domain.configuration;
 
-import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.detail.DetailType;
 import ru.lebedev.dealership.domain.exceptions.IncompatibleDetailException;
@@ -13,12 +12,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class ConfigurationBuilder {
-    private final CarVersionId carVersionId;
+    private final long carVersionId;
     private final Map<DetailType, Detail> requiredDetails;
 
     private final Map<DetailType, Detail> optionalDetails = new HashMap<>();
 
-    public ConfigurationBuilder(CarVersionId carVersionId, Map<DetailType, Detail> requiredDetails) {
+    public ConfigurationBuilder(long carVersionId, Map<DetailType, Detail> requiredDetails) {
         this.carVersionId = carVersionId;
         this.requiredDetails = requiredDetails;
     }

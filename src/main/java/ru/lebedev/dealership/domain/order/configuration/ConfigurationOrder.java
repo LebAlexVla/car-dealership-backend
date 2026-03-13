@@ -2,14 +2,12 @@ package ru.lebedev.dealership.domain.order.configuration;
 
 import ru.lebedev.dealership.domain.exceptions.OrderStatusTransitionException;
 
-import java.util.UUID;
-
 public class ConfigurationOrder {
-    private final UUID orderId;
+    private final long orderId;
 
     private ConfigurationOrderStatus status = ConfigurationOrderStatus.PLACED;
 
-    public ConfigurationOrder(UUID orderId) {
+    public ConfigurationOrder(long orderId) {
         this.orderId = orderId;
     }
 
@@ -48,7 +46,7 @@ public class ConfigurationOrder {
     }
 
 
-    public UUID getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 }

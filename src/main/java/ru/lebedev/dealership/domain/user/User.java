@@ -1,4 +1,4 @@
 package ru.lebedev.dealership.domain.user;
 
-public record User(UserId id, UserType type) {
+public record User(long id, UserType type) {
 }

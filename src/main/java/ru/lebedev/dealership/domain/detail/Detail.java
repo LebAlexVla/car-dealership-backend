@@ -1,21 +1,20 @@
 package ru.lebedev.dealership.domain.detail;
 
-import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 import ru.lebedev.dealership.domain.shared.vo.Price;
 
 import java.util.Set;
 
-public record Detail(DetailId id, String name, DetailType type, Price price, Set<CarVersionId> compatibleCars) {
+public record Detail(long detailId, String name, DetailType type, Price price, Set<Long> compatibleCars) {
 
-    public boolean checkCompatibility(CarVersionId carVersionId) {
+    public boolean checkCompatibility(long carVersionId) {
         return compatibleCars.contains(carVersionId);
     }
 
-    public void addCompatibleCar(CarVersionId carVersionId) {
+    public void addCompatibleCar(long carVersionId) {
         compatibleCars.add(carVersionId);
     }
 
-    public void removeCompatibleCar(CarVersionId carVersionId) {
+    public void removeCompatibleCar(long carVersionId) {
         compatibleCars.remove(carVersionId);
     }
 }
