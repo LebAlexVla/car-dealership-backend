@@ -2,9 +2,9 @@ package ru.lebedev.dealership.application.contracts.detail.mappers;
 
 import ru.lebedev.dealership.application.abstractions.persistence.queries.DetailFilter;
 import ru.lebedev.dealership.application.contracts.detail.models.DetailFilterDto;
-import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 import ru.lebedev.dealership.domain.detail.DetailType;
-import ru.lebedev.dealership.domain.shared.valueobjects.Price;
+import ru.lebedev.dealership.domain.shared.vo.Price;
 
 import java.util.Set;
 import java.util.UUID;

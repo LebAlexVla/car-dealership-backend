@@ -1,6 +1,6 @@
 package ru.lebedev.dealership.application.abstractions.persistence.repositories;
 
-import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 
 import java.util.List;
 

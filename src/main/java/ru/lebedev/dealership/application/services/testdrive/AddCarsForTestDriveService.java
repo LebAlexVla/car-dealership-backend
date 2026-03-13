@@ -5,7 +5,7 @@ import ru.lebedev.dealership.application.abstractions.persistence.repositories.U
 import ru.lebedev.dealership.application.contracts.testdrive.AddCarsForTestDriveUseCase;
 import ru.lebedev.dealership.application.contracts.testdrive.operations.AddCarsForTestDrive;
 import ru.lebedev.dealership.application.permissions.Permission;
-import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 import ru.lebedev.dealership.domain.user.User;
 import ru.lebedev.dealership.domain.user.UserId;
 

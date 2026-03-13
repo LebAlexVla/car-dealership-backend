@@ -2,7 +2,7 @@ package ru.lebedev.dealership.application.contracts.car.mappers;
 
 import ru.lebedev.dealership.application.contracts.car.models.CarVersionOutputDto;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
-import ru.lebedev.dealership.domain.car.valueobjects.CarColor;
+import ru.lebedev.dealership.domain.car.vo.CarColor;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.domain.car.valueobjects;
+package ru.lebedev.dealership.domain.car.vo;
 
 import ru.lebedev.dealership.domain.car.enums.FuelType;
 

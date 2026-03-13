@@ -5,10 +5,10 @@ import ru.lebedev.dealership.application.contracts.car.models.CarVersionFilterDt
 import ru.lebedev.dealership.domain.car.enums.CarDrive;
 import ru.lebedev.dealership.domain.car.enums.FuelType;
 import ru.lebedev.dealership.domain.car.enums.GearboxType;
-import ru.lebedev.dealership.domain.car.valueobjects.CarColor;
-import ru.lebedev.dealership.domain.car.valueobjects.EngineCapacity;
-import ru.lebedev.dealership.domain.car.valueobjects.EnginePower;
-import ru.lebedev.dealership.domain.shared.valueobjects.Price;
+import ru.lebedev.dealership.domain.car.vo.CarColor;
+import ru.lebedev.dealership.domain.car.vo.EngineCapacity;
+import ru.lebedev.dealership.domain.car.vo.EnginePower;
+import ru.lebedev.dealership.domain.shared.vo.Price;
 
 public class CarVersionFilterDtoMapper {
     public static CarVersionFilter map(CarVersionFilterDto dto) {

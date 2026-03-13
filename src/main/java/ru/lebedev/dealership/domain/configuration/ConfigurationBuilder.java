@@ -1,6 +1,6 @@
 package ru.lebedev.dealership.domain.configuration;
 
-import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.detail.DetailType;
 

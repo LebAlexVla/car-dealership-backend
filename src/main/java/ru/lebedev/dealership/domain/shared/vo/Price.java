@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.domain.shared.valueobjects;
+package ru.lebedev.dealership.domain.shared.vo;
 
 import java.math.BigDecimal;
 

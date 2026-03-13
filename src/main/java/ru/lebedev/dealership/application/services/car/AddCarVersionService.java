@@ -7,7 +7,7 @@ import ru.lebedev.dealership.application.contracts.car.mappers.CarVersionInputDt
 import ru.lebedev.dealership.application.contracts.car.operations.AddCarVersion;
 import ru.lebedev.dealership.application.permissions.Permission;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
-import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 import ru.lebedev.dealership.domain.user.User;
 import ru.lebedev.dealership.domain.user.UserId;
 

@@ -1,7 +1,7 @@
 package ru.lebedev.dealership.application.contracts.detail.mappers;
 
 import ru.lebedev.dealership.application.contracts.detail.models.DetailOutputDto;
-import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 import ru.lebedev.dealership.domain.detail.Detail;
 
 import java.util.Set;

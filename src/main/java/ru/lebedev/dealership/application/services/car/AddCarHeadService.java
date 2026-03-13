@@ -8,7 +8,7 @@ import ru.lebedev.dealership.application.contracts.car.mappers.CarHeadInputDtoMa
 import ru.lebedev.dealership.application.contracts.car.operations.AddCarHead;
 import ru.lebedev.dealership.application.permissions.Permission;
 import ru.lebedev.dealership.domain.car.entities.CarHead;
-import ru.lebedev.dealership.domain.car.valueobjects.CarHeadId;
+import ru.lebedev.dealership.domain.car.vo.CarHeadId;
 import ru.lebedev.dealership.domain.user.User;
 import ru.lebedev.dealership.domain.user.UserId;
 

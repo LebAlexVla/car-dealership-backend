@@ -5,7 +5,7 @@ import ru.lebedev.dealership.application.abstractions.persistence.repositories.U
 import ru.lebedev.dealership.application.contracts.order.stockorder.AddStockOrderUseCase;
 import ru.lebedev.dealership.application.contracts.order.stockorder.operations.AddStockOrder;
 import ru.lebedev.dealership.application.permissions.Permission;
-import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 import ru.lebedev.dealership.domain.order.stock.StockOrder;
 import ru.lebedev.dealership.domain.order.stock.StockOrderId;
 import ru.lebedev.dealership.domain.user.User;

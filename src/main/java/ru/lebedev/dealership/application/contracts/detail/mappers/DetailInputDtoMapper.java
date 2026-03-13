@@ -1,11 +1,11 @@
 package ru.lebedev.dealership.application.contracts.detail.mappers;
 
 import ru.lebedev.dealership.application.contracts.detail.models.DetailInputDto;
-import ru.lebedev.dealership.domain.car.valueobjects.CarVersionId;
+import ru.lebedev.dealership.domain.car.vo.CarVersionId;
 import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.detail.DetailId;
 import ru.lebedev.dealership.domain.detail.DetailType;
-import ru.lebedev.dealership.domain.shared.valueobjects.Price;
+import ru.lebedev.dealership.domain.shared.vo.Price;
 
 import java.util.HashSet;
 import java.util.Set;

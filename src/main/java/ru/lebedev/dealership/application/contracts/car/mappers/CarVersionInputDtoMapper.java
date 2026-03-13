@@ -5,8 +5,8 @@ import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.car.enums.CarDrive;
 import ru.lebedev.dealership.domain.car.enums.FuelType;
 import ru.lebedev.dealership.domain.car.enums.GearboxType;
-import ru.lebedev.dealership.domain.car.valueobjects.*;
-import ru.lebedev.dealership.domain.shared.valueobjects.Price;
+import ru.lebedev.dealership.domain.car.vo.*;
+import ru.lebedev.dealership.domain.shared.vo.Price;
 
 import java.util.List;
 import java.util.UUID;
