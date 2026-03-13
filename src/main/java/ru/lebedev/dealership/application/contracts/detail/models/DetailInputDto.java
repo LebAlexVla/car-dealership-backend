@@ -7,6 +7,6 @@ public record DetailInputDto(
         String detailName,
         String detailType,
         BigDecimal price,
-        Set<String> compatibleCars
+        Set<Long> compatibleCars
 ) {
 }
