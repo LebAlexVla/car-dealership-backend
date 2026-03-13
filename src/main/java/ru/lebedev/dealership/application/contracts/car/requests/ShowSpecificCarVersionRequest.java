@@ -1,4 +1,4 @@
 package ru.lebedev.dealership.application.contracts.car.requests;
 
-public record ShowSpecificCarVersionRequest(long userId, long carVersionId) {
+public record ShowSpecificCarVersionRequest(long carVersionId) {
 }

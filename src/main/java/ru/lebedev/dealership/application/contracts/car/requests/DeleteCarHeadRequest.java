@@ -1,4 +1,4 @@
 package ru.lebedev.dealership.application.contracts.car.requests;
 
-public record DeleteCarHeadRequest(long userId, long carHeadId) {
+public record DeleteCarHeadRequest(long carHeadId) {
 }
