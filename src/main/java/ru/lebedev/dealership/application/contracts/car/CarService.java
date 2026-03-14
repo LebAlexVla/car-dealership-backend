@@ -7,9 +7,9 @@ import ru.lebedev.dealership.application.contracts.car.requests.*;
 import java.util.List;
 
 public interface CarService {
-    long AddCarHead(AddCarHeadRequest request);
+    Long AddCarHead(AddCarHeadRequest request);
 
-    long AddCarVersion(AddCarVersionRequest request);
+    Long AddCarVersion(AddCarVersionRequest request);
 
     void DeleteCarHead(DeleteCarHeadRequest request);
 

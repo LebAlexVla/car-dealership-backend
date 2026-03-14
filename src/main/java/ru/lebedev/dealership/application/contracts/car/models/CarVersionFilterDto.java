@@ -6,7 +6,7 @@ public record CarVersionFilterDto(
         BigDecimal minPrice,
         BigDecimal maxPrice,
         String fuelType,
-        long enginePower,
+        Long enginePower,
         double engineCapacity,
         String gearboxType,
         String carDrive,

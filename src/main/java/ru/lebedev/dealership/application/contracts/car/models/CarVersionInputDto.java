@@ -5,9 +5,9 @@ import java.util.List;
 
 public record CarVersionInputDto(
         String carVersionName,
-        long carHeadId,
+        Long carHeadId,
         String fuelType,
-        long power,
+        Long power,
         double capacity,
         String gearBoxType,
         String carDrive,

@@ -8,7 +8,7 @@ public record CarVersionOutputDto(
         String carVersionName,
         String carHeadId,
         String fuelType,
-        long power,
+        Long power,
         double capacity,
         String gearBoxType,
         String carDrive,
