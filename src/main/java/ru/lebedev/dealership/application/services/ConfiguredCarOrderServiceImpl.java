@@ -1,16 +1,15 @@
 package ru.lebedev.dealership.application.services;
 
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.ConfiguredCarOrderRepository;
-import ru.lebedev.dealership.application.contracts.order.configuredcar.ConfiguredCarOrderUseCase;
 import ru.lebedev.dealership.application.contracts.order.configuredcar.mappers.ConfiguredCarOrderInputDtoMapper;
 import ru.lebedev.dealership.application.contracts.order.configuredcar.requests.AddConfigurationOrderRequest;
 import ru.lebedev.dealership.application.contracts.order.configuredcar.requests.UpdateConfigurationOrderRequest;
 import ru.lebedev.dealership.domain.order.configuredcar.ConfiguredCarOrder;
 
-public class ConfiguredCarOrderService implements ConfiguredCarOrderUseCase {
+public class ConfiguredCarOrderServiceImpl implements ru.lebedev.dealership.application.contracts.order.configuredcar.ConfiguredCarOrderService {
     private final ConfiguredCarOrderRepository configuredCarOrderRepository;
 
-    public ConfiguredCarOrderService(ConfiguredCarOrderRepository configuredCarOrderRepository) {
+    public ConfiguredCarOrderServiceImpl(ConfiguredCarOrderRepository configuredCarOrderRepository) {
         this.configuredCarOrderRepository = configuredCarOrderRepository;
     }
 

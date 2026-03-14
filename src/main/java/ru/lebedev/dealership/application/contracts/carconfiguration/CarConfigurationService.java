@@ -2,7 +2,7 @@ package ru.lebedev.dealership.application.contracts.carconfiguration;
 
 import ru.lebedev.dealership.application.contracts.carconfiguration.requests.*;
 
-public interface CarConfigurationUseCase {
+public interface CarConfigurationService {
     long AddDefaulter(AddCarConfigurationDefaulterRequest request);
 
     void DeleteDefaulter(DeleteCarConfigurationDefaulterRequest request);

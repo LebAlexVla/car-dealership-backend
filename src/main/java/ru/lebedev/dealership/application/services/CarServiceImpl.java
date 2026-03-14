@@ -14,11 +14,11 @@ import ru.lebedev.dealership.domain.car.entities.CarVersion;
 
 import java.util.List;
 
-public class CarService implements CarUseCase {
+public class CarServiceImpl implements CarUseCase {
     private final CarHeadRepository carHeadRepository;
     private final CarVersionRepository carVersionRepository;
 
-    public CarService(CarHeadRepository carHeadRepository, CarVersionRepository carVersionRepository) {
+    public CarServiceImpl(CarHeadRepository carHeadRepository, CarVersionRepository carVersionRepository) {
         this.carHeadRepository = carHeadRepository;
         this.carVersionRepository = carVersionRepository;
     }

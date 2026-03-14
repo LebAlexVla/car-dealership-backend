@@ -6,7 +6,7 @@ import ru.lebedev.dealership.application.contracts.car.requests.*;
 
 import java.util.List;
 
-public interface CarUseCase {
+public interface CarService {
     long AddCarHead(AddCarHeadRequest request);
 
     long AddCarVersion(AddCarVersionRequest request);

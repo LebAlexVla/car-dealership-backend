@@ -2,7 +2,6 @@ package ru.lebedev.dealership.application.services;
 
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.TestDriveCarsRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.TestDriveRepository;
-import ru.lebedev.dealership.application.contracts.testdrive.TestDriveUseCase;
 import ru.lebedev.dealership.application.contracts.testdrive.mappers.TestDriveInputDtoMapper;
 import ru.lebedev.dealership.application.contracts.testdrive.mappers.TestDriveOutputDtoMapper;
 import ru.lebedev.dealership.application.contracts.testdrive.models.TestDriveOutputDto;
@@ -11,11 +10,11 @@ import ru.lebedev.dealership.domain.testdrive.TestDrive;
 
 import java.util.List;
 
-public class TestDriveService implements TestDriveUseCase {
+public class TestDriveServiceImpl implements ru.lebedev.dealership.application.contracts.testdrive.TestDriveService {
     private final TestDriveRepository testDriveRepository;
     private final TestDriveCarsRepository testDriveCarsRepository;
 
-    public TestDriveService(TestDriveRepository testDriveRepository, TestDriveCarsRepository testDriveCarsRepository) {
+    public TestDriveServiceImpl(TestDriveRepository testDriveRepository, TestDriveCarsRepository testDriveCarsRepository) {
         this.testDriveRepository = testDriveRepository;
         this.testDriveCarsRepository = testDriveCarsRepository;
     }

@@ -3,18 +3,17 @@ package ru.lebedev.dealership.application.services;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarConfigurationCustomizerRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarConfigurationDefaulterRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarConfigurationRepository;
-import ru.lebedev.dealership.application.contracts.carconfiguration.CarConfigurationUseCase;
 import ru.lebedev.dealership.application.contracts.carconfiguration.mappers.CarConfigurationDefaulterInputDtoMapper;
 import ru.lebedev.dealership.application.contracts.carconfiguration.requests.*;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfigurationCustomizer;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfigurationDefaulter;
 
-public class CarConfigurationService implements CarConfigurationUseCase {
+public class CarConfigurationServiceImpl implements ru.lebedev.dealership.application.contracts.carconfiguration.CarConfigurationService {
     private final CarConfigurationDefaulterRepository carConfigurationDefaulterRepository;
     private final CarConfigurationCustomizerRepository carConfigurationCustomizerRepository;
     private final CarConfigurationRepository carConfigurationRepository;
 
-    public CarConfigurationService(CarConfigurationDefaulterRepository carConfigurationDefaulterRepository, CarConfigurationCustomizerRepository carConfigurationCustomizerRepository, CarConfigurationRepository carConfigurationRepository) {
+    public CarConfigurationServiceImpl(CarConfigurationDefaulterRepository carConfigurationDefaulterRepository, CarConfigurationCustomizerRepository carConfigurationCustomizerRepository, CarConfigurationRepository carConfigurationRepository) {
         this.carConfigurationDefaulterRepository = carConfigurationDefaulterRepository;
         this.carConfigurationCustomizerRepository = carConfigurationCustomizerRepository;
         this.carConfigurationRepository = carConfigurationRepository;

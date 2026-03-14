@@ -3,7 +3,7 @@ package ru.lebedev.dealership.application.contracts.order.stock;
 import ru.lebedev.dealership.application.contracts.order.stock.requests.AddStockOrderRequest;
 import ru.lebedev.dealership.application.contracts.order.stock.requests.UpdateStockOrderRequest;
 
-public interface StockOrderUseCase {
+public interface StockOrderService {
     long AddOrder(AddStockOrderRequest request);
 
     void DeleteOrder(UpdateStockOrderRequest request);

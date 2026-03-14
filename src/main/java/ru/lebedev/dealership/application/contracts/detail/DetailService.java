@@ -8,7 +8,7 @@ import ru.lebedev.dealership.application.contracts.detail.requests.ShowSpecificD
 
 import java.util.List;
 
-public interface DetailUseCase {
+public interface DetailService {
     long AddDetail(AddDetailRequest request);
 
     void DeleteDetail(DeleteDetailRequest request);

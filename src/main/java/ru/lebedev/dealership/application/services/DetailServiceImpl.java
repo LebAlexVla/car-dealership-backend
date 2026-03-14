@@ -2,7 +2,6 @@ package ru.lebedev.dealership.application.services;
 
 import ru.lebedev.dealership.application.abstractions.persistence.queries.DetailFilter;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.DetailRepository;
-import ru.lebedev.dealership.application.contracts.detail.DetailUseCase;
 import ru.lebedev.dealership.application.contracts.detail.mappers.DetailFilterDtoMapper;
 import ru.lebedev.dealership.application.contracts.detail.mappers.DetailInputDtoMapper;
 import ru.lebedev.dealership.application.contracts.detail.mappers.DetailOutputDtoMapper;
@@ -15,10 +14,10 @@ import ru.lebedev.dealership.domain.detail.Detail;
 
 import java.util.List;
 
-public class DetailService implements DetailUseCase {
+public class DetailServiceImpl implements ru.lebedev.dealership.application.contracts.detail.DetailService {
     private final DetailRepository detailRepository;
 
-    public DetailService(DetailRepository detailRepository) {
+    public DetailServiceImpl(DetailRepository detailRepository) {
         this.detailRepository = detailRepository;
     }
 

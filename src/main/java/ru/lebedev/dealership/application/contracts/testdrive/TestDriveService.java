@@ -5,7 +5,7 @@ import ru.lebedev.dealership.application.contracts.testdrive.requests.*;
 
 import java.util.List;
 
-public interface TestDriveUseCase {
+public interface TestDriveService {
     long AddTestDrive(AddTestDriveRequest request);
 
     void DeleteTestDrive(DeleteTestDriveRequest request);
