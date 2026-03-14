@@ -6,6 +6,6 @@ import java.util.Set;
 public record DetailFilterDto(
         String detailType,
         BigDecimal price,
-        Set<String> compatibleCars
+        Set<Long> compatibleCars
 ) {
 }
