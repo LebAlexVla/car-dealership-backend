@@ -4,7 +4,7 @@ import ru.lebedev.dealership.application.abstractions.persistence.queries.CarHea
 import ru.lebedev.dealership.application.abstractions.persistence.queries.CarVersionFilter;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarHeadRepository;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.CarVersionRepository;
-import ru.lebedev.dealership.application.contracts.car.CarUseCase;
+import ru.lebedev.dealership.application.contracts.car.CarService;
 import ru.lebedev.dealership.application.contracts.car.mappers.*;
 import ru.lebedev.dealership.application.contracts.car.models.CarHeadOutputDto;
 import ru.lebedev.dealership.application.contracts.car.models.CarVersionOutputDto;
@@ -14,7 +14,7 @@ import ru.lebedev.dealership.domain.car.entities.CarVersion;
 
 import java.util.List;
 
-public class CarServiceImpl implements CarUseCase {
+public class CarServiceImpl implements CarService {
     private final CarHeadRepository carHeadRepository;
     private final CarVersionRepository carVersionRepository;
 
@@ -24,7 +24,7 @@ public class CarServiceImpl implements CarUseCase {
     }
 
     @Override
-    public long AddCarHead(AddCarHeadRequest request) {
+    public Long addCarHead(AddCarHeadRequest request) {
         CarHead carHead = CarHeadInputDtoMapper.map(request.inputDto());
         carHead = carHeadRepository.save(carHead);
 
@@ -32,7 +32,7 @@ public class CarServiceImpl implements CarUseCase {
     }
 
     @Override
-    public long AddCarVersion(AddCarVersionRequest request) {
+    public Long addCarVersion(AddCarVersionRequest request) {
         CarVersion carVersion = CarVersionInputDtoMapper.map(request.inputDto());
         carVersion = carVersionRepository.save(carVersion);
 
@@ -40,35 +40,35 @@ public class CarServiceImpl implements CarUseCase {
     }
 
     @Override
-    public void DeleteCarHead(DeleteCarHeadRequest request) {
-        long carHeadId = request.carHeadId();
+    public void deleteCarHead(DeleteCarHeadRequest request) {
+        Long carHeadId = request.carHeadId();
         carHeadRepository.delete(carHeadId);
     }
 
     @Override
-    public void DeleteCarVersion(DeleteCarVersionRequest request) {
-        long carVersionId = request.carVersionId();
+    public void deleteCarVersion(DeleteCarVersionRequest request) {
+        Long carVersionId = request.carVersionId();
         carVersionRepository.delete(carVersionId);
     }
 
     @Override
-    public CarHeadOutputDto ShowSpecificCarHead(ShowSpecificCarHeadRequest request) {
-        long carHeadId = request.carHeadId();
+    public CarHeadOutputDto showSpecificCarHead(ShowSpecificCarHeadRequest request) {
+        Long carHeadId = request.carHeadId();
         CarHead carHead = carHeadRepository.findById(carHeadId);
 
         return CarHeadOutputDtoMapper.map(carHead);
     }
 
     @Override
-    public CarVersionOutputDto ShowSpecificCarVersion(ShowSpecificCarVersionRequest request) {
-        long carVersionId = request.carVersionId();
+    public CarVersionOutputDto showSpecificCarVersion(ShowSpecificCarVersionRequest request) {
+        Long carVersionId = request.carVersionId();
         CarVersion carVersion = carVersionRepository.findById(carVersionId);
 
         return CarVersionOutputDtoMapper.map(carVersion);
     }
 
     @Override
-    public List<CarHeadOutputDto> ShowCarsHeads(ShowCarsHeadsRequest request) {
+    public List<CarHeadOutputDto> showCarsHeads(ShowCarsHeadsRequest request) {
         CarHeadFilter carHeadFilter = CarHeadFilterDtoMapper.map(request.filterDto());
         List<CarHead> carHeads = carHeadRepository.findByFilter(carHeadFilter);
 
@@ -79,7 +79,7 @@ public class CarServiceImpl implements CarUseCase {
     }
 
     @Override
-    public List<CarVersionOutputDto> ShowCarsVersions(ShowCarsVersionsRequest request) {
+    public List<CarVersionOutputDto> showCarsVersions(ShowCarsVersionsRequest request) {
         CarVersionFilter carVersionFilter = CarVersionFilterDtoMapper.map(request.filterDto());
         List<CarVersion> carVersions = carVersionRepository.findByFilter(carVersionFilter);
 

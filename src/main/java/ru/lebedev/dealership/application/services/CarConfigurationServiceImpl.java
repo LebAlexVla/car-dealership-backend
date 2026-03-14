@@ -20,7 +20,7 @@ public class CarConfigurationServiceImpl implements ru.lebedev.dealership.applic
     }
 
     @Override
-    public long AddDefaulter(AddCarConfigurationDefaulterRequest request) {
+    public long addDefaulter(AddCarConfigurationDefaulterRequest request) {
         CarConfigurationDefaulter carConfigurationDefaulter = CarConfigurationDefaulterInputDtoMapper.map(request.inputDto());
         carConfigurationDefaulter = carConfigurationDefaulterRepository.save(carConfigurationDefaulter);
 
@@ -28,13 +28,13 @@ public class CarConfigurationServiceImpl implements ru.lebedev.dealership.applic
     }
 
     @Override
-    public void DeleteDefaulter(DeleteCarConfigurationDefaulterRequest request) {
+    public void deleteDefaulter(DeleteCarConfigurationDefaulterRequest request) {
         long carConfigurationDefaulterId = request.carConfigurationDefaulterId();
         carConfigurationDefaulterRepository.delete(carConfigurationDefaulterId);
     }
 
     @Override
-    public long AddCustomizer(AddCarConfigurationCustomizerRequest request) {
+    public long addCustomizer(AddCarConfigurationCustomizerRequest request) {
         long carConfigurationDefaulterId = request.carConfigurationDefaulterId();
         CarConfigurationDefaulter defaulter = carConfigurationDefaulterRepository.findById(carConfigurationDefaulterId);
         CarConfigurationCustomizer customizer = defaulter.create(0, request.clientId());
@@ -44,24 +44,24 @@ public class CarConfigurationServiceImpl implements ru.lebedev.dealership.applic
     }
 
     @Override
-    public void DeleteCustomizer(DeleteCarConfigurationCustomizerRequest request) {
+    public void deleteCustomizer(DeleteCarConfigurationCustomizerRequest request) {
         long carConfigurationCustomizerId = request.carConfigurationCustomizerId();
         carConfigurationCustomizerRepository.delete(carConfigurationCustomizerId);
     }
 
     @Override
-    public void AddCustomRequiredDetail(AddCustomDetailRequest request) {
+    public void addCustomRequiredDetail(AddCustomDetailRequest request) {
         long carConfigurationCustomizerId = request.carConfigurationCustomizerId();
         CarConfigurationCustomizer customizer = carConfigurationCustomizerRepository.findById(carConfigurationCustomizerId);
     }
 
     @Override
-    public void AddCustomOptionalDetail(AddCustomDetailRequest request) {
+    public void addCustomOptionalDetail(AddCustomDetailRequest request) {
 
     }
 
     @Override
-    public long CreateCarConfiguration() {
+    public long createCarConfiguration() {
         return 0;
     }
 }

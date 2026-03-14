@@ -13,7 +13,7 @@ public class StockOrderServiceImpl implements ru.lebedev.dealership.application.
     }
 
     @Override
-    public long AddOrder(AddStockOrderRequest request) {
+    public long addOrder(AddStockOrderRequest request) {
         long clientId = request.inputDto().clientId();
         long carVersionId = request.inputDto().carVersionId();
         StockOrder stockOrder = new StockOrder(0, clientId, carVersionId);
@@ -23,13 +23,13 @@ public class StockOrderServiceImpl implements ru.lebedev.dealership.application.
     }
 
     @Override
-    public void DeleteOrder(UpdateStockOrderRequest request) {
+    public void deleteOrder(UpdateStockOrderRequest request) {
         long orderId = request.stockOrderId();
         stockOrderRepository.delete(orderId);
     }
 
     @Override
-    public void ApproveOrder(UpdateStockOrderRequest request) {
+    public void approveOrder(UpdateStockOrderRequest request) {
         long orderId = request.stockOrderId();
         StockOrder stockOrder = stockOrderRepository.findById(orderId);
         stockOrder.approve();
@@ -37,7 +37,7 @@ public class StockOrderServiceImpl implements ru.lebedev.dealership.application.
     }
 
     @Override
-    public void PayOrder(UpdateStockOrderRequest request) {
+    public void payOrder(UpdateStockOrderRequest request) {
         long orderId = request.stockOrderId();
         StockOrder stockOrder = stockOrderRepository.findById(orderId);
         stockOrder.pay();
@@ -45,7 +45,7 @@ public class StockOrderServiceImpl implements ru.lebedev.dealership.application.
     }
 
     @Override
-    public void CompleteOrder(UpdateStockOrderRequest request) {
+    public void completeOrder(UpdateStockOrderRequest request) {
         long orderId = request.stockOrderId();
         StockOrder stockOrder = stockOrderRepository.findById(orderId);
         stockOrder.complete();
@@ -53,7 +53,7 @@ public class StockOrderServiceImpl implements ru.lebedev.dealership.application.
     }
 
     @Override
-    public void CancelOrder(UpdateStockOrderRequest request) {
+    public void cancelOrder(UpdateStockOrderRequest request) {
         long orderId = request.stockOrderId();
         StockOrder stockOrder = stockOrderRepository.findById(orderId);
         stockOrder.cancel();

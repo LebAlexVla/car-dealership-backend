@@ -4,15 +4,15 @@ import ru.lebedev.dealership.application.contracts.order.stock.requests.AddStock
 import ru.lebedev.dealership.application.contracts.order.stock.requests.UpdateStockOrderRequest;
 
 public interface StockOrderService {
-    long AddOrder(AddStockOrderRequest request);
+    long addOrder(AddStockOrderRequest request);
 
-    void DeleteOrder(UpdateStockOrderRequest request);
+    void deleteOrder(UpdateStockOrderRequest request);
 
-    void ApproveOrder(UpdateStockOrderRequest request);
+    void approveOrder(UpdateStockOrderRequest request);
 
-    void PayOrder(UpdateStockOrderRequest request);
+    void payOrder(UpdateStockOrderRequest request);
 
-    void CompleteOrder(UpdateStockOrderRequest request);
+    void completeOrder(UpdateStockOrderRequest request);
 
-    void CancelOrder(UpdateStockOrderRequest request);
+    void cancelOrder(UpdateStockOrderRequest request);
 }

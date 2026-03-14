@@ -6,13 +6,13 @@ import ru.lebedev.dealership.application.contracts.testdrive.requests.*;
 import java.util.List;
 
 public interface TestDriveService {
-    long AddTestDrive(AddTestDriveRequest request);
+    long addTestDrive(AddTestDriveRequest request);
 
-    void DeleteTestDrive(DeleteTestDriveRequest request);
+    void deleteTestDrive(DeleteTestDriveRequest request);
 
-    List<TestDriveOutputDto> ShowTestDrives(ShowTestDrivesRequest request);
+    List<TestDriveOutputDto> showTestDrives(ShowTestDrivesRequest request);
 
-    void AddCars(AddCarsRequest request);
+    void addCars(AddCarsRequest request);
 
-    void RemoveCars(RemoveCarsRequest request);
+    void removeCars(RemoveCarsRequest request);
 }

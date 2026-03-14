@@ -9,11 +9,11 @@ import ru.lebedev.dealership.application.contracts.detail.requests.ShowSpecificD
 import java.util.List;
 
 public interface DetailService {
-    long AddDetail(AddDetailRequest request);
+    long addDetail(AddDetailRequest request);
 
-    void DeleteDetail(DeleteDetailRequest request);
+    void deleteDetail(DeleteDetailRequest request);
 
-    DetailOutputDto ShowSpecificDetail(ShowSpecificDetailRequest request);
+    DetailOutputDto showSpecificDetail(ShowSpecificDetailRequest request);
 
-    List<DetailOutputDto> ShowDetails(ShowDetailsRequest request);
+    List<DetailOutputDto> showDetails(ShowDetailsRequest request);
 }

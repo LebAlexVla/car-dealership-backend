@@ -22,7 +22,7 @@ public class DetailServiceImpl implements ru.lebedev.dealership.application.cont
     }
 
     @Override
-    public long AddDetail(AddDetailRequest request) {
+    public long addDetail(AddDetailRequest request) {
         Detail detail = DetailInputDtoMapper.map(request.inputDto());
         detail = detailRepository.save(detail);
 
@@ -30,13 +30,13 @@ public class DetailServiceImpl implements ru.lebedev.dealership.application.cont
     }
 
     @Override
-    public void DeleteDetail(DeleteDetailRequest request) {
+    public void deleteDetail(DeleteDetailRequest request) {
         long detailId = request.detailId();
         detailRepository.delete(detailId);
     }
 
     @Override
-    public DetailOutputDto ShowSpecificDetail(ShowSpecificDetailRequest request) {
+    public DetailOutputDto showSpecificDetail(ShowSpecificDetailRequest request) {
         long detailId = request.detailId();
         Detail detail = detailRepository.findById(detailId);
 
@@ -44,7 +44,7 @@ public class DetailServiceImpl implements ru.lebedev.dealership.application.cont
     }
 
     @Override
-    public List<DetailOutputDto> ShowDetails(ShowDetailsRequest request) {
+    public List<DetailOutputDto> showDetails(ShowDetailsRequest request) {
         DetailFilter detailFilter = DetailFilterDtoMapper.map(request.detailFilterDto());
         List<Detail> details = detailRepository.findByFilter(detailFilter);
 

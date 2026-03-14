@@ -7,19 +7,19 @@ import ru.lebedev.dealership.application.contracts.car.requests.*;
 import java.util.List;
 
 public interface CarService {
-    Long AddCarHead(AddCarHeadRequest request);
+    Long addCarHead(AddCarHeadRequest request);
 
-    Long AddCarVersion(AddCarVersionRequest request);
+    Long addCarVersion(AddCarVersionRequest request);
 
-    void DeleteCarHead(DeleteCarHeadRequest request);
+    void deleteCarHead(DeleteCarHeadRequest request);
 
-    void DeleteCarVersion(DeleteCarVersionRequest request);
+    void deleteCarVersion(DeleteCarVersionRequest request);
 
-    CarHeadOutputDto ShowSpecificCarHead(ShowSpecificCarHeadRequest request);
+    CarHeadOutputDto showSpecificCarHead(ShowSpecificCarHeadRequest request);
 
-    CarVersionOutputDto ShowSpecificCarVersion(ShowSpecificCarVersionRequest request);
+    CarVersionOutputDto showSpecificCarVersion(ShowSpecificCarVersionRequest request);
 
-    List<CarHeadOutputDto> ShowCarsHeads(ShowCarsHeadsRequest request);
+    List<CarHeadOutputDto> showCarsHeads(ShowCarsHeadsRequest request);
 
-    List<CarVersionOutputDto> ShowCarsVersions(ShowCarsVersionsRequest request);
+    List<CarVersionOutputDto> showCarsVersions(ShowCarsVersionsRequest request);
 }

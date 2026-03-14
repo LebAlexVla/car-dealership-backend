@@ -14,7 +14,7 @@ public class ConfiguredCarOrderServiceImpl implements ru.lebedev.dealership.appl
     }
 
     @Override
-    public long AddOrder(AddConfigurationOrderRequest request) {
+    public long addOrder(AddConfigurationOrderRequest request) {
         ConfiguredCarOrder configuredCarOrder = ConfiguredCarOrderInputDtoMapper.map(request.inputDto());
         configuredCarOrder = configuredCarOrderRepository.save(configuredCarOrder);
 
@@ -22,13 +22,13 @@ public class ConfiguredCarOrderServiceImpl implements ru.lebedev.dealership.appl
     }
 
     @Override
-    public void DeleteOrder(UpdateConfigurationOrderRequest request) {
+    public void deleteOrder(UpdateConfigurationOrderRequest request) {
         long configurationOrderId = request.configurationOrderId();
         configuredCarOrderRepository.delete(configurationOrderId);
     }
 
     @Override
-    public void ApproveOrder(UpdateConfigurationOrderRequest request) {
+    public void approveOrder(UpdateConfigurationOrderRequest request) {
         long configurationOrderId = request.configurationOrderId();
         ConfiguredCarOrder configuredCarOrder = configuredCarOrderRepository.findById(configurationOrderId);
         configuredCarOrder.approve();
@@ -36,7 +36,7 @@ public class ConfiguredCarOrderServiceImpl implements ru.lebedev.dealership.appl
     }
 
     @Override
-    public void PayOrder(UpdateConfigurationOrderRequest request) {
+    public void payOrder(UpdateConfigurationOrderRequest request) {
         long configurationOrderId = request.configurationOrderId();
         ConfiguredCarOrder configuredCarOrder = configuredCarOrderRepository.findById(configurationOrderId);
         configuredCarOrder.pay();
@@ -44,7 +44,7 @@ public class ConfiguredCarOrderServiceImpl implements ru.lebedev.dealership.appl
     }
 
     @Override
-    public void DeliverOrder(UpdateConfigurationOrderRequest request) {
+    public void deliverOrder(UpdateConfigurationOrderRequest request) {
         long configurationOrderId = request.configurationOrderId();
         ConfiguredCarOrder configuredCarOrder = configuredCarOrderRepository.findById(configurationOrderId);
         configuredCarOrder.deliver();
@@ -52,7 +52,7 @@ public class ConfiguredCarOrderServiceImpl implements ru.lebedev.dealership.appl
     }
 
     @Override
-    public void CompleteOrder(UpdateConfigurationOrderRequest request) {
+    public void completeOrder(UpdateConfigurationOrderRequest request) {
         long configurationOrderId = request.configurationOrderId();
         ConfiguredCarOrder configuredCarOrder = configuredCarOrderRepository.findById(configurationOrderId);
         configuredCarOrder.complete();
@@ -60,7 +60,7 @@ public class ConfiguredCarOrderServiceImpl implements ru.lebedev.dealership.appl
     }
 
     @Override
-    public void CancelOrder(UpdateConfigurationOrderRequest request) {
+    public void cancelOrder(UpdateConfigurationOrderRequest request) {
         long configurationOrderId = request.configurationOrderId();
         ConfiguredCarOrder configuredCarOrder = configuredCarOrderRepository.findById(configurationOrderId);
         configuredCarOrder.cancel();

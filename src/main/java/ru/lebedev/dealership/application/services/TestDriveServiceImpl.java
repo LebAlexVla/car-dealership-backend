@@ -20,7 +20,7 @@ public class TestDriveServiceImpl implements ru.lebedev.dealership.application.c
     }
 
     @Override
-    public long AddTestDrive(AddTestDriveRequest request) {
+    public long addTestDrive(AddTestDriveRequest request) {
         TestDrive testDrive = TestDriveInputDtoMapper.map(request.inputDto());
         testDrive = testDriveRepository.save(testDrive);
 
@@ -28,13 +28,13 @@ public class TestDriveServiceImpl implements ru.lebedev.dealership.application.c
     }
 
     @Override
-    public void DeleteTestDrive(DeleteTestDriveRequest request) {
+    public void deleteTestDrive(DeleteTestDriveRequest request) {
         long testDriveId = request.testDriveId();
         testDriveRepository.delete(testDriveId);
     }
 
     @Override
-    public List<TestDriveOutputDto> ShowTestDrives(ShowTestDrivesRequest request) {
+    public List<TestDriveOutputDto> showTestDrives(ShowTestDrivesRequest request) {
         List<TestDrive> testDrives = testDriveRepository.findAll();
 
         return testDrives
@@ -44,14 +44,14 @@ public class TestDriveServiceImpl implements ru.lebedev.dealership.application.c
     }
 
     @Override
-    public void AddCars(AddCarsRequest request) {
+    public void addCars(AddCarsRequest request) {
         long testDriveId = request.testDriveId();
         List<Long> carVersionsIds = request.carVersionsIds();
         testDriveCarsRepository.add(carVersionsIds);
     }
 
     @Override
-    public void RemoveCars(RemoveCarsRequest request) {
+    public void removeCars(RemoveCarsRequest request) {
         long testDriveId = request.testDriveId();
         List<Long> carVersionsIds = request.carVersionsIds();
         testDriveCarsRepository.delete(carVersionsIds);

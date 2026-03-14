@@ -1,4 +1,4 @@
-package org.example;
+package ru.lebedev.dealership;
 
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
