@@ -1,16 +1,16 @@
-package ru.lebedev.dealership.domain.order.configuration;
+package ru.lebedev.dealership.domain.order.configuredcar;
 
 import ru.lebedev.dealership.domain.exceptions.OrderStatusTransitionException;
 
-public class ConfigurationOrder {
+public class ConfiguredCarOrder {
     private final long orderId;
     private final long clientId;
     private final long carVersionId;
     private final long configurationId;
 
-    private ConfigurationOrderStatus status = ConfigurationOrderStatus.PLACED;
+    private ConfiguredCarOrderStatus status = ConfiguredCarOrderStatus.PLACED;
 
-    public ConfigurationOrder(long orderId, long clientId, long carVersionId, long configurationId) {
+    public ConfiguredCarOrder(long orderId, long clientId, long carVersionId, long configurationId) {
         this.orderId = orderId;
         this.clientId = clientId;
         this.carVersionId = carVersionId;
@@ -18,32 +18,32 @@ public class ConfigurationOrder {
     }
 
     public void approve() {
-        checkStatus(ConfigurationOrderStatus.PLACED);
-        status = ConfigurationOrderStatus.APPROVED;
-        status = ConfigurationOrderStatus.WAITING_FOR_PAYMENT;
+        checkStatus(ConfiguredCarOrderStatus.PLACED);
+        status = ConfiguredCarOrderStatus.APPROVED;
+        status = ConfiguredCarOrderStatus.WAITING_FOR_PAYMENT;
     }
 
     public void pay() {
-        checkStatus(ConfigurationOrderStatus.WAITING_FOR_PAYMENT);
-        status = ConfigurationOrderStatus.PAID;
-        status = ConfigurationOrderStatus.AWAITING_DELIVERY;
+        checkStatus(ConfiguredCarOrderStatus.WAITING_FOR_PAYMENT);
+        status = ConfiguredCarOrderStatus.PAID;
+        status = ConfiguredCarOrderStatus.AWAITING_DELIVERY;
     }
 
     public void deliver() {
-        checkStatus(ConfigurationOrderStatus.AWAITING_DELIVERY);
-        status = ConfigurationOrderStatus.READY_FOR_PICK_UP;
+        checkStatus(ConfiguredCarOrderStatus.AWAITING_DELIVERY);
+        status = ConfiguredCarOrderStatus.READY_FOR_PICK_UP;
     }
 
     public void complete() {
-        checkStatus(ConfigurationOrderStatus.READY_FOR_PICK_UP);
-        status = ConfigurationOrderStatus.COMPLETED;
+        checkStatus(ConfiguredCarOrderStatus.READY_FOR_PICK_UP);
+        status = ConfiguredCarOrderStatus.COMPLETED;
     }
 
     public void cancel() {
-        status = ConfigurationOrderStatus.CANCELLED;
+        status = ConfiguredCarOrderStatus.CANCELLED;
     }
 
-    private void checkStatus(ConfigurationOrderStatus expected) {
+    private void checkStatus(ConfiguredCarOrderStatus expected) {
         if (this.status != expected) {
             throw new OrderStatusTransitionException(
                     "Illegal transition from " + status

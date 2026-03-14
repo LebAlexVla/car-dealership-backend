@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.domain.configuration;
+package ru.lebedev.dealership.domain.carconfiguration;
 
 import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.detail.DetailType;
@@ -11,20 +11,20 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ConfigurationBuilder {
+public class CarConfigurationBuilder {
     private final long carVersionId;
     private final long clientId;
     private final Map<DetailType, Detail> requiredDetails;
 
     private final Map<DetailType, Detail> optionalDetails = new HashMap<>();
 
-    public ConfigurationBuilder(long carVersionId, long clientId, Map<DetailType, Detail> requiredDetails) {
+    public CarConfigurationBuilder(long carVersionId, long clientId, Map<DetailType, Detail> requiredDetails) {
         this.carVersionId = carVersionId;
         this.clientId = clientId;
         this.requiredDetails = requiredDetails;
     }
 
-    public ConfigurationBuilder withRequiredDetail(Detail detail) {
+    public CarConfigurationBuilder withRequiredDetail(Detail detail) {
         if (!detail.checkCompatibility(carVersionId)) {
             throw new IncompatibleDetailException(
                     detail.name() + " is not compatible to the car with id: " + carVersionId
@@ -42,7 +42,7 @@ public class ConfigurationBuilder {
         return this;
     }
 
-    public ConfigurationBuilder withOptionalDetail(Detail detail) {
+    public CarConfigurationBuilder withOptionalDetail(Detail detail) {
         if (!detail.checkCompatibility(carVersionId)) {
             throw new IncompatibleDetailException(
                     detail.name() + " is not compatible to the car with id: " + carVersionId
@@ -60,12 +60,12 @@ public class ConfigurationBuilder {
         return this;
     }
 
-    public Configuration Build() {
+    public CarConfiguration Build() {
         Set<Detail> details = new HashSet<>();
         details.addAll(requiredDetails.values());
         details.addAll(optionalDetails.values());
 
-        return new Configuration(details);
+        return new CarConfiguration(details);
     }
 
     public long getClientId() {

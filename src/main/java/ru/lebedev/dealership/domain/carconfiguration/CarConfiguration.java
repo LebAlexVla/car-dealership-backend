@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.domain.configuration;
+package ru.lebedev.dealership.domain.carconfiguration;
 
 import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.shared.vo.Price;
@@ -6,7 +6,7 @@ import ru.lebedev.dealership.domain.shared.vo.Price;
 import java.math.BigDecimal;
 import java.util.Set;
 
-public record Configuration(
+public record CarConfiguration(
         long configurationId,
         Set<Detail> details
 ) {

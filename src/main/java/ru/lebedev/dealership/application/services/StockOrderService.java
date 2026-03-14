@@ -1,9 +1,9 @@
 package ru.lebedev.dealership.application.services;
 
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.StockOrderRepository;
-import ru.lebedev.dealership.application.contracts.stockorder.StockOrderUseCase;
-import ru.lebedev.dealership.application.contracts.stockorder.requests.AddStockOrderRequest;
-import ru.lebedev.dealership.application.contracts.stockorder.requests.UpdateStockOrderRequest;
+import ru.lebedev.dealership.application.contracts.order.stock.StockOrderUseCase;
+import ru.lebedev.dealership.application.contracts.order.stock.requests.AddStockOrderRequest;
+import ru.lebedev.dealership.application.contracts.order.stock.requests.UpdateStockOrderRequest;
 import ru.lebedev.dealership.domain.order.stock.StockOrder;
 
 public class StockOrderService implements StockOrderUseCase {

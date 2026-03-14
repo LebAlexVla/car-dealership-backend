@@ -1,9 +1,9 @@
-package ru.lebedev.dealership.application.contracts.configurationorder;
+package ru.lebedev.dealership.application.contracts.order.configuredcar;
 
-import ru.lebedev.dealership.application.contracts.configurationorder.requests.AddConfigurationOrderRequest;
-import ru.lebedev.dealership.application.contracts.configurationorder.requests.UpdateConfigurationOrderRequest;
+import ru.lebedev.dealership.application.contracts.order.configuredcar.requests.AddConfigurationOrderRequest;
+import ru.lebedev.dealership.application.contracts.order.configuredcar.requests.UpdateConfigurationOrderRequest;
 
-public interface ConfigurationOrderUseCase {
+public interface ConfiguredCarOrderUseCase {
     long AddOrder(AddConfigurationOrderRequest request);
 
     void DeleteOrder(UpdateConfigurationOrderRequest request);

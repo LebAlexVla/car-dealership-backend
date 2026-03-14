@@ -1,6 +1,6 @@
-package ru.lebedev.dealership.domain.order.configuration;
+package ru.lebedev.dealership.domain.order.configuredcar;
 
-public enum ConfigurationOrderStatus {
+public enum ConfiguredCarOrderStatus {
     PLACED,
     APPROVED,
     WAITING_FOR_PAYMENT,

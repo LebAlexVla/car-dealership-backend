@@ -1,7 +1,7 @@
-package ru.lebedev.dealership.application.contracts.stockorder;
+package ru.lebedev.dealership.application.contracts.order.stock;
 
-import ru.lebedev.dealership.application.contracts.stockorder.requests.AddStockOrderRequest;
-import ru.lebedev.dealership.application.contracts.stockorder.requests.UpdateStockOrderRequest;
+import ru.lebedev.dealership.application.contracts.order.stock.requests.AddStockOrderRequest;
+import ru.lebedev.dealership.application.contracts.order.stock.requests.UpdateStockOrderRequest;
 
 public interface StockOrderUseCase {
     long AddOrder(AddStockOrderRequest request);

@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.domain.configuration;
+package ru.lebedev.dealership.domain.carconfiguration;
 
 import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.detail.DetailType;
@@ -6,11 +6,11 @@ import ru.lebedev.dealership.domain.detail.DetailType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConfigurationBuilderFactory {
+public class CarConfigurationBuilderFactory {
     private final long carVersionId;
     private final Map<DetailType, Detail> requiredDetails;
 
-    public ConfigurationBuilderFactory(long carVersionId, Map<DetailType, Detail> requiredDetails) {
+    public CarConfigurationBuilderFactory(long carVersionId, Map<DetailType, Detail> requiredDetails) {
         this.carVersionId = carVersionId;
         this.requiredDetails = requiredDetails;
     }
@@ -23,7 +23,7 @@ public class ConfigurationBuilderFactory {
         requiredDetails.remove(detail.type());
     }
 
-    public ConfigurationBuilder create(long clientId) {
-        return new ConfigurationBuilder(carVersionId, clientId, new HashMap<>(requiredDetails));
+    public CarConfigurationBuilder create(long clientId) {
+        return new CarConfigurationBuilder(carVersionId, clientId, new HashMap<>(requiredDetails));
     }
 }
