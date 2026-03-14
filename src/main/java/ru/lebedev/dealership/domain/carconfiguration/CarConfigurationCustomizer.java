@@ -11,20 +11,22 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class CarConfigurationBuilder {
+public class CarConfigurationCustomizer {
+    private final long CarConfigurationCustomizerId;
     private final long carVersionId;
     private final long clientId;
-    private final Map<DetailType, Detail> requiredDetails;
+    private final Map<DetailType, Long> requiredDetails;
 
-    private final Map<DetailType, Detail> optionalDetails = new HashMap<>();
+    private final Map<DetailType, Long> optionalDetails = new HashMap<>();
 
-    public CarConfigurationBuilder(long carVersionId, long clientId, Map<DetailType, Detail> requiredDetails) {
+    public CarConfigurationCustomizer(long customCarConfigurationId, long carVersionId, long clientId, Map<DetailType, Long> requiredDetails) {
+        this.CarConfigurationCustomizerId = customCarConfigurationId;
         this.carVersionId = carVersionId;
         this.clientId = clientId;
         this.requiredDetails = requiredDetails;
     }
 
-    public CarConfigurationBuilder withRequiredDetail(Detail detail) {
+    public CarConfigurationCustomizer withRequiredDetail(Detail detail) {
         if (!detail.checkCompatibility(carVersionId)) {
             throw new IncompatibleDetailException(
                     detail.name() + " is not compatible to the car with id: " + carVersionId
@@ -37,12 +39,12 @@ public class CarConfigurationBuilder {
             );
         }
 
-        requiredDetails.put(detail.type(), detail);
+        requiredDetails.put(detail.type(), detail.detailId());
 
         return this;
     }
 
-    public CarConfigurationBuilder withOptionalDetail(Detail detail) {
+    public CarConfigurationCustomizer withOptionalDetail(Detail detail) {
         if (!detail.checkCompatibility(carVersionId)) {
             throw new IncompatibleDetailException(
                     detail.name() + " is not compatible to the car with id: " + carVersionId
@@ -55,20 +57,24 @@ public class CarConfigurationBuilder {
             );
         }
 
-        optionalDetails.put(detail.type(), detail);
+        optionalDetails.put(detail.type(), detail.detailId());
 
         return this;
     }
 
-    public CarConfiguration Build() {
-        Set<Detail> details = new HashSet<>();
+    public CarConfiguration Build(long carConfigurationId) {
+        Set<Long> details = new HashSet<>();
         details.addAll(requiredDetails.values());
         details.addAll(optionalDetails.values());
 
-        return new CarConfiguration(details);
+        return new CarConfiguration(carConfigurationId, details);
     }
 
     public long getClientId() {
         return clientId;
+    }
+
+    public long getCustomCarConfigurationId() {
+        return CarConfigurationCustomizerId;
     }
 }
