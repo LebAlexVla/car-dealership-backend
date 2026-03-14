@@ -5,7 +5,7 @@ import ru.lebedev.dealership.domain.carconfiguration.CarConfigurationCustomizer;
 public interface CarConfigurationCustomizerRepository {
     CarConfigurationCustomizer save(CarConfigurationCustomizer carConfigurationCustomizer);
 
-    CarConfigurationCustomizer findById(long carConfigurationCustomizerId);
+    CarConfigurationCustomizer findById(Long carConfigurationCustomizerId);
 
-    void delete(long clientId);
+    void delete(Long clientId);
 }

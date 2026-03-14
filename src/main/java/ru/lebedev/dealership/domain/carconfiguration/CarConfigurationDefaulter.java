@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CarConfigurationDefaulter {
-    private final long CarConfigurationDefaulterId;
-    private final long carVersionId;
+    private final Long CarConfigurationDefaulterId;
+    private final Long carVersionId;
     private final Map<DetailType, Long> requiredDetails;
 
-    public CarConfigurationDefaulter(long CarConfigurationDefaulterId, long carVersionId, Map<DetailType, Long> requiredDetails) {
+    public CarConfigurationDefaulter(Long CarConfigurationDefaulterId, Long carVersionId, Map<DetailType, Long> requiredDetails) {
         this.CarConfigurationDefaulterId = CarConfigurationDefaulterId;
         this.carVersionId = carVersionId;
         this.requiredDetails = requiredDetails;
@@ -25,7 +25,7 @@ public class CarConfigurationDefaulter {
         requiredDetails.remove(detailType);
     }
 
-    public CarConfigurationCustomizer create(long customCarConfigurationId, long clientId) {
+    public CarConfigurationCustomizer create(Long customCarConfigurationId, Long clientId) {
         return new CarConfigurationCustomizer(
                 customCarConfigurationId,
                 carVersionId,
@@ -34,7 +34,7 @@ public class CarConfigurationDefaulter {
         );
     }
 
-    public long getCarConfigurationDefaulterId() {
+    public Long getCarConfigurationDefaulterId() {
         return CarConfigurationDefaulterId;
     }
 }

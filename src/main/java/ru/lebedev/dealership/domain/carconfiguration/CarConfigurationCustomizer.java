@@ -12,14 +12,14 @@ import java.util.Map;
 import java.util.Set;
 
 public class CarConfigurationCustomizer {
-    private final long CarConfigurationCustomizerId;
-    private final long carVersionId;
-    private final long clientId;
+    private final Long CarConfigurationCustomizerId;
+    private final Long carVersionId;
+    private final Long clientId;
     private final Map<DetailType, Long> requiredDetails;
 
     private final Map<DetailType, Long> optionalDetails = new HashMap<>();
 
-    public CarConfigurationCustomizer(long customCarConfigurationId, long carVersionId, long clientId, Map<DetailType, Long> requiredDetails) {
+    public CarConfigurationCustomizer(Long customCarConfigurationId, Long carVersionId, Long clientId, Map<DetailType, Long> requiredDetails) {
         this.CarConfigurationCustomizerId = customCarConfigurationId;
         this.carVersionId = carVersionId;
         this.clientId = clientId;
@@ -62,7 +62,7 @@ public class CarConfigurationCustomizer {
         return this;
     }
 
-    public CarConfiguration Build(long carConfigurationId) {
+    public CarConfiguration build(Long carConfigurationId) {
         Set<Long> details = new HashSet<>();
         details.addAll(requiredDetails.values());
         details.addAll(optionalDetails.values());
@@ -70,11 +70,11 @@ public class CarConfigurationCustomizer {
         return new CarConfiguration(carConfigurationId, details);
     }
 
-    public long getClientId() {
+    public Long getClientId() {
         return clientId;
     }
 
-    public long getCustomCarConfigurationId() {
+    public Long getCustomCarConfigurationId() {
         return CarConfigurationCustomizerId;
     }
 }

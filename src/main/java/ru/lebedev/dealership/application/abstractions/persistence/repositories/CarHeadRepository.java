@@ -8,9 +8,9 @@ import java.util.List;
 public interface CarHeadRepository {
     CarHead save(CarHead carHead);
 
-    void delete(long carHeadId);
+    void delete(Long carHeadId);
 
-    CarHead findById(long carHeadId);
+    CarHead findById(Long carHeadId);
 
     List<CarHead> findByFilter(CarHeadFilter filter);
 }

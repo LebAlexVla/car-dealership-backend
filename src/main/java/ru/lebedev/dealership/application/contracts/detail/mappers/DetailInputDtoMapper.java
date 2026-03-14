@@ -8,7 +8,7 @@ import ru.lebedev.dealership.domain.shared.vo.Price;
 public class DetailInputDtoMapper {
     public static Detail map(DetailInputDto dto) {
         return new Detail(
-                0,
+                0L,
                 dto.detailName(),
                 new DetailType(dto.detailType()),
                 new Price(dto.price()),

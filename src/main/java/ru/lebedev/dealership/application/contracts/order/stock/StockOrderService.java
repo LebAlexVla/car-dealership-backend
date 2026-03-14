@@ -4,7 +4,7 @@ import ru.lebedev.dealership.application.contracts.order.stock.requests.AddStock
 import ru.lebedev.dealership.application.contracts.order.stock.requests.UpdateStockOrderRequest;
 
 public interface StockOrderService {
-    long addOrder(AddStockOrderRequest request);
+    Long addOrder(AddStockOrderRequest request);
 
     void deleteOrder(UpdateStockOrderRequest request);
 

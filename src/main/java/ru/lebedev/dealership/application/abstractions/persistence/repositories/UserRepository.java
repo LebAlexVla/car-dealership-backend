@@ -5,5 +5,5 @@ import ru.lebedev.dealership.domain.user.User;
 public interface UserRepository {
     User save(User user);
 
-    User findById(long id);
+    User findById(Long id);
 }

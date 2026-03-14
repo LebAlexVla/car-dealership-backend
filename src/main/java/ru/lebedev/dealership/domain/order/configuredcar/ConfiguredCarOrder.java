@@ -3,14 +3,14 @@ package ru.lebedev.dealership.domain.order.configuredcar;
 import ru.lebedev.dealership.domain.exceptions.OrderStatusTransitionException;
 
 public class ConfiguredCarOrder {
-    private final long orderId;
-    private final long clientId;
-    private final long carVersionId;
-    private final long configurationId;
+    private final Long orderId;
+    private final Long clientId;
+    private final Long carVersionId;
+    private final Long configurationId;
 
     private ConfiguredCarOrderStatus status = ConfiguredCarOrderStatus.PLACED;
 
-    public ConfiguredCarOrder(long orderId, long clientId, long carVersionId, long configurationId) {
+    public ConfiguredCarOrder(Long orderId, Long clientId, Long carVersionId, Long configurationId) {
         this.orderId = orderId;
         this.clientId = clientId;
         this.carVersionId = carVersionId;
@@ -52,19 +52,19 @@ public class ConfiguredCarOrder {
     }
 
 
-    public long getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public long getClientId() {
+    public Long getClientId() {
         return clientId;
     }
 
-    public long getCarVersionId() {
+    public Long getCarVersionId() {
         return carVersionId;
     }
 
-    public long getConfiguration() {
+    public Long getConfiguration() {
         return configurationId;
     }
 }

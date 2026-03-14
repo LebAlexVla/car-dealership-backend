@@ -1,7 +1,7 @@
 package ru.lebedev.dealership.application.contracts.car.models;
 
 public record CarHeadOutputDto(
-        String carHeadId,
+        Long carHeadId,
         String brand,
         String model,
         String bodyType

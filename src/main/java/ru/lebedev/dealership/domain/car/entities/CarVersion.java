@@ -9,9 +9,9 @@ import ru.lebedev.dealership.domain.shared.vo.Price;
 import java.util.List;
 
 public record CarVersion(
-        long carVersionId,
+        Long carVersionId,
         String name,
-        long carHeadId,
+        Long carHeadId,
         Engine engine,
         GearboxType gearboxType,
         CarDrive carDrive,

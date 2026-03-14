@@ -8,9 +8,9 @@ import java.util.List;
 public interface CarVersionRepository {
     CarVersion save(CarVersion carVersion);
 
-    void delete(long carVersionId);
+    void delete(Long carVersionId);
 
-    CarVersion findById(long carVersionId);
+    CarVersion findById(Long carVersionId);
 
     List<CarVersion> findByFilter(CarVersionFilter filter);
 }

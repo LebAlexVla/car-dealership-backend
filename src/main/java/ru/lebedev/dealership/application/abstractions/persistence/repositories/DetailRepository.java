@@ -8,9 +8,9 @@ import java.util.List;
 public interface DetailRepository {
     Detail save(Detail detail);
 
-    void delete(long detailId);
+    void delete(Long detailId);
 
-    Detail findById(long detailId);
+    Detail findById(Long detailId);
 
     List<Detail> findByFilter(DetailFilter filter);
 }

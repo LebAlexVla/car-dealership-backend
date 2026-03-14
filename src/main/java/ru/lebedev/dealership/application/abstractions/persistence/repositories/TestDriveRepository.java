@@ -7,9 +7,9 @@ import java.util.List;
 public interface TestDriveRepository {
     TestDrive save(TestDrive testDrive);
 
-    void delete(long testDriveId);
+    void delete(Long testDriveId);
 
-    TestDrive findById(long testDriveId);
+    TestDrive findById(Long testDriveId);
 
     List<TestDrive> findAll();
 }

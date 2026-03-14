@@ -13,10 +13,10 @@ public class StockOrderServiceImpl implements ru.lebedev.dealership.application.
     }
 
     @Override
-    public long addOrder(AddStockOrderRequest request) {
-        long clientId = request.inputDto().clientId();
-        long carVersionId = request.inputDto().carVersionId();
-        StockOrder stockOrder = new StockOrder(0, clientId, carVersionId);
+    public Long addOrder(AddStockOrderRequest request) {
+        Long clientId = request.inputDto().clientId();
+        Long carVersionId = request.inputDto().carVersionId();
+        StockOrder stockOrder = new StockOrder(0L, clientId, carVersionId);
         stockOrder = stockOrderRepository.save(stockOrder);
 
         return stockOrder.getOrderId();
@@ -24,13 +24,13 @@ public class StockOrderServiceImpl implements ru.lebedev.dealership.application.
 
     @Override
     public void deleteOrder(UpdateStockOrderRequest request) {
-        long orderId = request.stockOrderId();
+        Long orderId = request.stockOrderId();
         stockOrderRepository.delete(orderId);
     }
 
     @Override
     public void approveOrder(UpdateStockOrderRequest request) {
-        long orderId = request.stockOrderId();
+        Long orderId = request.stockOrderId();
         StockOrder stockOrder = stockOrderRepository.findById(orderId);
         stockOrder.approve();
         stockOrderRepository.save(stockOrder);
@@ -38,7 +38,7 @@ public class StockOrderServiceImpl implements ru.lebedev.dealership.application.
 
     @Override
     public void payOrder(UpdateStockOrderRequest request) {
-        long orderId = request.stockOrderId();
+        Long orderId = request.stockOrderId();
         StockOrder stockOrder = stockOrderRepository.findById(orderId);
         stockOrder.pay();
         stockOrderRepository.save(stockOrder);
@@ -46,7 +46,7 @@ public class StockOrderServiceImpl implements ru.lebedev.dealership.application.
 
     @Override
     public void completeOrder(UpdateStockOrderRequest request) {
-        long orderId = request.stockOrderId();
+        Long orderId = request.stockOrderId();
         StockOrder stockOrder = stockOrderRepository.findById(orderId);
         stockOrder.complete();
         stockOrderRepository.save(stockOrder);
@@ -54,7 +54,7 @@ public class StockOrderServiceImpl implements ru.lebedev.dealership.application.
 
     @Override
     public void cancelOrder(UpdateStockOrderRequest request) {
-        long orderId = request.stockOrderId();
+        Long orderId = request.stockOrderId();
         StockOrder stockOrder = stockOrderRepository.findById(orderId);
         stockOrder.cancel();
         stockOrderRepository.save(stockOrder);

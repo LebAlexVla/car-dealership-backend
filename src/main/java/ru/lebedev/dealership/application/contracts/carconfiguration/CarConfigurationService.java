@@ -3,11 +3,11 @@ package ru.lebedev.dealership.application.contracts.carconfiguration;
 import ru.lebedev.dealership.application.contracts.carconfiguration.requests.*;
 
 public interface CarConfigurationService {
-    long addDefaulter(AddCarConfigurationDefaulterRequest request);
+    Long addDefaulter(AddCarConfigurationDefaulterRequest request);
 
     void deleteDefaulter(DeleteCarConfigurationDefaulterRequest request);
 
-    long addCustomizer(AddCarConfigurationCustomizerRequest request);
+    Long addCustomizer(AddCarConfigurationCustomizerRequest request);
 
     void deleteCustomizer(DeleteCarConfigurationCustomizerRequest request);
 
@@ -15,5 +15,5 @@ public interface CarConfigurationService {
 
     void addCustomOptionalDetail(AddCustomDetailRequest request);
 
-    long createCarConfiguration();
+    Long createCarConfiguration(CreateCarConfigurationRequest request);
 }

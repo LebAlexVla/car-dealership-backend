@@ -3,13 +3,13 @@ package ru.lebedev.dealership.domain.order.stock;
 import ru.lebedev.dealership.domain.exceptions.OrderStatusTransitionException;
 
 public class StockOrder {
-    private final long orderId;
-    private final long clientId;
-    private final long carVersionId;
+    private final Long orderId;
+    private final Long clientId;
+    private final Long carVersionId;
 
     private StockOrderStatus status = StockOrderStatus.PLACED;
 
-    public StockOrder(long orderId, long clientId, long carVersionId) {
+    public StockOrder(Long orderId, Long clientId, Long carVersionId) {
         this.orderId = orderId;
         this.clientId = clientId;
         this.carVersionId = carVersionId;
@@ -44,15 +44,15 @@ public class StockOrder {
         }
     }
 
-    public long getCarVersionId() {
+    public Long getCarVersionId() {
         return carVersionId;
     }
 
-    public long getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public long getClientId() {
+    public Long getClientId() {
         return clientId;
     }
 }

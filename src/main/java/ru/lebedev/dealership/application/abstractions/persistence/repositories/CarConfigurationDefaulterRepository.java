@@ -5,7 +5,7 @@ import ru.lebedev.dealership.domain.carconfiguration.CarConfigurationDefaulter;
 public interface CarConfigurationDefaulterRepository {
     CarConfigurationDefaulter save(CarConfigurationDefaulter carConfigurationDefaulter);
 
-    void delete(long carVersionId);
+    void delete(Long carVersionId);
 
-    CarConfigurationDefaulter findById(long carConfigurationDefaulter);
+    CarConfigurationDefaulter findById(Long carConfigurationDefaulter);
 }

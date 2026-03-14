@@ -4,7 +4,7 @@ import ru.lebedev.dealership.application.contracts.order.configuredcar.requests.
 import ru.lebedev.dealership.application.contracts.order.configuredcar.requests.UpdateConfigurationOrderRequest;
 
 public interface ConfiguredCarOrderService {
-    long addOrder(AddConfigurationOrderRequest request);
+    Long addOrder(AddConfigurationOrderRequest request);
 
     void deleteOrder(UpdateConfigurationOrderRequest request);
 

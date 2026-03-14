@@ -16,7 +16,7 @@ import java.util.List;
 public class CarVersionInputDtoMapper {
     public static CarVersion map(CarVersionInputDto dto) {
         return new CarVersion(
-                0,
+                0L,
                 dto.carVersionName(),
                 dto.carHeadId(),
                 mapEngine(dto),

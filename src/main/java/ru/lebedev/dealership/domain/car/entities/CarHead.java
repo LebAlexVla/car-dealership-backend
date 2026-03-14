@@ -5,7 +5,7 @@ import ru.lebedev.dealership.domain.car.vo.CarModel;
 import ru.lebedev.dealership.domain.shared.vo.Brand;
 
 public record CarHead(
-        long carHeadId,
+        Long carHeadId,
         Brand brand,
         CarModel model,
         BodyType bodyType

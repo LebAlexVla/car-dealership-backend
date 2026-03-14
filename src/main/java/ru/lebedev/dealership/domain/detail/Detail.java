@@ -4,17 +4,17 @@ import ru.lebedev.dealership.domain.shared.vo.Price;
 
 import java.util.Set;
 
-public record Detail(long detailId, String name, DetailType type, Price price, Set<Long> compatibleCars) {
+public record Detail(Long detailId, String name, DetailType type, Price price, Set<Long> compatibleCars) {
 
-    public boolean checkCompatibility(long carVersionId) {
+    public boolean checkCompatibility(Long carVersionId) {
         return compatibleCars.contains(carVersionId);
     }
 
-    public void addCompatibleCar(long carVersionId) {
+    public void addCompatibleCar(Long carVersionId) {
         compatibleCars.add(carVersionId);
     }
 
-    public void removeCompatibleCar(long carVersionId) {
+    public void removeCompatibleCar(Long carVersionId) {
         compatibleCars.remove(carVersionId);
     }
 }

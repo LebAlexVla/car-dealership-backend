@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class CarConfigurationDefaulterInputDtoMapper {
     public static CarConfigurationDefaulter map(CarConfigurationDefaulterInputDto inputDto) {
         return new CarConfigurationDefaulter(
-                0,
+                0L,
                 inputDto.carVersionId(),
                 inputDto.requiredDetails()
                         .entrySet()

@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public record Price(BigDecimal rubles) {
     public Price {
-        if (rubles.compareTo(BigDecimal.ZERO) < 0) {
+        if (rubles.compareTo(BigDecimal.ZERO) < 0L) {
             throw new InvalidValueObjectException("Price can't be negative");
         }
     }

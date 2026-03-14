@@ -9,7 +9,7 @@ import ru.lebedev.dealership.domain.shared.vo.Brand;
 public class CarHeadInputDtoMapper {
     public static CarHead map(CarHeadInputDto dto) {
         return new CarHead(
-                0,
+                0L,
                 new Brand(dto.brand()),
                 new CarModel(dto.model()),
                 BodyType.valueOf(dto.bodyType().trim().toUpperCase())

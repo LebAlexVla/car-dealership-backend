@@ -7,9 +7,9 @@ import java.util.List;
 public interface StockOrderRepository {
     StockOrder save(StockOrder stockOrder);
 
-    void delete(long orderId);
+    void delete(Long orderId);
 
-    StockOrder findById(long orderId);
+    StockOrder findById(Long orderId);
 
     List<StockOrder> findAll();
 }

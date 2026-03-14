@@ -9,9 +9,9 @@ import java.util.List;
 public class CarVersionOutputDtoMapper {
     public static CarVersionOutputDto map(CarVersion carVersion) {
         return new CarVersionOutputDto(
-                carVersion.id().value().toString(),
+                carVersion.carVersionId(),
                 carVersion.name(),
-                carVersion.headId().value().toString(),
+                carVersion.carHeadId(),
                 carVersion.engine().fuelType().toString(),
                 carVersion.engine().power().horsepower(),
                 carVersion.engine().capacity().liters(),

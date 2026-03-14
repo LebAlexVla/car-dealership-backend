@@ -7,9 +7,9 @@ import java.util.List;
 public interface ConfiguredCarOrderRepository {
     ConfiguredCarOrder save(ConfiguredCarOrder order);
 
-    void delete(long orderId);
+    void delete(Long orderId);
 
-    ConfiguredCarOrder findById(long orderId);
+    ConfiguredCarOrder findById(Long orderId);
 
     List<ConfiguredCarOrder> findAll();
 }

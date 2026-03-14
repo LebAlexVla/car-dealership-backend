@@ -6,7 +6,7 @@ import ru.lebedev.dealership.domain.order.configuredcar.ConfiguredCarOrder;
 public class ConfiguredCarOrderInputDtoMapper {
     public static ConfiguredCarOrder map(ConfiguredCarOrderInputDto inputDto) {
         return new ConfiguredCarOrder(
-                0,
+                0L,
                 inputDto.clientId(),
                 inputDto.carVersionId(),
                 inputDto.configurationId()

@@ -3,7 +3,7 @@ package ru.lebedev.dealership.application.contracts.carconfiguration.models;
 import java.util.Map;
 
 public record CarConfigurationDefaulterInputDto(
-        long carVersionId,
+        Long carVersionId,
         Map<String, Long> requiredDetails
 ) {
 }

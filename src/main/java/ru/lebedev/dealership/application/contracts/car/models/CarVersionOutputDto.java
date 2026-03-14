@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record CarVersionOutputDto(
-        String carVersionId,
+        Long carVersionId,
         String carVersionName,
-        String carHeadId,
+        Long carHeadId,
         String fuelType,
         Long power,
         double capacity,

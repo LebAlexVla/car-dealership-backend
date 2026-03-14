@@ -6,9 +6,9 @@ import ru.lebedev.dealership.domain.testdrive.TestDrive;
 public class TestDriveOutputDtoMapper {
     public static TestDriveOutputDto map(TestDrive testDrive) {
         return new TestDriveOutputDto(
-                testDrive.testDriveId().value().toString(),
-                testDrive.clientId().value().toString(),
-                testDrive.carVersionId().value().toString(),
+                testDrive.testDriveId(),
+                testDrive.clientId(),
+                testDrive.carVersionId(),
                 testDrive.dateTime()
         );
     }
