@@ -13,12 +13,14 @@ import java.util.Set;
 
 public class ConfigurationBuilder {
     private final long carVersionId;
+    private final long clientId;
     private final Map<DetailType, Detail> requiredDetails;
 
     private final Map<DetailType, Detail> optionalDetails = new HashMap<>();
 
-    public ConfigurationBuilder(long carVersionId, Map<DetailType, Detail> requiredDetails) {
+    public ConfigurationBuilder(long carVersionId, long clientId, Map<DetailType, Detail> requiredDetails) {
         this.carVersionId = carVersionId;
+        this.clientId = clientId;
         this.requiredDetails = requiredDetails;
     }
 
@@ -64,5 +66,9 @@ public class ConfigurationBuilder {
         details.addAll(optionalDetails.values());
 
         return new Configuration(details);
+    }
+
+    public long getClientId() {
+        return clientId;
     }
 }

@@ -7,5 +7,9 @@ import java.util.List;
 public interface ConfigurationOrderRepository {
     ConfigurationOrder save(ConfigurationOrder order);
 
+    void delete(long orderId);
+
+    ConfigurationOrder findById(long orderId);
+
     List<ConfigurationOrder> findAll();
 }

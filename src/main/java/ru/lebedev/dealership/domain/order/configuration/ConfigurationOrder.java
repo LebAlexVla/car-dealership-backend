@@ -1,14 +1,21 @@
 package ru.lebedev.dealership.domain.order.configuration;
 
+import ru.lebedev.dealership.domain.configuration.Configuration;
 import ru.lebedev.dealership.domain.exceptions.OrderStatusTransitionException;
 
 public class ConfigurationOrder {
     private final long orderId;
+    private final long clientId;
+    private final long carVersionId;
+    private final Configuration configuration;
 
     private ConfigurationOrderStatus status = ConfigurationOrderStatus.PLACED;
 
-    public ConfigurationOrder(long orderId) {
+    public ConfigurationOrder(long orderId, long clientId, long carVersionId, Configuration configuration) {
         this.orderId = orderId;
+        this.clientId = clientId;
+        this.carVersionId = carVersionId;
+        this.configuration = configuration;
     }
 
     public void approve() {
@@ -48,5 +55,17 @@ public class ConfigurationOrder {
 
     public long getOrderId() {
         return orderId;
+    }
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public long getCarVersionId() {
+        return carVersionId;
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
     }
 }

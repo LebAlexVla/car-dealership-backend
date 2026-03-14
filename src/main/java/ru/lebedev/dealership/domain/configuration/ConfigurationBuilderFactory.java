@@ -23,7 +23,7 @@ public class ConfigurationBuilderFactory {
         requiredDetails.remove(detail.type());
     }
 
-    public ConfigurationBuilder create() {
-        return new ConfigurationBuilder(carVersionId, new HashMap<>(requiredDetails));
+    public ConfigurationBuilder create(long clientId) {
+        return new ConfigurationBuilder(carVersionId, clientId, new HashMap<>(requiredDetails));
     }
 }
