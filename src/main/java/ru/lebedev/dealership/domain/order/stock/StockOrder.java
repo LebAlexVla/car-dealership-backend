@@ -21,6 +21,8 @@ public class StockOrder extends BaseEntity {
     @Column(name = "order_status", nullable = false)
     private StockOrderStatus status = StockOrderStatus.PLACED;
 
+    protected StockOrder() {}
+
     public StockOrder(User client, CarVersion carVersion) {
         this.client = client;
         this.carVersion = carVersion;
