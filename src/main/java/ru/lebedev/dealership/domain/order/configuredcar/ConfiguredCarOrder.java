@@ -1,20 +1,28 @@
 package ru.lebedev.dealership.domain.order.configuredcar;
 
+import jakarta.persistence.*;
+import ru.lebedev.dealership.domain.BaseEntity;
+import ru.lebedev.dealership.domain.car.entities.CarVersion;
+import ru.lebedev.dealership.domain.carconfiguration.CarConfiguration;
 import ru.lebedev.dealership.domain.exceptions.OrderStatusTransitionException;
+import ru.lebedev.dealership.domain.user.User;
 
-public class ConfiguredCarOrder {
-    private final Long orderId;
-    private final Long clientId;
-    private final Long carVersionId;
-    private final Long configurationId;
+@Entity
+@Table(name = "configured_car_order")
+public class ConfiguredCarOrder extends BaseEntity {
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "car_configuration_id", nullable = false)
+    private CarConfiguration configuration;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ConfiguredCarOrderStatus status = ConfiguredCarOrderStatus.PLACED;
 
-    public ConfiguredCarOrder(Long orderId, Long clientId, Long carVersionId, Long configurationId) {
-        this.orderId = orderId;
-        this.clientId = clientId;
-        this.carVersionId = carVersionId;
-        this.configurationId = configurationId;
+    protected ConfiguredCarOrder() {
+    }
+
+    public ConfiguredCarOrder(CarConfiguration configuration) {
+        this.configuration = configuration;
     }
 
     public void approve() {
@@ -51,20 +59,19 @@ public class ConfiguredCarOrder {
         }
     }
 
-
-    public Long getOrderId() {
-        return orderId;
+    public User getClient() {
+        return configuration.getClient();
     }
 
-    public Long getClientId() {
-        return clientId;
+    public CarVersion getCarVersion() {
+        return configuration.getCarVersion();
     }
 
-    public Long getCarVersionId() {
-        return carVersionId;
+    public CarConfiguration getConfiguration() {
+        return configuration;
     }
 
-    public Long getConfiguration() {
-        return configurationId;
+    public ConfiguredCarOrderStatus getStatus() {
+        return status;
     }
 }

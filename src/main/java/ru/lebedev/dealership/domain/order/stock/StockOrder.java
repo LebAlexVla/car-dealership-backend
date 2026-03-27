@@ -1,18 +1,29 @@
 package ru.lebedev.dealership.domain.order.stock;
 
+import jakarta.persistence.*;
+import ru.lebedev.dealership.domain.BaseEntity;
+import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.exceptions.OrderStatusTransitionException;
+import ru.lebedev.dealership.domain.user.User;
 
-public class StockOrder {
-    private final Long orderId;
-    private final Long clientId;
-    private final Long carVersionId;
+@Entity
+@Table(name = "stock_order")
+public class StockOrder extends BaseEntity {
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User client;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "car_version_id", nullable = false)
+    private CarVersion carVersion;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status", nullable = false)
     private StockOrderStatus status = StockOrderStatus.PLACED;
 
-    public StockOrder(Long orderId, Long clientId, Long carVersionId) {
-        this.orderId = orderId;
-        this.clientId = clientId;
-        this.carVersionId = carVersionId;
+    public StockOrder(User client, CarVersion carVersion) {
+        this.client = client;
+        this.carVersion = carVersion;
     }
 
     public void approve() {
@@ -44,15 +55,15 @@ public class StockOrder {
         }
     }
 
-    public Long getCarVersionId() {
-        return carVersionId;
+    public CarVersion getCarVersion() {
+        return carVersion;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public User getClient() {
+        return client;
     }
 
-    public Long getClientId() {
-        return clientId;
+    public StockOrderStatus getStatus() {
+        return status;
     }
 }

@@ -94,7 +94,7 @@ public class CarConfigurationCustomizer extends BaseEntity {
         details.addAll(requiredDetails.values());
         details.addAll(optionalDetails.values());
 
-        return new CarConfiguration(details);
+        return new CarConfiguration(client, carVersion, details);
     }
 
     public User getClient() {
