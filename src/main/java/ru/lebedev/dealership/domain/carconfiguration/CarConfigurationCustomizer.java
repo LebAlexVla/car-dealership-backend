@@ -1,80 +1,115 @@
 package ru.lebedev.dealership.domain.carconfiguration;
 
+import jakarta.persistence.*;
+import ru.lebedev.dealership.domain.BaseEntity;
+import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.detail.Detail;
-import ru.lebedev.dealership.domain.detail.DetailType;
 import ru.lebedev.dealership.domain.exceptions.IncompatibleDetailException;
 import ru.lebedev.dealership.domain.exceptions.WrongOptionalDetailException;
 import ru.lebedev.dealership.domain.exceptions.WrongRequiredDetailException;
+import ru.lebedev.dealership.domain.user.User;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class CarConfigurationCustomizer {
-    private final Long CarConfigurationCustomizerId;
-    private final Long carVersionId;
-    private final Long clientId;
-    private final Map<DetailType, Long> requiredDetails;
+@Entity
+@Table(name = "car_configuration_customizer")
+public class CarConfigurationCustomizer extends BaseEntity {
 
-    private final Map<DetailType, Long> optionalDetails = new HashMap<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User client;
 
-    public CarConfigurationCustomizer(Long customCarConfigurationId, Long carVersionId, Long clientId, Map<DetailType, Long> requiredDetails) {
-        this.CarConfigurationCustomizerId = customCarConfigurationId;
-        this.carVersionId = carVersionId;
-        this.clientId = clientId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_version_id")
+    private CarVersion carVersion;
+
+    @ManyToMany
+    @JoinTable(
+            name = "car_configuration_customizer_required_details",
+            joinColumns = @JoinColumn(name = "car_configuration_customizer_id"),
+            inverseJoinColumns = @JoinColumn(name = "detail_id")
+    )
+    @MapKey(name = "type")
+    private Map<String, Detail> requiredDetails = new HashMap<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "car_configuration_customizer_optional_details",
+            joinColumns = @JoinColumn(name = "car_configuration_customizer_id"),
+            inverseJoinColumns = @JoinColumn(name = "detail_id")
+    )
+    @MapKey(name = "type")
+    private Map<String, Detail> optionalDetails = new HashMap<>();
+
+    protected CarConfigurationCustomizer() {
+    }
+
+    public CarConfigurationCustomizer(User client, CarVersion carVersion, Map<String, Detail> requiredDetails) {
+        this.client = client;
+        this.carVersion = carVersion;
         this.requiredDetails = requiredDetails;
     }
 
     public CarConfigurationCustomizer withRequiredDetail(Detail detail) {
-        if (!detail.checkCompatibility(carVersionId)) {
+        if (!detail.checkCompatibility(carVersion)) {
             throw new IncompatibleDetailException(
-                    detail.name() + " is not compatible to the car with id: " + carVersionId
+                    detail.getName() + " is not compatible to the car with " + carVersion.getCarVersionName()
             );
         }
 
-        if (!requiredDetails.containsKey(detail.type())) {
+        if (!requiredDetails.containsKey(detail.getType())) {
             throw new WrongRequiredDetailException(
-                    detail.type().name() + " is not a required detail"
+                    detail.getType() + " is not a required detail"
             );
         }
 
-        requiredDetails.put(detail.type(), detail.detailId());
+        requiredDetails.put(detail.getType(), detail);
 
         return this;
     }
 
     public CarConfigurationCustomizer withOptionalDetail(Detail detail) {
-        if (!detail.checkCompatibility(carVersionId)) {
+        if (!detail.checkCompatibility(carVersion)) {
             throw new IncompatibleDetailException(
-                    detail.name() + " is not compatible to the car with id: " + carVersionId
+                    detail.getName() + " is not compatible to the car with id: " + carVersion.getCarVersionName()
             );
         }
 
-        if (requiredDetails.containsKey(detail.type())) {
+        if (requiredDetails.containsKey(detail.getType())) {
             throw new WrongOptionalDetailException(
-                    detail.type().name() + " is not an optional detail"
+                    detail.getType() + " is not an optional detail"
             );
         }
 
-        optionalDetails.put(detail.type(), detail.detailId());
+        optionalDetails.put(detail.getType(), detail);
 
         return this;
     }
 
-    public CarConfiguration build(Long carConfigurationId) {
-        Set<Long> details = new HashSet<>();
+    public CarConfiguration build() {
+        Set<Detail> details = new HashSet<>();
         details.addAll(requiredDetails.values());
         details.addAll(optionalDetails.values());
 
-        return new CarConfiguration(carConfigurationId, details);
+        return new CarConfiguration(details);
     }
 
-    public Long getClientId() {
-        return clientId;
+    public User getClient() {
+        return client;
     }
 
-    public Long getCustomCarConfigurationId() {
-        return CarConfigurationCustomizerId;
+    public CarVersion getCarVersion() {
+        return carVersion;
+    }
+
+    public Map<String, Detail> getRequiredDetails() {
+        return new HashMap<>(requiredDetails);
+    }
+
+    public Map<String, Detail> getOptionalDetails() {
+        return new HashMap<>(optionalDetails);
     }
 }
