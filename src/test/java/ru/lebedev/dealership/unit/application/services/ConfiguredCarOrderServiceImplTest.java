@@ -3,7 +3,7 @@ package ru.lebedev.dealership.unit.application.services;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.ConfiguredCarOrderRepository;
-import ru.lebedev.dealership.application.contracts.order.configuredcar.models.ConfiguredCarOrderInputDto;
+import ru.lebedev.dealership.presentation.order.configuredcar.ConfiguredCarOrderInputDto;
 import ru.lebedev.dealership.application.contracts.order.configuredcar.requests.AddConfigurationOrderRequest;
 import ru.lebedev.dealership.application.contracts.order.configuredcar.requests.UpdateConfigurationOrderRequest;
 import ru.lebedev.dealership.domain.order.configuredcar.ConfiguredCarOrder;

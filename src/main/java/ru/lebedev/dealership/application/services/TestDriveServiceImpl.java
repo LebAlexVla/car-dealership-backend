@@ -4,7 +4,7 @@ import ru.lebedev.dealership.application.abstractions.persistence.repositories.T
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.TestDriveRepository;
 import ru.lebedev.dealership.application.contracts.testdrive.mappers.TestDriveInputDtoMapper;
 import ru.lebedev.dealership.application.contracts.testdrive.mappers.TestDriveOutputDtoMapper;
-import ru.lebedev.dealership.application.contracts.testdrive.models.TestDriveOutputDto;
+import ru.lebedev.dealership.presentation.testdrive.models.TestDriveOutputDto;
 import ru.lebedev.dealership.application.contracts.testdrive.requests.*;
 import ru.lebedev.dealership.domain.testdrive.TestDrive;
 

@@ -3,7 +3,7 @@ package ru.lebedev.dealership.unit.application.services;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.lebedev.dealership.application.abstractions.persistence.repositories.StockOrderRepository;
-import ru.lebedev.dealership.application.contracts.order.stock.models.StockOrderInputDto;
+import ru.lebedev.dealership.presentation.order.stock.StockOrderInputDto;
 import ru.lebedev.dealership.application.contracts.order.stock.requests.AddStockOrderRequest;
 import ru.lebedev.dealership.application.contracts.order.stock.requests.UpdateStockOrderRequest;
 import ru.lebedev.dealership.domain.order.stock.StockOrder;
