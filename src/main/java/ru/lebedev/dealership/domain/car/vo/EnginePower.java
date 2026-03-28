@@ -9,7 +9,8 @@ public class EnginePower {
     @Column(nullable = false)
     private Long horsepower;
 
-    protected EnginePower() {}
+    protected EnginePower() {
+    }
 
     public EnginePower(Long horsepower) {
         if (horsepower <= 0L) {

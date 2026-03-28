@@ -22,7 +22,8 @@ public class TestDrive extends BaseEntity {
     @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime;
 
-    protected TestDrive() {}
+    protected TestDrive() {
+    }
 
     public TestDrive(
             User client, CarVersion carVersion, LocalDateTime dateTime

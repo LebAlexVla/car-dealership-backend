@@ -42,7 +42,7 @@ public class CarConfigurationCustomizer extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "detail_id")
     )
     @MapKey(name = "type")
-    private Map<String, Detail> optionalDetails = new HashMap<>();
+    private final Map<String, Detail> optionalDetails = new HashMap<>();
 
     protected CarConfigurationCustomizer() {
     }

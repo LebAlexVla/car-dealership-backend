@@ -9,7 +9,8 @@ public class EngineCapacity {
     @Column(nullable = false)
     private double liters;
 
-    protected EngineCapacity() {}
+    protected EngineCapacity() {
+    }
 
     public EngineCapacity(double liters) {
         if (liters <= 0.0) {

@@ -18,7 +18,8 @@ public class CarHead extends BaseEntity {
     @Column(name = "body_type", nullable = false)
     private BodyType bodyType;
 
-    protected CarHead() {}
+    protected CarHead() {
+    }
 
     public CarHead(
             String brand,

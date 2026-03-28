@@ -11,7 +11,8 @@ public class Price {
     @Column(nullable = false)
     private BigDecimal rubles;
 
-    protected Price() {}
+    protected Price() {
+    }
 
     public Price(BigDecimal rubles) {
         if (rubles.compareTo(BigDecimal.ZERO) < 0L) {

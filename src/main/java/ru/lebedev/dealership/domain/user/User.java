@@ -10,7 +10,8 @@ public class User {
     @Column(nullable = false)
     private UserType type;
 
-    protected User() {}
+    protected User() {
+    }
 
     public User(UserType type) {
         this.type = type;

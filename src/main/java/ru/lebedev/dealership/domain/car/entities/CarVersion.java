@@ -18,7 +18,7 @@ public class CarVersion extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "car_head_id", nullable = false)
-    private CarHead carHead;
+    private final CarHead carHead;
 
     @Embedded
     private Engine engine;

@@ -12,7 +12,8 @@ public class TestDriveCar extends BaseEntity {
     @JoinColumn(name = "car_id", nullable = false, unique = true)
     private CarVersion carVersion;
 
-    protected TestDriveCar() {}
+    protected TestDriveCar() {
+    }
 
     public TestDriveCar(CarVersion carVersion) {
         this.carVersion = carVersion;

@@ -22,7 +22,7 @@ public class DetailService {
         return savedDetail.getId();
     }
 
-    public Optional<Detail> getById(Long id) {
+    public Optional<Detail> findById(Long id) {
         return detailRepository.findById(id);
     }
 
