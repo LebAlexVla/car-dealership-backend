@@ -1,12 +1,12 @@
 package ru.lebedev.dealership.application.abstractions.persistence.queries;
 
 import ru.lebedev.dealership.domain.car.enums.BodyType;
-import ru.lebedev.dealership.domain.car.vo.CarModel;
-import ru.lebedev.dealership.domain.shared.vo.Brand;
+
+import java.util.List;
 
 public record CarHeadFilter(
-        Brand brand,
-        CarModel carModel,
-        BodyType bodyType
+        List<String> brands,
+        List<String> carModels,
+        List<BodyType> bodyTypes
 ) {
 }

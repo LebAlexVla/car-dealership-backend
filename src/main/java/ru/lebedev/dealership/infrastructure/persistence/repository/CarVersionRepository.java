@@ -2,7 +2,7 @@ package ru.lebedev.dealership.infrastructure.persistence.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import ru.lebedev.dealership.domain.car.entities.CarHead;
+import ru.lebedev.dealership.domain.car.entities.CarVersion;
 
-public interface CarHeadRepository extends JpaRepository<CarHead, Long>, JpaSpecificationExecutor<CarHead> {
+public interface CarVersionRepository extends JpaRepository<CarVersion, Long>, JpaSpecificationExecutor<CarVersion> {
 }

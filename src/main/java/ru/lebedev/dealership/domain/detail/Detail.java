@@ -21,7 +21,7 @@ public class Detail extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "detail_car_versions",
+            name = "detail_compatible_car_versions",
             joinColumns = @JoinColumn(name = "detail_id"),
             inverseJoinColumns = @JoinColumn(name = "car_version_id")
     )

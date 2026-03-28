@@ -28,7 +28,7 @@ public class CarVersion extends BaseEntity {
     private GearboxType gearboxType;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "car_drive", nullable = false)
     private CarDrive carDrive;
 
     @ElementCollection
