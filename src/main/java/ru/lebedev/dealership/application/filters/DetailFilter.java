@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.application.abstractions.persistence.queries;
+package ru.lebedev.dealership.application.filters;
 
 import ru.lebedev.dealership.domain.shared.vo.Price;
 

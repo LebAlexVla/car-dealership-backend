@@ -1,7 +1,7 @@
 package ru.lebedev.dealership.infrastructure.persistence.specification;
 
 import org.springframework.data.jpa.domain.Specification;
-import ru.lebedev.dealership.application.abstractions.persistence.queries.CarVersionFilter;
+import ru.lebedev.dealership.application.filters.CarVersionFilter;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.car.enums.CarDrive;
 import ru.lebedev.dealership.domain.car.enums.FuelType;

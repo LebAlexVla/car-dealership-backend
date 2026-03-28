@@ -1,6 +1,6 @@
 package ru.lebedev.dealership.application.contracts.car.mappers;
 
-import ru.lebedev.dealership.application.abstractions.persistence.queries.CarVersionFilter;
+import ru.lebedev.dealership.application.filters.CarVersionFilter;
 import ru.lebedev.dealership.application.contracts.car.models.CarVersionFilterDto;
 import ru.lebedev.dealership.domain.car.enums.CarDrive;
 import ru.lebedev.dealership.domain.car.enums.FuelType;
