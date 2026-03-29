@@ -5,6 +5,7 @@ import ru.lebedev.dealership.domain.BaseEntity;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.exceptions.IncompatibleDetailException;
+import ru.lebedev.dealership.domain.exceptions.NoSuchOptionalDetailException;
 import ru.lebedev.dealership.domain.exceptions.WrongOptionalDetailException;
 import ru.lebedev.dealership.domain.exceptions.WrongRequiredDetailException;
 import ru.lebedev.dealership.domain.user.User;
@@ -53,7 +54,7 @@ public class CarConfigurationCustomizer extends BaseEntity {
         this.requiredDetails = requiredDetails;
     }
 
-    public CarConfigurationCustomizer withRequiredDetail(Detail detail) {
+    public void selectRequiredDetail(Detail detail) {
         if (!detail.checkCompatibility(carVersion)) {
             throw new IncompatibleDetailException(
                     detail.getName() + " is not compatible to the car with " + carVersion.getCarVersionName()
@@ -67,11 +68,9 @@ public class CarConfigurationCustomizer extends BaseEntity {
         }
 
         requiredDetails.put(detail.getType(), detail);
-
-        return this;
     }
 
-    public CarConfigurationCustomizer withOptionalDetail(Detail detail) {
+    public void selectOptionalDetail(Detail detail) {
         if (!detail.checkCompatibility(carVersion)) {
             throw new IncompatibleDetailException(
                     detail.getName() + " is not compatible to the car with id: " + carVersion.getCarVersionName()
@@ -85,8 +84,14 @@ public class CarConfigurationCustomizer extends BaseEntity {
         }
 
         optionalDetails.put(detail.getType(), detail);
+    }
 
-        return this;
+    public void rejectOptionalDetail(Detail detail) {
+        if (!optionalDetails.containsKey(detail.getType()) || !optionalDetails.containsValue(detail)) {
+            throw new NoSuchOptionalDetailException(detail.getType(), detail.getName());
+        }
+
+        optionalDetails.remove(detail.getType());
     }
 
     public CarConfiguration build() {
