@@ -5,6 +5,7 @@ import ru.lebedev.dealership.domain.BaseEntity;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.shared.vo.Price;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -34,7 +35,7 @@ public class Detail extends BaseEntity {
         this.name = name;
         this.type = type;
         this.price = price;
-        this.compatibleCars = compatibleCars;
+        this.compatibleCars = (compatibleCars != null ? compatibleCars : new HashSet<>());
     }
 
     public boolean checkCompatibility(CarVersion carVersion) {

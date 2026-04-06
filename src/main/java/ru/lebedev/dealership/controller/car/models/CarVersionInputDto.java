@@ -1,11 +1,10 @@
-package ru.lebedev.dealership.presentation.car.models;
+package ru.lebedev.dealership.controller.car.models;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public record CarVersionOutputDto(
-        Long carVersionId,
-        String carVersionName,
+public record CarVersionInputDto(
+        String name,
         Long carHeadId,
         String fuelType,
         Long power,

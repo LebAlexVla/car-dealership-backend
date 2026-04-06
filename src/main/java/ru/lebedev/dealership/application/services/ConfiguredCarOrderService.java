@@ -1,8 +1,11 @@
 package ru.lebedev.dealership.application.services;
 
 import org.springframework.stereotype.Service;
+import ru.lebedev.dealership.application.exceptions.CarConfigurationNotFoundException;
 import ru.lebedev.dealership.application.exceptions.ConfiguredCarOrderNotFoundException;
+import ru.lebedev.dealership.domain.carconfiguration.CarConfiguration;
 import ru.lebedev.dealership.domain.order.configuredcar.ConfiguredCarOrder;
+import ru.lebedev.dealership.infrastructure.persistence.repository.CarConfigurationRepository;
 import ru.lebedev.dealership.infrastructure.persistence.repository.ConfiguredCarOrderRepository;
 
 import java.util.List;
@@ -11,13 +14,18 @@ import java.util.Optional;
 @Service
 public class ConfiguredCarOrderService {
     public final ConfiguredCarOrderRepository configuredCarOrderRepository;
+    public final CarConfigurationRepository carConfigurationRepository;
 
-    public ConfiguredCarOrderService(ConfiguredCarOrderRepository configuredCarOrderRepository) {
+    public ConfiguredCarOrderService(ConfiguredCarOrderRepository configuredCarOrderRepository, CarConfigurationRepository carConfigurationRepository) {
         this.configuredCarOrderRepository = configuredCarOrderRepository;
+        this.carConfigurationRepository = carConfigurationRepository;
     }
 
-    public Long create(ConfiguredCarOrder configuredCarOrder) {
-        ConfiguredCarOrder savedOrder = configuredCarOrderRepository.save(configuredCarOrder);
+    public Long create(Long carConfigurationId) {
+        CarConfiguration carConfiguration = carConfigurationRepository.findById(carConfigurationId)
+                .orElseThrow(() -> new CarConfigurationNotFoundException(carConfigurationId));
+        ConfiguredCarOrder savedOrder = configuredCarOrderRepository.save(new ConfiguredCarOrder(carConfiguration));
+
         return savedOrder.getId();
     }
 

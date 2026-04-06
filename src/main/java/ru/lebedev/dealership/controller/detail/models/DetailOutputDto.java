@@ -1,12 +1,12 @@
-package ru.lebedev.dealership.presentation.detail.models;
+package ru.lebedev.dealership.controller.detail.models;
 
 import java.math.BigDecimal;
 import java.util.Set;
 
 public record DetailOutputDto(
-        Long detailId,
-        String detailName,
-        String detailType,
+        Long id,
+        String name,
+        String type,
         BigDecimal price,
         Set<Long> compatibleCars
 ) {

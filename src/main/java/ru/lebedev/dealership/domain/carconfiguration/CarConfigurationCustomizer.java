@@ -16,6 +16,21 @@ import java.util.Set;
 @Entity
 @Table(name = "car_configuration_customizer")
 public class CarConfigurationCustomizer extends BaseEntity {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_version_id")
+    private CarVersion carVersion;
+
+    @ManyToMany
+    @JoinTable(
+            name = "car_configuration_customizer_required_details",
+            joinColumns = @JoinColumn(name = "car_configuration_customizer_id"),
+            inverseJoinColumns = @JoinColumn(name = "detail_id")
+    )
+    private Set<Detail> requiredDetails = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -24,19 +39,6 @@ public class CarConfigurationCustomizer extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "detail_id")
     )
     private final Set<Detail> optionalDetails = new HashSet<>();
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User client;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "car_version_id")
-    private CarVersion carVersion;
-    @ManyToMany
-    @JoinTable(
-            name = "car_configuration_customizer_required_details",
-            joinColumns = @JoinColumn(name = "car_configuration_customizer_id"),
-            inverseJoinColumns = @JoinColumn(name = "detail_id")
-    )
-    private Set<Detail> requiredDetails = new HashSet<>();
 
     protected CarConfigurationCustomizer() {
     }

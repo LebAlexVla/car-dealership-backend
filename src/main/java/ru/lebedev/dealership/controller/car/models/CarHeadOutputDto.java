@@ -1,7 +1,7 @@
-package ru.lebedev.dealership.presentation.car.models;
+package ru.lebedev.dealership.controller.car.models;
 
 public record CarHeadOutputDto(
-        Long carHeadId,
+        Long id,
         String brand,
         String model,
         String bodyType

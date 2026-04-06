@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public record DetailFilter(
-        List<String> detailType,
+        List<String> detailTypes,
         Price minPrice,
         Price maxPrice,
         Set<Long> compatibleCarsIds
