@@ -8,7 +8,6 @@ import ru.lebedev.dealership.application.services.DetailService;
 import ru.lebedev.dealership.controller.detail.dto.DetailFilterDto;
 import ru.lebedev.dealership.controller.detail.dto.DetailInputDto;
 import ru.lebedev.dealership.controller.detail.dto.DetailOutputDto;
-import ru.lebedev.dealership.controller.detail.mapper.DetailFilterMapper;
 import ru.lebedev.dealership.controller.detail.mapper.DetailMapper;
 import ru.lebedev.dealership.domain.detail.Detail;
 
@@ -19,12 +18,10 @@ import java.util.List;
 public class DetailController {
     private final DetailService detailService;
     private final DetailMapper detailMapper;
-    private final DetailFilterMapper detailFilterMapper;
 
-    public DetailController(DetailService detailService, DetailMapper detailMapper, DetailFilterMapper detailFilterMapper) {
+    public DetailController(DetailService detailService, DetailMapper detailMapper) {
         this.detailService = detailService;
         this.detailMapper = detailMapper;
-        this.detailFilterMapper = detailFilterMapper;
     }
 
     @PostMapping
@@ -45,7 +42,7 @@ public class DetailController {
 
     @GetMapping
     public ResponseEntity<List<DetailOutputDto>> find(@ModelAttribute DetailFilterDto filterDto) {
-        DetailFilter filter = detailFilterMapper.map(filterDto);
+        DetailFilter filter = detailMapper.toFilter(filterDto);
         List<DetailOutputDto> result = detailService.find(filter)
                 .stream()
                 .map(detailMapper::toDto)

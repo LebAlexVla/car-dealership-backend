@@ -5,7 +5,7 @@ import ru.lebedev.dealership.domain.BaseEntity;
 import ru.lebedev.dealership.domain.car.enums.CarDrive;
 import ru.lebedev.dealership.domain.car.enums.GearboxType;
 import ru.lebedev.dealership.domain.car.vo.Engine;
-import ru.lebedev.dealership.domain.shared.vo.Price;
+import ru.lebedev.dealership.domain.car.vo.Price;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "car_version")
 public class CarVersion extends BaseEntity {
     @Column(name = "car_version_name", nullable = false)
-    private String carVersionName;
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "car_head_id", nullable = false)
@@ -57,7 +57,7 @@ public class CarVersion extends BaseEntity {
             List<String> colors,
             Price price
     ) {
-        this.carVersionName = name;
+        this.name = name;
         this.carHead = carHead;
         this.engine = engine;
         this.gearboxType = gearboxType;
@@ -72,8 +72,12 @@ public class CarVersion extends BaseEntity {
         }
     }
 
-    public String getCarVersionName() {
-        return carVersionName;
+    public void assignCarHead(CarHead carHead) {
+        this.carHead = carHead;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public CarHead getCarHead() {

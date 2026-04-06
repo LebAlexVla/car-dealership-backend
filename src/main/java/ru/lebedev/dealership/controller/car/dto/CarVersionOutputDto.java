@@ -7,12 +7,11 @@ public record CarVersionOutputDto(
         Long id,
         String name,
         Long carHeadId,
-        String fuelType,
-        Long power,
-        double capacity,
-        String gearBoxType,
+        EngineDto engineDto,
+        String gearboxType,
         String carDrive,
         List<String> colors,
-        BigDecimal price
+        BigDecimal price,
+        boolean testDriveAvailable
 ) {
 }

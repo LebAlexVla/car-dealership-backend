@@ -43,7 +43,7 @@ public class CarConfigurationDefaulter extends BaseEntity {
                     throw new DuplicateDefaultDetailTypeException(
                             detail.getType() +
                                     " already added to the default configuration of the " +
-                                    carVersion.getCarVersionName()
+                                    carVersion.getName()
                     );
                 });
 

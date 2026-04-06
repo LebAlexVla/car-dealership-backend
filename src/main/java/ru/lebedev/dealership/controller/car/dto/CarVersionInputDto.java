@@ -6,10 +6,8 @@ import java.util.List;
 public record CarVersionInputDto(
         String name,
         Long carHeadId,
-        String fuelType,
-        Long power,
-        double capacity,
-        String gearBoxType,
+        EngineDto engineDto,
+        String gearboxType,
         String carDrive,
         List<String> colors,
         BigDecimal price

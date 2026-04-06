@@ -3,7 +3,7 @@ package ru.lebedev.dealership.infrastructure.persistence.specification;
 import org.springframework.data.jpa.domain.Specification;
 import ru.lebedev.dealership.application.filters.DetailFilter;
 import ru.lebedev.dealership.domain.detail.Detail;
-import ru.lebedev.dealership.domain.shared.vo.Price;
+import ru.lebedev.dealership.domain.car.vo.Price;
 
 import java.util.List;
 import java.util.Set;

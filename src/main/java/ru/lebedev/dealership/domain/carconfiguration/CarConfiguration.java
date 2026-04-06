@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import ru.lebedev.dealership.domain.BaseEntity;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.detail.Detail;
-import ru.lebedev.dealership.domain.shared.vo.Price;
+import ru.lebedev.dealership.domain.car.vo.Price;
 import ru.lebedev.dealership.domain.user.User;
 
 import java.util.HashSet;

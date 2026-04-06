@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.domain.shared.vo;
+package ru.lebedev.dealership.domain.car.vo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

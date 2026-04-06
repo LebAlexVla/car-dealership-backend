@@ -2,27 +2,24 @@ package ru.lebedev.dealership.controller.detail.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import ru.lebedev.dealership.application.filters.DetailFilter;
+import ru.lebedev.dealership.controller.car.mapper.PriceMapper;
+import ru.lebedev.dealership.controller.detail.dto.DetailFilterDto;
 import ru.lebedev.dealership.controller.detail.dto.DetailInputDto;
 import ru.lebedev.dealership.controller.detail.dto.DetailOutputDto;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.detail.Detail;
-import ru.lebedev.dealership.domain.shared.vo.Price;
 
-import java.math.BigDecimal;
-
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = PriceMapper.class)
 public interface DetailMapper {
-    @Mapping(source = "price.rubles", target = "price")
+    @Mapping(target = "compatibleCars", ignore = true)
+    Detail toEntity(DetailInputDto dto);
+
     DetailOutputDto toDto(Detail detail);
 
-    @Mapping(target = "compatibleCars", ignore = true)
-    Detail toEntity(DetailInputDto request);
+    DetailFilter toFilter(DetailFilterDto filterDto);
 
     default Long map(CarVersion carVersion) {
         return carVersion != null ? carVersion.getId() : null;
-    }
-
-    default Price map(BigDecimal price) {
-        return new Price(price);
     }
 }

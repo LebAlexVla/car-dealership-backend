@@ -1,6 +1,7 @@
 package ru.lebedev.dealership.application.services;
 
 import org.springframework.stereotype.Service;
+import ru.lebedev.dealership.application.exceptions.CarHeadNotFoundException;
 import ru.lebedev.dealership.application.filters.CarHeadFilter;
 import ru.lebedev.dealership.application.filters.CarVersionFilter;
 import ru.lebedev.dealership.domain.car.entities.CarHead;
@@ -28,8 +29,12 @@ public class CarService {
         return savedCarHead.getId();
     }
 
-    public Long createVersion(CarVersion carVersion) {
+    public Long createVersion(CarVersion carVersion, Long carHeadId) {
+        CarHead carHead = carHeadRepository.findById(carHeadId)
+                .orElseThrow(() -> new CarHeadNotFoundException(carHeadId));
+        carVersion.assignCarHead(carHead);
         CarVersion savedCarVersion = carVersionRepository.save(carVersion);
+
         return savedCarVersion.getId();
     }
 

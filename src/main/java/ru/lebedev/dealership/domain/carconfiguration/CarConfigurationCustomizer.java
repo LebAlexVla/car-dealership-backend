@@ -52,7 +52,7 @@ public class CarConfigurationCustomizer extends BaseEntity {
     public void selectRequiredDetail(Detail detail) {
         if (!detail.checkCompatibility(carVersion)) {
             throw new IncompatibleDetailException(
-                    detail.getName() + " is not compatible to the car with " + carVersion.getCarVersionName()
+                    detail.getName() + " is not compatible to the car with " + carVersion.getName()
             );
         }
 
@@ -71,7 +71,7 @@ public class CarConfigurationCustomizer extends BaseEntity {
     public void selectOptionalDetail(Detail detail) {
         if (!detail.checkCompatibility(carVersion)) {
             throw new IncompatibleDetailException(
-                    detail.getName() + " is not compatible to the car with id: " + carVersion.getCarVersionName()
+                    detail.getName() + " is not compatible to the car with id: " + carVersion.getName()
             );
         }
 

@@ -5,7 +5,7 @@ import ru.lebedev.dealership.domain.car.enums.FuelType;
 import ru.lebedev.dealership.domain.car.enums.GearboxType;
 import ru.lebedev.dealership.domain.car.vo.EngineCapacity;
 import ru.lebedev.dealership.domain.car.vo.EnginePower;
-import ru.lebedev.dealership.domain.shared.vo.Price;
+import ru.lebedev.dealership.domain.car.vo.Price;
 
 import java.util.List;
 
