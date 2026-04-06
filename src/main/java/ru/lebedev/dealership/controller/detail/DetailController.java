@@ -5,11 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.lebedev.dealership.application.filters.DetailFilter;
 import ru.lebedev.dealership.application.services.DetailService;
-import ru.lebedev.dealership.controller.detail.models.*;
+import ru.lebedev.dealership.controller.detail.dto.DetailFilterDto;
+import ru.lebedev.dealership.controller.detail.dto.DetailInputDto;
+import ru.lebedev.dealership.controller.detail.dto.DetailOutputDto;
+import ru.lebedev.dealership.controller.detail.mapper.DetailFilterMapper;
+import ru.lebedev.dealership.controller.detail.mapper.DetailMapper;
 import ru.lebedev.dealership.domain.detail.Detail;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/detail")

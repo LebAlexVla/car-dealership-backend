@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.controller.car.models;
+package ru.lebedev.dealership.controller.car.dto;
 
 import java.util.List;
 

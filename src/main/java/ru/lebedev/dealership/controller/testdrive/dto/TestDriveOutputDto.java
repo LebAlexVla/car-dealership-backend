@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.controller.testdrive.models;
+package ru.lebedev.dealership.controller.testdrive.dto;
 
 import java.time.LocalDateTime;
 

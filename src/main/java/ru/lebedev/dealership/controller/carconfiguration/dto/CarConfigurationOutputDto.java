@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.controller.carconfiguration.models;
+package ru.lebedev.dealership.controller.carconfiguration.dto;
 
 import java.util.Set;
 

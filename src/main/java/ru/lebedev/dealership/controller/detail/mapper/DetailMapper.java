@@ -1,7 +1,9 @@
-package ru.lebedev.dealership.controller.detail.models;
+package ru.lebedev.dealership.controller.detail.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import ru.lebedev.dealership.controller.detail.dto.DetailInputDto;
+import ru.lebedev.dealership.controller.detail.dto.DetailOutputDto;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.shared.vo.Price;

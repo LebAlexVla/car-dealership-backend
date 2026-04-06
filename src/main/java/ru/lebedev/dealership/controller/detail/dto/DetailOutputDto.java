@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.controller.detail.models;
+package ru.lebedev.dealership.controller.detail.dto;
 
 import java.math.BigDecimal;
 import java.util.Set;
