@@ -42,6 +42,9 @@ public class CarVersion extends BaseEntity {
     @Embedded
     private Price price;
 
+    @Column(name = "is_test_drive_availible", nullable = false)
+    private boolean testDriveAvailable = false;
+
     protected CarVersion() {
     }
 
@@ -99,5 +102,13 @@ public class CarVersion extends BaseEntity {
 
     public void setPrice(Price price) {
         this.price = price;
+    }
+
+    public boolean isTestDriveAvailable() {
+        return testDriveAvailable;
+    }
+
+    public void setTestDriveAvailable(boolean testDriveAvailable) {
+        this.testDriveAvailable = testDriveAvailable;
     }
 }

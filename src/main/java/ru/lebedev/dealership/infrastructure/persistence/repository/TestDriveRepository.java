@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface TestDriveRepository extends JpaRepository<TestDrive, Long> {
-    Optional<TestDrive> findByClientId(Long id);
+    Optional<TestDrive> findByClientId(Long clientId);
 }
