@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 @Mapper(componentModel = "spring")
 public interface DetailMapper {
-    @Mapping(source = "price.getRubles()", target = "price")
+    @Mapping(source = "price.rubles", target = "price")
     DetailOutputDto toDto(Detail detail);
 
     @Mapping(target = "compatibleCars", ignore = true)

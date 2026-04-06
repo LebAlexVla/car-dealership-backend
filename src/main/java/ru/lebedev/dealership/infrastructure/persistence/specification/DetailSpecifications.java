@@ -11,10 +11,9 @@ import java.util.Set;
 public class DetailSpecifications {
     public static Specification<Detail> fromFilter(DetailFilter filter) {
         return Specification
-                .where(hasType(filter.detailType()))
+                .where(hasType(filter.detailTypes()))
                 .and(minPriceLimit(filter.minPrice()))
-                .and(maxPriceLimit(filter.maxPrice()))
-                ;
+                .and(maxPriceLimit(filter.maxPrice()));
     }
 
     private static Specification<Detail> hasType(List<String> detailTypes) {
