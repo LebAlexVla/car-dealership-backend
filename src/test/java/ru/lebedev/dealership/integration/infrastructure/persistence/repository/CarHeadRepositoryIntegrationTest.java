@@ -16,8 +16,8 @@ import ru.lebedev.dealership.infrastructure.persistence.repository.CarHeadReposi
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Testcontainers
-//@DataJpaTest
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CarHeadRepositoryIntegrationTest {
 
     @Container

@@ -1,4 +1,4 @@
-package ru.lebedev.dealership.controller.order.stock.models;
+package ru.lebedev.dealership.controller.order.stock.dto;
 
 public record StockOrderOutputDto(
         Long id,
