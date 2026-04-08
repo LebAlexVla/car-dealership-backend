@@ -5,7 +5,7 @@ import ru.lebedev.dealership.domain.car.vo.Price;
 
 import java.math.BigDecimal;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PriceMapper {
     Price toPrice(BigDecimal rubles);
 
