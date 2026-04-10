@@ -33,7 +33,7 @@ public class DetailController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DetailOutputDto> findById(@PathVariable Long id) {
+    public ResponseEntity<DetailOutputDto> findById(@PathVariable("id") Long id) {
         return detailService.findById(id)
                 .map(detailMapper::toDto)
                 .map(ResponseEntity::ok)
@@ -52,7 +52,7 @@ public class DetailController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         detailService.delete(id);
         return ResponseEntity.noContent().build();
     }
