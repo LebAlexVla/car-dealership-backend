@@ -43,7 +43,7 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
-    @GetMapping("head/{id}")
+    @GetMapping("/head/{id}")
     public ResponseEntity<CarHeadOutputDto> findHeadById(@PathVariable("id") Long id) {
         return carService.findHeadById(id)
                 .map(carHeadMapper::toDto)
@@ -51,7 +51,7 @@ public class CarController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("version/{id}")
+    @GetMapping("/version/{id}")
     public ResponseEntity<CarVersionOutputDto> findVersionById(@PathVariable("id") Long id) {
         return carService.findVersionById(id)
                 .map(carVersionMapper::toDto)
