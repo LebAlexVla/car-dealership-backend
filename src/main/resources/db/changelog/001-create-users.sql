@@ -8,7 +8,9 @@ CREATE TABLE users
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
     removed    BOOLEAN                  NOT NULL DEFAULT FALSE,
 
-    type       VARCHAR(20)              NOT NULL
+    name       VARCHAR(255)             NOT NULL,
+    type       VARCHAR(20)              NOT NULL,
+    phone      VARCHAR(30)              NOT NULL
 );
 
 --rollback DROP TABLE users;
