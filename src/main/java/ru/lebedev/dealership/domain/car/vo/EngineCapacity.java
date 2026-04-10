@@ -6,7 +6,7 @@ import ru.lebedev.dealership.domain.exceptions.InvalidValueObjectException;
 
 @Embeddable
 public class EngineCapacity {
-    @Column(nullable = false)
+    @Column(name = "engine_capacity_liters", nullable = false)
     private double liters;
 
     protected EngineCapacity() {

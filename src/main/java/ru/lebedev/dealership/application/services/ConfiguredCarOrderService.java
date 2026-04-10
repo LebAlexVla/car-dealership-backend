@@ -34,7 +34,7 @@ public class ConfiguredCarOrderService {
     }
 
     public Optional<ConfiguredCarOrder> findByClientId(Long clientId) {
-        return configuredCarOrderRepository.findByClientId(clientId);
+        return configuredCarOrderRepository.findByConfigurationClientId(clientId);
     }
 
     public List<ConfiguredCarOrder> findAll() {

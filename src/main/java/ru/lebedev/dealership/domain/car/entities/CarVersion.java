@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "car_version")
 public class CarVersion extends BaseEntity {
-    @Column(name = "car_version_name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -24,7 +24,7 @@ public class CarVersion extends BaseEntity {
     private Engine engine;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "gearbox_type", nullable = false)
     private GearboxType gearboxType;
 
     @Enumerated(EnumType.STRING)
@@ -42,7 +42,7 @@ public class CarVersion extends BaseEntity {
     @Embedded
     private Price price;
 
-    @Column(name = "is_test_drive_availible", nullable = false)
+    @Column(name = "is_test_drive_available", nullable = false)
     private boolean testDriveAvailable = false;
 
     protected CarVersion() {

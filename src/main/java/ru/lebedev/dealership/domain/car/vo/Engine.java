@@ -6,7 +6,7 @@ import ru.lebedev.dealership.domain.car.enums.FuelType;
 @Embeddable
 public record Engine(
         @Enumerated(EnumType.STRING)
-        @Column(name = "fuel_type")
+        @Column(name = "engine_fuel_type")
         FuelType fuelType,
 
         @Embedded

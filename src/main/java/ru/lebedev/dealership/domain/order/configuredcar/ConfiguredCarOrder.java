@@ -15,7 +15,7 @@ public class ConfiguredCarOrder extends BaseEntity {
     private CarConfiguration configuration;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private ConfiguredCarOrderStatus status = ConfiguredCarOrderStatus.PLACED;
 
     protected ConfiguredCarOrder() {

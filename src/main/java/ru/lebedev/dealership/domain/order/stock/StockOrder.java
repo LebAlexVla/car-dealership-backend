@@ -18,7 +18,7 @@ public class StockOrder extends BaseEntity {
     private CarVersion carVersion;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "order_status", nullable = false)
+    @Column(name = "status", nullable = false)
     private StockOrderStatus status = StockOrderStatus.PLACED;
 
     protected StockOrder() {

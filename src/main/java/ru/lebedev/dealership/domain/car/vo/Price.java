@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Embeddable
 public class Price {
-    @Column(nullable = false)
+    @Column(name = "price_rubles", nullable = false)
     private BigDecimal rubles;
 
     protected Price() {

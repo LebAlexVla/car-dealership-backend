@@ -17,16 +17,16 @@ import java.util.Set;
 @Table(name = "car_configuration_customizer")
 public class CarConfigurationCustomizer extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "car_version_id")
+    @JoinColumn(name = "car_version_id", nullable = false)
     private CarVersion carVersion;
 
     @ManyToMany
     @JoinTable(
-            name = "car_configuration_customizer_required_details",
+            name = "configuration_customizer_required_details",
             joinColumns = @JoinColumn(name = "car_configuration_customizer_id"),
             inverseJoinColumns = @JoinColumn(name = "detail_id")
     )
@@ -34,7 +34,7 @@ public class CarConfigurationCustomizer extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "car_configuration_customizer_optional_details",
+            name = "configuration_customizer_optional_details",
             joinColumns = @JoinColumn(name = "car_configuration_customizer_id"),
             inverseJoinColumns = @JoinColumn(name = "detail_id")
     )

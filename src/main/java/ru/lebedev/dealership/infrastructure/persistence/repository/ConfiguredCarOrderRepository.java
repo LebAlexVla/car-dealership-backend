@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ConfiguredCarOrderRepository extends JpaRepository<ConfiguredCarOrder, Long> {
-    Optional<ConfiguredCarOrder> findByClientId(Long clientId);
+    Optional<ConfiguredCarOrder> findByConfigurationClientId(Long clientId);
 }
