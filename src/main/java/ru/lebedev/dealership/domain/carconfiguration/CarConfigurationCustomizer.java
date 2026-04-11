@@ -1,80 +1,121 @@
 package ru.lebedev.dealership.domain.carconfiguration;
 
+import jakarta.persistence.*;
+import ru.lebedev.dealership.domain.BaseEntity;
+import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.detail.Detail;
-import ru.lebedev.dealership.domain.detail.DetailType;
 import ru.lebedev.dealership.domain.exceptions.IncompatibleDetailException;
+import ru.lebedev.dealership.domain.exceptions.NoSuchOptionalDetailException;
 import ru.lebedev.dealership.domain.exceptions.WrongOptionalDetailException;
 import ru.lebedev.dealership.domain.exceptions.WrongRequiredDetailException;
+import ru.lebedev.dealership.domain.user.User;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-public class CarConfigurationCustomizer {
-    private final Long CarConfigurationCustomizerId;
-    private final Long carVersionId;
-    private final Long clientId;
-    private final Map<DetailType, Long> requiredDetails;
+@Entity
+@Table(name = "car_configuration_customizer")
+public class CarConfigurationCustomizer extends BaseEntity {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User client;
 
-    private final Map<DetailType, Long> optionalDetails = new HashMap<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_version_id", nullable = false)
+    private CarVersion carVersion;
 
-    public CarConfigurationCustomizer(Long customCarConfigurationId, Long carVersionId, Long clientId, Map<DetailType, Long> requiredDetails) {
-        this.CarConfigurationCustomizerId = customCarConfigurationId;
-        this.carVersionId = carVersionId;
-        this.clientId = clientId;
+    @ManyToMany
+    @JoinTable(
+            name = "configuration_customizer_required_details",
+            joinColumns = @JoinColumn(name = "car_configuration_customizer_id"),
+            inverseJoinColumns = @JoinColumn(name = "detail_id")
+    )
+    private Set<Detail> requiredDetails = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "configuration_customizer_optional_details",
+            joinColumns = @JoinColumn(name = "car_configuration_customizer_id"),
+            inverseJoinColumns = @JoinColumn(name = "detail_id")
+    )
+    private final Set<Detail> optionalDetails = new HashSet<>();
+
+    protected CarConfigurationCustomizer() {
+    }
+
+    public CarConfigurationCustomizer(User client, CarVersion carVersion, Set<Detail> requiredDetails) {
+        this.client = client;
+        this.carVersion = carVersion;
         this.requiredDetails = requiredDetails;
     }
 
-    public CarConfigurationCustomizer withRequiredDetail(Detail detail) {
-        if (!detail.checkCompatibility(carVersionId)) {
+    public void selectRequiredDetail(Detail detail) {
+        if (!detail.checkCompatibility(carVersion)) {
             throw new IncompatibleDetailException(
-                    detail.name() + " is not compatible to the car with id: " + carVersionId
+                    detail.getName() + " is not compatible to the car with " + carVersion.getName()
             );
         }
 
-        if (!requiredDetails.containsKey(detail.type())) {
+        boolean isRequiredDetail = requiredDetails.stream()
+                .anyMatch(required -> required.getType().equals(detail.getType()));
+        if (!isRequiredDetail) {
             throw new WrongRequiredDetailException(
-                    detail.type().name() + " is not a required detail"
+                    detail.getType() + " is not a required detail"
             );
         }
 
-        requiredDetails.put(detail.type(), detail.detailId());
-
-        return this;
+        requiredDetails.removeIf(existing -> existing.getType().equals(detail.getType()));
+        requiredDetails.add(detail);
     }
 
-    public CarConfigurationCustomizer withOptionalDetail(Detail detail) {
-        if (!detail.checkCompatibility(carVersionId)) {
+    public void selectOptionalDetail(Detail detail) {
+        if (!detail.checkCompatibility(carVersion)) {
             throw new IncompatibleDetailException(
-                    detail.name() + " is not compatible to the car with id: " + carVersionId
+                    detail.getName() + " is not compatible to the car with id: " + carVersion.getName()
             );
         }
 
-        if (requiredDetails.containsKey(detail.type())) {
+        boolean isRequiredDetail = requiredDetails.stream()
+                .anyMatch(required -> required.getType().equals(detail.getType()));
+        if (isRequiredDetail) {
             throw new WrongOptionalDetailException(
-                    detail.type().name() + " is not an optional detail"
+                    detail.getType() + " is not an optional detail"
             );
         }
 
-        optionalDetails.put(detail.type(), detail.detailId());
-
-        return this;
+        optionalDetails.removeIf(existing -> existing.getType().equals(detail.getType()));
+        optionalDetails.add(detail);
     }
 
-    public CarConfiguration build(Long carConfigurationId) {
-        Set<Long> details = new HashSet<>();
-        details.addAll(requiredDetails.values());
-        details.addAll(optionalDetails.values());
+    public void rejectOptionalDetail(Detail detail) {
+        if (!optionalDetails.contains(detail)) {
+            throw new NoSuchOptionalDetailException(detail.getType(), detail.getName());
+        }
 
-        return new CarConfiguration(carConfigurationId, details);
+        optionalDetails.remove(detail);
     }
 
-    public Long getClientId() {
-        return clientId;
+    public CarConfiguration build() {
+        Set<Detail> details = new HashSet<>();
+        details.addAll(requiredDetails);
+        details.addAll(optionalDetails);
+
+        return new CarConfiguration(client, carVersion, details);
     }
 
-    public Long getCustomCarConfigurationId() {
-        return CarConfigurationCustomizerId;
+    public User getClient() {
+        return client;
+    }
+
+    public CarVersion getCarVersion() {
+        return carVersion;
+    }
+
+    public Set<Detail> getRequiredDetails() {
+        return new HashSet<>(requiredDetails);
+    }
+
+    public Set<Detail> getOptionalDetails() {
+        return new HashSet<>(optionalDetails);
     }
 }
