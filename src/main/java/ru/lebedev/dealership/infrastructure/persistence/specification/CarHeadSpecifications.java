@@ -30,6 +30,6 @@ public class CarHeadSpecifications {
     private static Specification<CarHead> hasBodyTypes(List<BodyType> bodyTypes) {
         return (root, query, criteriaBuilder) ->
                 (bodyTypes == null || bodyTypes.isEmpty()) ? null :
-                        root.get("model").in(bodyTypes);
+                        root.get("body_type").in(bodyTypes);
     }
 }

@@ -84,6 +84,6 @@ public class CarVersionSpecifications {
     private static Specification<CarVersion> hasColors(List<String> colors) {
         return (root, query, criteriaBuilder) ->
                 (colors == null || colors.isEmpty()) ? null :
-                        root.join("color").in(colors);
+                        root.join("colors").in(colors);
     }
 }

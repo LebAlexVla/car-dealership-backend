@@ -15,4 +15,4 @@ CREATE TABLE car_configuration_defaulter
             ON DELETE CASCADE
 );
 
---rollback DROP TABLE users;
+--rollback DROP TABLE car_configuration_defaulter;

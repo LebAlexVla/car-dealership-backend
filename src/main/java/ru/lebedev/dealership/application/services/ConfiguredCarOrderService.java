@@ -71,7 +71,7 @@ public class ConfiguredCarOrderService {
         order.cancel();
     }
 
-    public void delete(Long orderId) {
+    public void deleteById(Long orderId) {
         configuredCarOrderRepository.deleteById(orderId);
     }
 }

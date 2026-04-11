@@ -1,10 +1,8 @@
 package ru.lebedev.dealership.application.services;
 
 import org.springframework.stereotype.Service;
-import ru.lebedev.dealership.application.exceptions.CustomizerNotFoundException;
-import ru.lebedev.dealership.application.exceptions.DefaulterNotFoundException;
-import ru.lebedev.dealership.application.exceptions.DetailNotFoundException;
-import ru.lebedev.dealership.application.exceptions.UserNotFoundException;
+import ru.lebedev.dealership.application.exceptions.*;
+import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfiguration;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfigurationCustomizer;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfigurationDefaulter;
@@ -12,8 +10,10 @@ import ru.lebedev.dealership.domain.detail.Detail;
 import ru.lebedev.dealership.domain.user.User;
 import ru.lebedev.dealership.infrastructure.persistence.repository.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CarConfigurationService {
@@ -21,18 +21,26 @@ public class CarConfigurationService {
     private final CarConfigurationCustomizerRepository customizerRepository;
     private final CarConfigurationRepository configurationRepository;
     private final UserRepository userRepository;
+    private final CarVersionRepository carVersionRepository;
     private final DetailRepository detailRepository;
 
-    public CarConfigurationService(CarConfigurationDefaulterRepository carConfigurationDefaulterRepository, CarConfigurationCustomizerRepository carConfigurationCustomizerRepository, CarConfigurationRepository carConfigurationRepository, UserRepository userRepository, DetailRepository detailRepository) {
+    public CarConfigurationService(CarConfigurationDefaulterRepository carConfigurationDefaulterRepository, CarConfigurationCustomizerRepository carConfigurationCustomizerRepository, CarConfigurationRepository carConfigurationRepository, UserRepository userRepository, CarVersionRepository carVersionRepository, DetailRepository detailRepository) {
         this.defaulterRepository = carConfigurationDefaulterRepository;
         this.customizerRepository = carConfigurationCustomizerRepository;
         this.configurationRepository = carConfigurationRepository;
         this.userRepository = userRepository;
+        this.carVersionRepository = carVersionRepository;
         this.detailRepository = detailRepository;
     }
 
-    public Long createDefaulter(CarConfigurationDefaulter defaulter) {
-        CarConfigurationDefaulter savedDefaulter = defaulterRepository.save(defaulter);
+    public Long createDefaulter(Long carVersionId, Set<Long> requiredDetailsIds) {
+        CarVersion carVersion = carVersionRepository.findById(carVersionId)
+                .orElseThrow(() -> new CarVersionNotFoundException(carVersionId));
+        Set<Detail> requiredDetails = new HashSet<>(detailRepository.findAllById(requiredDetailsIds));
+        CarConfigurationDefaulter savedDefaulter = defaulterRepository.save(
+                new CarConfigurationDefaulter(carVersion, requiredDetails)
+        );
+
         return savedDefaulter.getId();
     }
 
@@ -52,9 +60,9 @@ public class CarConfigurationService {
         CarConfigurationCustomizer customizer = customizerRepository.findById(customizerId)
                 .orElseThrow(() -> new CustomizerNotFoundException(customizerId));
 
-        CarConfiguration carConfiguration = customizer.build();
+        CarConfiguration savedCarConfiguration = configurationRepository.save(customizer.build());
 
-        return carConfiguration.getId();
+        return savedCarConfiguration.getId();
     }
 
     public Optional<CarConfigurationDefaulter> findDefaulterByCarVersionId(Long carVersionId) {

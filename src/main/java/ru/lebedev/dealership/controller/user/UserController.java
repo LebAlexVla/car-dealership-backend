@@ -9,6 +9,8 @@ import ru.lebedev.dealership.controller.user.dto.UserOutputDto;
 import ru.lebedev.dealership.controller.user.mapper.UserMapper;
 import ru.lebedev.dealership.domain.user.User;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -36,12 +38,21 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping
+    @GetMapping("/by-phone")
     public ResponseEntity<UserOutputDto> findByPhone(@RequestParam String phone) {
         return userService.findByPhone(phone)
                 .map(userMapper::toDto)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserOutputDto>> findAll() {
+        List<UserOutputDto> result = userService.findAll()
+                .stream()
+                .map(userMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/{id}")

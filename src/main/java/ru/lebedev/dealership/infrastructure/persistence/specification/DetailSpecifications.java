@@ -13,7 +13,8 @@ public class DetailSpecifications {
         return Specification
                 .where(hasType(filter.detailTypes()))
                 .and(minPriceLimit(filter.minPrice()))
-                .and(maxPriceLimit(filter.maxPrice()));
+                .and(maxPriceLimit(filter.maxPrice()))
+                .and(compatibleWithCars(filter.compatibleCarsIds()));
     }
 
     private static Specification<Detail> hasType(List<String> detailTypes) {
