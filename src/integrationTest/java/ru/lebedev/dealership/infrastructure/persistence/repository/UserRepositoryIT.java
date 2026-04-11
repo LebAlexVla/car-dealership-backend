@@ -8,8 +8,6 @@ import ru.lebedev.dealership.domain.user.UserType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-@Transactional
 class UserRepositoryIT extends AbstractRepositoryDatabaseIT {
 
     @Test
