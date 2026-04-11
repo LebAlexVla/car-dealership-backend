@@ -1,9 +1,15 @@
 package ru.lebedev.dealership.infrastructure.persistence.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.lebedev.dealership.domain.car.entities.CarHead;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.car.enums.BodyType;
@@ -22,16 +28,19 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
-abstract class AbstractRepositoryDatabaseIT {
+@SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Testcontainers(disabledWithoutDocker = true)
+@Transactional
+public abstract class AbstractRepositoryDatabaseIT {
 
+    @Container
+    @ServiceConnection
     static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("testdb")
             .withUsername("test")
-            .withPassword("test");
-
-    static {
-        postgres.start();
-    }
+            .withPassword("test")
+            .withReuse(true);
 
     @Autowired
     protected UserRepository userRepository;
@@ -44,13 +53,6 @@ abstract class AbstractRepositoryDatabaseIT {
 
     @Autowired
     protected DetailRepository detailRepository;
-
-    @DynamicPropertySource
-    static void configure(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-    }
 
     protected User createUser(String phone) {
         return userRepository.save(new User("Client " + phone, UserType.CUSTOMER, phone));
