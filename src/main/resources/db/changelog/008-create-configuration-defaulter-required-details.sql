@@ -6,6 +6,8 @@ CREATE TABLE configuration_defaulter_required_details
     car_configuration_defaulter_id BIGINT NOT NULL,
     detail_id                      BIGINT NOT NULL,
 
+    PRIMARY KEY (car_configuration_defaulter_id, detail_id),
+
     CONSTRAINT fk_config_defaulter_details_config
         FOREIGN KEY (car_configuration_defaulter_id) REFERENCES car_configuration_defaulter (id)
             ON DELETE CASCADE,
@@ -14,4 +16,5 @@ CREATE TABLE configuration_defaulter_required_details
         FOREIGN KEY (detail_id) REFERENCES detail (id)
             ON DELETE CASCADE
 );
+
 --rollback DROP TABLE configuration_defaulter_required_details

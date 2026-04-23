@@ -6,8 +6,7 @@ CREATE TABLE car_configuration_details
     car_configuration_id BIGINT NOT NULL,
     detail_id            BIGINT NOT NULL,
 
-    CONSTRAINT pk_car_configuration_details
-        PRIMARY KEY (car_configuration_id, detail_id),
+    PRIMARY KEY (car_configuration_id, detail_id),
 
     CONSTRAINT fk_car_configuration_details_config
         FOREIGN KEY (car_configuration_id) REFERENCES car_configuration (id)
@@ -17,4 +16,5 @@ CREATE TABLE car_configuration_details
         FOREIGN KEY (detail_id) REFERENCES detail (id)
             ON DELETE CASCADE
 );
+
 --rollback DROP TABLE car_configuration_details;
