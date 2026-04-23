@@ -42,7 +42,7 @@ public class CarVersionSpecifications {
     private static Specification<CarVersion> hasFuelTypes(List<FuelType> fuelTypes) {
         return (root, query, criteriaBuilder) ->
                 (fuelTypes == null || fuelTypes.isEmpty()) ? null :
-                        root.get("engine").get("fuel_type").in(fuelTypes);
+                        root.get("engine").get("fuelType").in(fuelTypes);
     }
 
     private static Specification<CarVersion> minEnginePowerLimit(EnginePower power) {
@@ -72,13 +72,13 @@ public class CarVersionSpecifications {
     private static Specification<CarVersion> hasGearboxTypes(List<GearboxType> gearboxTypes) {
         return (root, query, criteriaBuilder) ->
                 (gearboxTypes == null || gearboxTypes.isEmpty()) ? null :
-                        root.get("gearbox_type").in(gearboxTypes);
+                        root.get("gearboxType").in(gearboxTypes);
     }
 
     private static Specification<CarVersion> hasCarDrives(List<CarDrive> carDrives) {
         return (root, query, criteriaBuilder) ->
                 (carDrives == null || carDrives.isEmpty()) ? null :
-                        root.get("car_drive").in(carDrives);
+                        root.get("carDrive").in(carDrives);
     }
 
     private static Specification<CarVersion> hasColors(List<String> colors) {
