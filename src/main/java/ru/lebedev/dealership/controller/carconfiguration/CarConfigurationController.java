@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.lebedev.dealership.application.services.CarConfigurationService;
+import ru.lebedev.dealership.application.services.CurrentUserService;
 import ru.lebedev.dealership.controller.carconfiguration.dto.CarConfigurationCustomizerOutputDto;
 import ru.lebedev.dealership.controller.carconfiguration.dto.CarConfigurationDefaulterOutputDto;
 import ru.lebedev.dealership.controller.carconfiguration.dto.CarConfigurationOutputDto;
@@ -18,12 +19,14 @@ import java.util.Set;
 @RequestMapping("/car-configuration")
 public class CarConfigurationController {
     private final CarConfigurationService carConfigurationService;
+    private final CurrentUserService currentUserService;
     private final DefaulterMapper defaulterMapper;
     private final CustomizerMapper customizerMapper;
     private final ConfigurationMapper configurationMapper;
 
-    public CarConfigurationController(CarConfigurationService carConfigurationService, DefaulterMapper defaulterMapper, CustomizerMapper customizerMapper, ConfigurationMapper configurationMapper) {
+    public CarConfigurationController(CarConfigurationService carConfigurationService, CurrentUserService currentUserService, DefaulterMapper defaulterMapper, CustomizerMapper customizerMapper, ConfigurationMapper configurationMapper) {
         this.carConfigurationService = carConfigurationService;
+        this.currentUserService = currentUserService;
         this.defaulterMapper = defaulterMapper;
         this.customizerMapper = customizerMapper;
         this.configurationMapper = configurationMapper;
@@ -38,10 +41,10 @@ public class CarConfigurationController {
     }
 
     @PostMapping("/customizer")
-    ResponseEntity<Long> createCustomizer(
-            @RequestParam Long defaulterId, @RequestParam Long clientId
-    ) {
+    ResponseEntity<Long> createCustomizer(@RequestParam Long defaulterId) {
+        Long clientId = currentUserService.getCurrentUserId();
         Long id = carConfigurationService.createCustomizer(defaulterId, clientId);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 

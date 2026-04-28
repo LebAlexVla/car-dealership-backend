@@ -3,6 +3,7 @@ package ru.lebedev.dealership.controller.order.stock;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.lebedev.dealership.application.services.CurrentUserService;
 import ru.lebedev.dealership.application.services.StockOrderService;
 import ru.lebedev.dealership.controller.order.stock.dto.StockOrderOutputDto;
 import ru.lebedev.dealership.controller.order.stock.mapper.StockOrderMapper;
@@ -14,15 +15,19 @@ import java.util.List;
 public class StockOrderController {
     private final StockOrderService stockOrderService;
     private final StockOrderMapper stockOrderMapper;
+    private final CurrentUserService currentUserService;
 
-    public StockOrderController(StockOrderService stockOrderService, StockOrderMapper stockOrderMapper) {
+    public StockOrderController(StockOrderService stockOrderService, StockOrderMapper stockOrderMapper, CurrentUserService currentUserService) {
         this.stockOrderService = stockOrderService;
         this.stockOrderMapper = stockOrderMapper;
+        this.currentUserService = currentUserService;
     }
 
     @PostMapping
-    public ResponseEntity<Long> create(@RequestParam Long clientId, @RequestParam Long carVersionId) {
+    public ResponseEntity<Long> create(@RequestParam Long carVersionId) {
+        Long clientId = currentUserService.getCurrentUserId();
         Long id = stockOrderService.create(clientId, carVersionId);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
