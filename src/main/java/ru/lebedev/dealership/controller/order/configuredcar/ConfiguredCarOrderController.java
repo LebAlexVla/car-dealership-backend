@@ -35,11 +35,13 @@ public class ConfiguredCarOrderController {
     }
 
     @GetMapping("/by-client/{client-id}")
-    public ResponseEntity<ConfiguredCarOrderOutputDto> findByClientId(@PathVariable("client-id") Long clientId) {
-        return configuredCarOrderService.findByClientId(clientId)
+    public ResponseEntity<List<ConfiguredCarOrderOutputDto>> findByClientId(@PathVariable("client-id") Long clientId) {
+        List<ConfiguredCarOrderOutputDto> result = configuredCarOrderService.findByClientId(clientId)
+                .stream()
                 .map(configuredCarOrderMapper::toDto)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .toList();
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping

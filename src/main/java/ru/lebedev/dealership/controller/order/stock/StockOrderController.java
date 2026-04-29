@@ -40,11 +40,13 @@ public class StockOrderController {
     }
 
     @GetMapping("/by-client/{client-id}")
-    public ResponseEntity<StockOrderOutputDto> findByClientId(@PathVariable("client-id") Long clientId) {
-        return stockOrderService.findByClientId(clientId)
+    public ResponseEntity<List<StockOrderOutputDto>> findByClientId(@PathVariable("client-id") Long clientId) {
+        List<StockOrderOutputDto> result = stockOrderService.findByClientId(clientId)
+                .stream()
                 .map(stockOrderMapper::toDto)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .toList();
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping
