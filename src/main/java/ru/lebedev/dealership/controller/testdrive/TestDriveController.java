@@ -44,11 +44,13 @@ public class TestDriveController {
     }
 
     @GetMapping("/by-client/{client-id}")
-    public ResponseEntity<TestDriveOutputDto> findByClientId(@PathVariable("client-id") Long clientId) {
-        return testDriveService.findByClientId(clientId)
+    public ResponseEntity<List<TestDriveOutputDto>> findByClientId(@PathVariable("client-id") Long clientId) {
+        List<TestDriveOutputDto> result = testDriveService.findByClientId(clientId)
+                .stream()
                 .map(testDriveMapper::toDto)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .toList();
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping
