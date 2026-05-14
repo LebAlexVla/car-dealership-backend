@@ -13,9 +13,10 @@ CREATE TABLE stock_order
     status         VARCHAR(30)              NOT NULL,
 
     CONSTRAINT fk_stock_order_user
-        FOREIGN KEY (user_id) REFERENCES users (id),
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
 
     CONSTRAINT fk_stock_order_car_version
         FOREIGN KEY (car_version_id) REFERENCES car_version (id)
 );
+
 --rollback DROP TABLE stock_order;

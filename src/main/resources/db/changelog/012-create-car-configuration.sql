@@ -12,9 +12,10 @@ CREATE TABLE car_configuration
     car_version_id BIGINT                   NOT NULL,
 
     CONSTRAINT fk_car_configuration_user
-        FOREIGN KEY (user_id) REFERENCES users (id),
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
 
     CONSTRAINT fk_car_configuration_car_version
         FOREIGN KEY (car_version_id) REFERENCES car_version (id)
 );
+
 --rollback DROP TABLE car_configuration;

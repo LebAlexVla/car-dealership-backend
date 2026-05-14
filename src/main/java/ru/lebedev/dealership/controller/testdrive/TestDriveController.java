@@ -3,6 +3,7 @@ package ru.lebedev.dealership.controller.testdrive;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.lebedev.dealership.application.services.CurrentUserService;
 import ru.lebedev.dealership.application.services.TestDriveService;
 import ru.lebedev.dealership.controller.testdrive.dto.TestDriveOutputDto;
 import ru.lebedev.dealership.controller.testdrive.mapper.TestDriveMapper;
@@ -15,19 +16,22 @@ import java.util.List;
 public class TestDriveController {
     private final TestDriveService testDriveService;
     private final TestDriveMapper testDriveMapper;
+    private final CurrentUserService currentUserService;
 
-    public TestDriveController(TestDriveService testDriveService, TestDriveMapper testDriveMapper) {
+    public TestDriveController(TestDriveService testDriveService, TestDriveMapper testDriveMapper, CurrentUserService currentUserService) {
         this.testDriveService = testDriveService;
         this.testDriveMapper = testDriveMapper;
+        this.currentUserService = currentUserService;
     }
 
     @PostMapping
     public ResponseEntity<Long> create(
-            @RequestParam Long clientId,
             @RequestParam Long carVersionId,
             @RequestParam LocalDateTime dateTime
     ) {
+        Long clientId = currentUserService.getCurrentUserId();
         Long id = testDriveService.create(clientId, carVersionId, dateTime);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
@@ -40,11 +44,13 @@ public class TestDriveController {
     }
 
     @GetMapping("/by-client/{client-id}")
-    public ResponseEntity<TestDriveOutputDto> findByClientId(@PathVariable("client-id") Long clientId) {
-        return testDriveService.findByClientId(clientId)
+    public ResponseEntity<List<TestDriveOutputDto>> findByClientId(@PathVariable("client-id") Long clientId) {
+        List<TestDriveOutputDto> result = testDriveService.findByClientId(clientId)
+                .stream()
                 .map(testDriveMapper::toDto)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .toList();
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping

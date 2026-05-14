@@ -2,8 +2,6 @@ package ru.lebedev.dealership.infrastructure.persistence.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfiguration;
 import ru.lebedev.dealership.domain.detail.Detail;
@@ -32,31 +30,35 @@ class OrderAndDriveRepositoryIT extends AbstractRepositoryDatabaseIT {
     private CarConfigurationRepository carConfigurationRepository;
 
     @Test
-    void shouldFindTestDriveByClientId() {
+    void shouldFindTestDrivesByClientId() {
         User client = createUser("+79990000003");
         CarVersion carVersion = createCarVersion("40 TDI", true);
-        TestDrive saved = testDriveRepository.save(new TestDrive(client, carVersion, LocalDateTime.now().plusDays(1)));
+        TestDrive saved = testDriveRepository.save(
+                new TestDrive(client, carVersion, LocalDateTime.now().plusDays(1))
+        );
 
         var found = testDriveRepository.findByClientId(client.getId());
 
-        assertThat(found).isPresent();
-        assertThat(found.get().getId()).isEqualTo(saved.getId());
+        assertThat(found)
+                .extracting(TestDrive::getId)
+                .contains(saved.getId());
     }
 
     @Test
-    void shouldFindStockOrderByClientId() {
+    void shouldFindStockOrdersByClientId() {
         User client = createUser("+79990000004");
         CarVersion carVersion = createCarVersion("35 TFSI", true);
         StockOrder saved = stockOrderRepository.save(new StockOrder(client, carVersion));
 
         var found = stockOrderRepository.findByClientId(client.getId());
 
-        assertThat(found).isPresent();
-        assertThat(found.get().getId()).isEqualTo(saved.getId());
+        assertThat(found)
+                .extracting(StockOrder::getId)
+                .contains(saved.getId());
     }
 
     @Test
-    void shouldFindConfiguredCarOrderByConfigurationClientId() {
+    void shouldFindConfiguredCarOrdersByConfigurationClientId() {
         User client = createUser("+79990000005");
         CarVersion carVersion = createCarVersion("55 TFSI", true);
         Detail detail = createDetail("Panorama roof", "ROOF", carVersion);
@@ -67,7 +69,8 @@ class OrderAndDriveRepositoryIT extends AbstractRepositoryDatabaseIT {
 
         var found = configuredCarOrderRepository.findByConfigurationClientId(client.getId());
 
-        assertThat(found).isPresent();
-        assertThat(found.get().getId()).isEqualTo(saved.getId());
+        assertThat(found)
+                .extracting(ConfiguredCarOrder::getId)
+                .contains(saved.getId());
     }
 }

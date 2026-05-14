@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.jpa.domain.Specification;
+import ru.lebedev.dealership.TestDataFactory;
 import ru.lebedev.dealership.application.exceptions.CarHeadNotFoundException;
 import ru.lebedev.dealership.application.filters.CarHeadFilter;
 import ru.lebedev.dealership.application.filters.CarVersionFilter;
@@ -12,14 +13,15 @@ import ru.lebedev.dealership.domain.car.entities.CarHead;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.infrastructure.persistence.repository.CarHeadRepository;
 import ru.lebedev.dealership.infrastructure.persistence.repository.CarVersionRepository;
-import ru.lebedev.dealership.support.TestDataFactory;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CarServiceTest {

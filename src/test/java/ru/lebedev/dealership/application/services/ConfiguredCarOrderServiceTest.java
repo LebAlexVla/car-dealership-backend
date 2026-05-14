@@ -1,5 +1,6 @@
 package ru.lebedev.dealership.application.services;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -8,67 +9,232 @@ import ru.lebedev.dealership.application.exceptions.CarConfigurationNotFoundExce
 import ru.lebedev.dealership.application.exceptions.ConfiguredCarOrderNotFoundException;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfiguration;
 import ru.lebedev.dealership.domain.order.configuredcar.ConfiguredCarOrder;
+import ru.lebedev.dealership.domain.user.User;
 import ru.lebedev.dealership.infrastructure.persistence.repository.CarConfigurationRepository;
 import ru.lebedev.dealership.infrastructure.persistence.repository.ConfiguredCarOrderRepository;
-import ru.lebedev.dealership.support.TestDataFactory;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ConfiguredCarOrderServiceTest {
 
     @Mock
-    private ConfiguredCarOrderRepository orderRepository;
+    private ConfiguredCarOrderRepository configuredCarOrderRepository;
 
     @Mock
-    private CarConfigurationRepository configurationRepository;
+    private CarConfigurationRepository carConfigurationRepository;
 
-    @Test
-    void shouldCreateFindAndProcessConfiguredOrder() {
-        ConfiguredCarOrderService service = new ConfiguredCarOrderService(orderRepository, configurationRepository);
-        var configuration = new CarConfiguration(TestDataFactory.user(1L), TestDataFactory.carVersion(2L), Set.of());
-        TestDataFactory.setId(configuration, 10L);
-        var order = new ConfiguredCarOrder(configuration);
-        TestDataFactory.setId(order, 20L);
+    @Mock
+    private CurrentUserService currentUserService;
 
-        when(configurationRepository.findById(10L)).thenReturn(Optional.of(configuration));
-        when(orderRepository.save(any(ConfiguredCarOrder.class))).thenReturn(order);
-        when(orderRepository.findById(20L)).thenReturn(Optional.of(order));
-        when(orderRepository.findByConfigurationClientId(1L)).thenReturn(Optional.of(order));
-        when(orderRepository.findAll()).thenReturn(List.of(order));
+    private ConfiguredCarOrderService configuredCarOrderService;
 
-        assertEquals(20L, service.create(10L));
-        assertEquals(Optional.of(order), service.findById(20L));
-        assertEquals(Optional.of(order), service.findByClientId(1L));
-        assertEquals(1, service.findAll().size());
-
-        service.approveOrder(20L);
-        service.payOrder(20L);
-        service.deliverOrder(20L);
-        service.completeOrder(20L);
-        service.cancelOrder(20L);
-        service.deleteById(20L);
-
-        verify(orderRepository).deleteById(20L);
+    @BeforeEach
+    void setUp() {
+        configuredCarOrderService = new ConfiguredCarOrderService(
+                configuredCarOrderRepository,
+                carConfigurationRepository,
+                currentUserService
+        );
     }
 
     @Test
-    void shouldThrowForMissingConfigurationOrOrder() {
-        ConfiguredCarOrderService service = new ConfiguredCarOrderService(orderRepository, configurationRepository);
+    void create_shouldCreateConfiguredCarOrderForAdmin() {
+        CarConfiguration configuration = mock(CarConfiguration.class);
+        ConfiguredCarOrder savedOrder = mock(ConfiguredCarOrder.class);
 
-        when(configurationRepository.findById(10L)).thenReturn(Optional.empty());
-        assertThrows(CarConfigurationNotFoundException.class, () -> service.create(10L));
+        when(currentUserService.hasRole("ADMIN")).thenReturn(true);
+        when(carConfigurationRepository.findById(1L)).thenReturn(Optional.of(configuration));
+        when(configuredCarOrderRepository.save(any(ConfiguredCarOrder.class))).thenReturn(savedOrder);
+        when(savedOrder.getId()).thenReturn(100L);
 
-        when(orderRepository.findById(20L)).thenReturn(Optional.empty());
-        assertThrows(ConfiguredCarOrderNotFoundException.class, () -> service.approveOrder(20L));
-        assertThrows(ConfiguredCarOrderNotFoundException.class, () -> service.payOrder(20L));
-        assertThrows(ConfiguredCarOrderNotFoundException.class, () -> service.deliverOrder(20L));
-        assertThrows(ConfiguredCarOrderNotFoundException.class, () -> service.completeOrder(20L));
-        assertThrows(ConfiguredCarOrderNotFoundException.class, () -> service.cancelOrder(20L));
+        Long result = configuredCarOrderService.create(1L);
+
+        assertEquals(100L, result);
+        verify(configuredCarOrderRepository).save(any(ConfiguredCarOrder.class));
+    }
+
+    @Test
+    void create_shouldCreateConfiguredCarOrderForOwner() {
+        CarConfiguration configuration = mock(CarConfiguration.class);
+        User client = mock(User.class);
+        ConfiguredCarOrder savedOrder = mock(ConfiguredCarOrder.class);
+
+        when(currentUserService.hasRole("ADMIN")).thenReturn(false);
+        when(currentUserService.getCurrentUserId()).thenReturn(10L);
+        when(configuration.getClient()).thenReturn(client);
+        when(client.getId()).thenReturn(10L);
+        when(carConfigurationRepository.findById(1L)).thenReturn(Optional.of(configuration));
+        when(configuredCarOrderRepository.save(any(ConfiguredCarOrder.class))).thenReturn(savedOrder);
+        when(savedOrder.getId()).thenReturn(100L);
+
+        Long result = configuredCarOrderService.create(1L);
+
+        assertEquals(100L, result);
+        verify(configuredCarOrderRepository).save(any(ConfiguredCarOrder.class));
+    }
+
+    @Test
+    void create_shouldThrowWhenConfigurationNotFound() {
+        when(carConfigurationRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(CarConfigurationNotFoundException.class, () -> configuredCarOrderService.create(1L));
+
+        verify(configuredCarOrderRepository, never()).save(any());
+    }
+
+    @Test
+    void create_shouldThrowWhenConfigurationBelongsToAnotherUser() {
+        CarConfiguration configuration = mock(CarConfiguration.class);
+        User client = mock(User.class);
+
+        when(currentUserService.hasRole("ADMIN")).thenReturn(false);
+        when(currentUserService.getCurrentUserId()).thenReturn(10L);
+        when(configuration.getClient()).thenReturn(client);
+        when(client.getId()).thenReturn(99L);
+        when(carConfigurationRepository.findById(1L)).thenReturn(Optional.of(configuration));
+
+        assertThrows(CarConfigurationNotFoundException.class, () -> configuredCarOrderService.create(1L));
+
+        verify(configuredCarOrderRepository, never()).save(any());
+    }
+
+    @Test
+    void findById_shouldReturnOrder() {
+        ConfiguredCarOrder order = mock(ConfiguredCarOrder.class);
+
+        when(configuredCarOrderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        Optional<ConfiguredCarOrder> result = configuredCarOrderService.findById(1L);
+
+        assertEquals(Optional.of(order), result);
+    }
+
+    @Test
+    void findByClientId_shouldReturnOrdersForManager() {
+        ConfiguredCarOrder order = mock(ConfiguredCarOrder.class);
+
+        when(currentUserService.hasRole("ADMIN")).thenReturn(false);
+        when(currentUserService.hasRole("MANAGER")).thenReturn(true);
+        when(configuredCarOrderRepository.findByConfigurationClientId(1L)).thenReturn(List.of(order));
+
+        List<ConfiguredCarOrder> result = configuredCarOrderService.findByClientId(1L);
+
+        assertEquals(List.of(order), result);
+    }
+
+    @Test
+    void findByClientId_shouldReturnEmptyListForForeignClientWhenUser() {
+        when(currentUserService.hasRole("ADMIN")).thenReturn(false);
+        when(currentUserService.hasRole("MANAGER")).thenReturn(false);
+        when(currentUserService.getCurrentUserId()).thenReturn(10L);
+
+        List<ConfiguredCarOrder> result = configuredCarOrderService.findByClientId(99L);
+
+        assertTrue(result.isEmpty());
+        verify(configuredCarOrderRepository, never()).findByConfigurationClientId(anyLong());
+    }
+
+    @Test
+    void findAll_shouldReturnAllOrdersForAdmin() {
+        ConfiguredCarOrder order = mock(ConfiguredCarOrder.class);
+
+        when(currentUserService.hasRole("ADMIN")).thenReturn(true);
+        when(configuredCarOrderRepository.findAll()).thenReturn(List.of(order));
+
+        List<ConfiguredCarOrder> result = configuredCarOrderService.findAll();
+
+        assertEquals(List.of(order), result);
+        verify(configuredCarOrderRepository).findAll();
+    }
+
+    @Test
+    void findAll_shouldReturnOnlyCurrentUserOrdersForUser() {
+        ConfiguredCarOrder order = mock(ConfiguredCarOrder.class);
+
+        when(currentUserService.hasRole("ADMIN")).thenReturn(false);
+        when(currentUserService.hasRole("MANAGER")).thenReturn(false);
+        when(currentUserService.getCurrentUserId()).thenReturn(10L);
+        when(configuredCarOrderRepository.findByConfigurationClientId(10L)).thenReturn(List.of(order));
+
+        List<ConfiguredCarOrder> result = configuredCarOrderService.findAll();
+
+        assertEquals(List.of(order), result);
+        verify(configuredCarOrderRepository).findByConfigurationClientId(10L);
+        verify(configuredCarOrderRepository, never()).findAll();
+    }
+
+    @Test
+    void approveOrder_shouldApproveOrder() {
+        ConfiguredCarOrder order = mock(ConfiguredCarOrder.class);
+
+        when(configuredCarOrderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        configuredCarOrderService.approveOrder(1L);
+
+        verify(order).approve();
+    }
+
+    @Test
+    void approveOrder_shouldThrowWhenOrderNotFound() {
+        when(configuredCarOrderRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ConfiguredCarOrderNotFoundException.class, () -> configuredCarOrderService.approveOrder(1L));
+    }
+
+    @Test
+    void payOrder_shouldPayOrder() {
+        ConfiguredCarOrder order = mock(ConfiguredCarOrder.class);
+
+        when(configuredCarOrderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        configuredCarOrderService.payOrder(1L);
+
+        verify(order).pay();
+    }
+
+    @Test
+    void deliverOrder_shouldDeliverOrder() {
+        ConfiguredCarOrder order = mock(ConfiguredCarOrder.class);
+
+        when(configuredCarOrderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        configuredCarOrderService.deliverOrder(1L);
+
+        verify(order).deliver();
+    }
+
+    @Test
+    void completeOrder_shouldCompleteOrder() {
+        ConfiguredCarOrder order = mock(ConfiguredCarOrder.class);
+
+        when(configuredCarOrderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        configuredCarOrderService.completeOrder(1L);
+
+        verify(order).complete();
+    }
+
+    @Test
+    void cancelOrder_shouldCancelOrder() {
+        ConfiguredCarOrder order = mock(ConfiguredCarOrder.class);
+
+        when(configuredCarOrderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        configuredCarOrderService.cancelOrder(1L);
+
+        verify(order).cancel();
+    }
+
+    @Test
+    void deleteById_shouldDeleteOrder() {
+        configuredCarOrderService.deleteById(1L);
+
+        verify(configuredCarOrderRepository).deleteById(1L);
     }
 }

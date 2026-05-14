@@ -1,8 +1,6 @@
 package ru.lebedev.dealership.infrastructure.persistence.repository;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import ru.lebedev.dealership.domain.user.User;
 import ru.lebedev.dealership.domain.user.UserType;
 
@@ -12,9 +10,29 @@ class UserRepositoryIT extends AbstractRepositoryDatabaseIT {
 
     @Test
     void shouldFindUserByPhone() {
-        User saved = userRepository.save(new User("John", UserType.CUSTOMER, "+79990000001"));
+        User saved = userRepository.save(new User(
+                "john-keycloak-id",
+                "John",
+                UserType.CUSTOMER,
+                "+79990000001"
+        ));
 
         var found = userRepository.findByPhone("+79990000001");
+
+        assertThat(found).isPresent();
+        assertThat(found.get().getId()).isEqualTo(saved.getId());
+    }
+
+    @Test
+    void shouldFindUserByKeycloakId() {
+        User saved = userRepository.save(new User(
+                "john-keycloak-id-2",
+                "John",
+                UserType.CUSTOMER,
+                "+79990000002"
+        ));
+
+        var found = userRepository.findByKeycloakId("john-keycloak-id-2");
 
         assertThat(found).isPresent();
         assertThat(found.get().getId()).isEqualTo(saved.getId());

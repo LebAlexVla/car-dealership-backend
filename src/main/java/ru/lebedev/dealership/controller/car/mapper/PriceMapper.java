@@ -7,7 +7,9 @@ import java.math.BigDecimal;
 
 @Mapper(componentModel = "spring")
 public interface PriceMapper {
-    Price toPrice(BigDecimal rubles);
+    default Price toPrice(BigDecimal rubles) {
+        return new Price(rubles);
+    }
 
     default BigDecimal toBigDecimal(Price price) {
         return price.getRubles();

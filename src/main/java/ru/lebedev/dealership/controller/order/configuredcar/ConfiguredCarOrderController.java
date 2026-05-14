@@ -10,7 +10,7 @@ import ru.lebedev.dealership.controller.order.configuredcar.mapper.ConfiguredCar
 import java.util.List;
 
 @RestController
-@RequestMapping("/congigured-order")
+@RequestMapping("/configured-order")
 public class ConfiguredCarOrderController {
     private final ConfiguredCarOrderService configuredCarOrderService;
     private final ConfiguredCarOrderMapper configuredCarOrderMapper;
@@ -35,11 +35,13 @@ public class ConfiguredCarOrderController {
     }
 
     @GetMapping("/by-client/{client-id}")
-    public ResponseEntity<ConfiguredCarOrderOutputDto> findByClientId(@PathVariable("client-id") Long clientId) {
-        return configuredCarOrderService.findByClientId(clientId)
+    public ResponseEntity<List<ConfiguredCarOrderOutputDto>> findByClientId(@PathVariable("client-id") Long clientId) {
+        List<ConfiguredCarOrderOutputDto> result = configuredCarOrderService.findByClientId(clientId)
+                .stream()
                 .map(configuredCarOrderMapper::toDto)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .toList();
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping
@@ -82,7 +84,7 @@ public class ConfiguredCarOrderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) {
         configuredCarOrderService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

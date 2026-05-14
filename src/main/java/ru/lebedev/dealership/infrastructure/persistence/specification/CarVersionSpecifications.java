@@ -30,60 +30,83 @@ public class CarVersionSpecifications {
     private static Specification<CarVersion> minPriceLimit(Price price) {
         return (root, query, criteriaBuilder) ->
                 price == null ? null :
-                        criteriaBuilder.ge(root.get("price"), price.getRubles());
+                        criteriaBuilder.ge(
+                                root.get("price").get("rubles"),
+                                price.getRubles()
+                        );
     }
 
     private static Specification<CarVersion> maxPriceLimit(Price price) {
         return (root, query, criteriaBuilder) ->
                 price == null ? null :
-                        criteriaBuilder.le(root.get("price"), price.getRubles());
+                        criteriaBuilder.le(
+                                root.get("price").get("rubles"),
+                                price.getRubles()
+                        );
     }
 
     private static Specification<CarVersion> hasFuelTypes(List<FuelType> fuelTypes) {
         return (root, query, criteriaBuilder) ->
-                (fuelTypes == null || fuelTypes.isEmpty()) ? null :
-                        root.get("engine").get("fuel_type").in(fuelTypes);
+                fuelTypes == null || fuelTypes.isEmpty() ? null :
+                        root.get("engine").get("fuelType").in(fuelTypes);
     }
 
     private static Specification<CarVersion> minEnginePowerLimit(EnginePower power) {
         return (root, query, criteriaBuilder) ->
                 power == null ? null :
-                        criteriaBuilder.ge(root.get("engine").get("power"), power.getHorsepower());
+                        criteriaBuilder.ge(
+                                root.get("engine").get("power").get("horsepower"),
+                                power.getHorsepower()
+                        );
     }
 
     private static Specification<CarVersion> maxEnginePowerLimit(EnginePower power) {
         return (root, query, criteriaBuilder) ->
                 power == null ? null :
-                        criteriaBuilder.le(root.get("engine").get("power"), power.getHorsepower());
+                        criteriaBuilder.le(
+                                root.get("engine").get("power").get("horsepower"),
+                                power.getHorsepower()
+                        );
     }
 
     private static Specification<CarVersion> minEngineCapacityLimit(EngineCapacity capacity) {
         return (root, query, criteriaBuilder) ->
                 capacity == null ? null :
-                        criteriaBuilder.ge(root.get("engine").get("capacity"), capacity.getLiters());
+                        criteriaBuilder.ge(
+                                root.get("engine").get("capacity").get("liters"),
+                                capacity.getLiters()
+                        );
     }
 
     private static Specification<CarVersion> maxEngineCapacityLimit(EngineCapacity capacity) {
         return (root, query, criteriaBuilder) ->
                 capacity == null ? null :
-                        criteriaBuilder.le(root.get("engine").get("capacity"), capacity.getLiters());
+                        criteriaBuilder.le(
+                                root.get("engine").get("capacity").get("liters"),
+                                capacity.getLiters()
+                        );
     }
 
     private static Specification<CarVersion> hasGearboxTypes(List<GearboxType> gearboxTypes) {
         return (root, query, criteriaBuilder) ->
-                (gearboxTypes == null || gearboxTypes.isEmpty()) ? null :
-                        root.get("gearbox_type").in(gearboxTypes);
+                gearboxTypes == null || gearboxTypes.isEmpty() ? null :
+                        root.get("gearboxType").in(gearboxTypes);
     }
 
     private static Specification<CarVersion> hasCarDrives(List<CarDrive> carDrives) {
         return (root, query, criteriaBuilder) ->
-                (carDrives == null || carDrives.isEmpty()) ? null :
-                        root.get("car_drive").in(carDrives);
+                carDrives == null || carDrives.isEmpty() ? null :
+                        root.get("carDrive").in(carDrives);
     }
 
     private static Specification<CarVersion> hasColors(List<String> colors) {
-        return (root, query, criteriaBuilder) ->
-                (colors == null || colors.isEmpty()) ? null :
-                        root.join("colors").in(colors);
+        return (root, query, criteriaBuilder) -> {
+            if (colors == null || colors.isEmpty()) {
+                return null;
+            }
+
+            query.distinct(true);
+            return root.join("colors").in(colors);
+        };
     }
 }

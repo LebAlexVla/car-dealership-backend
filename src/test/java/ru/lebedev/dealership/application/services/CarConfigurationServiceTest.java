@@ -1,38 +1,76 @@
 package ru.lebedev.dealership.application.services;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
-import ru.lebedev.dealership.application.exceptions.*;
+import ru.lebedev.dealership.application.exceptions.CarVersionNotFoundException;
+import ru.lebedev.dealership.application.exceptions.CustomizerNotFoundException;
+import ru.lebedev.dealership.application.exceptions.DefaulterNotFoundException;
+import ru.lebedev.dealership.application.exceptions.DetailNotFoundException;
+import ru.lebedev.dealership.application.exceptions.UserNotFoundException;
+import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfiguration;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfigurationCustomizer;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfigurationDefaulter;
-import ru.lebedev.dealership.infrastructure.persistence.repository.*;
-import ru.lebedev.dealership.support.TestDataFactory;
+import ru.lebedev.dealership.domain.detail.Detail;
+import ru.lebedev.dealership.domain.user.User;
+import ru.lebedev.dealership.infrastructure.persistence.repository.CarConfigurationCustomizerRepository;
+import ru.lebedev.dealership.infrastructure.persistence.repository.CarConfigurationDefaulterRepository;
+import ru.lebedev.dealership.infrastructure.persistence.repository.CarConfigurationRepository;
+import ru.lebedev.dealership.infrastructure.persistence.repository.CarVersionRepository;
+import ru.lebedev.dealership.infrastructure.persistence.repository.DetailRepository;
+import ru.lebedev.dealership.infrastructure.persistence.repository.UserRepository;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static ru.lebedev.dealership.TestDataFactory.carConfiguration;
+import static ru.lebedev.dealership.TestDataFactory.carConfigurationCustomizer;
+import static ru.lebedev.dealership.TestDataFactory.carConfigurationDefaulter;
+import static ru.lebedev.dealership.TestDataFactory.carVersion;
+import static ru.lebedev.dealership.TestDataFactory.compatibleDetail;
+import static ru.lebedev.dealership.TestDataFactory.customer;
+import static ru.lebedev.dealership.TestDataFactory.price;
+import static ru.lebedev.dealership.TestDataFactory.withId;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class CarConfigurationServiceTest {
 
-    @Mock private CarConfigurationDefaulterRepository defaulterRepository;
-    @Mock private CarConfigurationCustomizerRepository customizerRepository;
-    @Mock private CarConfigurationRepository configurationRepository;
-    @Mock private UserRepository userRepository;
-    @Mock private CarVersionRepository carVersionRepository;
-    @Mock private DetailRepository detailRepository;
+    @Mock
+    private CarConfigurationDefaulterRepository defaulterRepository;
 
-    @Test
-    void shouldCreateAndFindAllConfigurationPartsAndDelete() {
-        CarConfigurationService service = new CarConfigurationService(
+    @Mock
+    private CarConfigurationCustomizerRepository customizerRepository;
+
+    @Mock
+    private CarConfigurationRepository configurationRepository;
+
+    @Mock
+    private UserRepository userRepository;
+
+    @Mock
+    private CarVersionRepository carVersionRepository;
+
+    @Mock
+    private DetailRepository detailRepository;
+
+    private CarConfigurationService carConfigurationService;
+
+    @BeforeEach
+    void setUp() {
+        carConfigurationService = new CarConfigurationService(
                 defaulterRepository,
                 customizerRepository,
                 configurationRepository,
@@ -40,98 +78,394 @@ class CarConfigurationServiceTest {
                 carVersionRepository,
                 detailRepository
         );
-
-        var car = TestDataFactory.carVersion(1L);
-        var detail = TestDataFactory.detail(2L, "Basic Audio", "audio", car);
-        var requiredReplacement = TestDataFactory.detail(5L, "Premium Audio", "audio", car);
-        var optionalDetail = TestDataFactory.detail(6L, "Sunroof", "roof", car);
-        var defaultAdditionalDetail = TestDataFactory.detail(4L, "Matrix", "lights", car);
-        var user = TestDataFactory.user(3L);
-        var defaulter = new CarConfigurationDefaulter(car, new HashSet<>(Set.of(detail)));
-        TestDataFactory.setId(defaulter, 10L);
-        var customizer = defaulter.create(user);
-        TestDataFactory.setId(customizer, 20L);
-        CarConfiguration configuration = customizer.build();
-        TestDataFactory.setId(configuration, 30L);
-
-        when(carVersionRepository.findById(1L)).thenReturn(Optional.of(car));
-        when(detailRepository.findAllById(Set.of(2L))).thenReturn(List.of(detail));
-        when(defaulterRepository.save(any(CarConfigurationDefaulter.class))).thenReturn(defaulter);
-
-        when(defaulterRepository.findById(10L)).thenReturn(Optional.of(defaulter));
-        when(userRepository.findById(3L)).thenReturn(Optional.of(user));
-        when(customizerRepository.save(any(CarConfigurationCustomizer.class))).thenReturn(customizer);
-
-        when(customizerRepository.findById(20L)).thenReturn(Optional.of(customizer));
-        when(configurationRepository.save(any(CarConfiguration.class))).thenReturn(configuration);
-
-        when(defaulterRepository.findByCarVersionId(1L)).thenReturn(Optional.of(defaulter));
-        when(configurationRepository.findById(30L)).thenReturn(Optional.of(configuration));
-
-        when(defaulterRepository.findAll()).thenReturn(List.of(defaulter));
-        when(customizerRepository.findAll()).thenReturn(List.of(customizer));
-        when(configurationRepository.findAll()).thenReturn(List.of(configuration));
-        when(detailRepository.findById(2L)).thenReturn(Optional.of(detail));
-        when(detailRepository.findById(4L)).thenReturn(Optional.of(defaultAdditionalDetail));
-        when(detailRepository.findById(5L)).thenReturn(Optional.of(requiredReplacement));
-        when(detailRepository.findById(6L)).thenReturn(Optional.of(optionalDetail));
-
-        assertEquals(10L, service.createDefaulter(1L, Set.of(2L)));
-        assertEquals(20L, service.createCustomizer(10L, 3L));
-        assertEquals(30L, service.createCarConfiguration(20L));
-
-        assertTrue(service.findDefaulterByCarVersionId(1L).isPresent());
-        assertTrue(service.findCustomizerById(20L).isPresent());
-        assertTrue(service.findConfigurationById(30L).isPresent());
-
-        assertEquals(1, service.findAllDefaulters().size());
-        assertEquals(1, service.findAllCustomizers().size());
-        assertEquals(1, service.findAllConfigurations().size());
-
-        service.addDefaultDetail(10L, 4L);
-        service.selectCustomRequiredDetail(20L, 5L);
-        service.selectCustomOptionalDetail(20L, 6L);
-        service.rejectCustomOptionalDetail(20L, 6L);
-
-        service.deleteDefaulterByCarId(1L);
-        service.deleteCustomizerById(20L);
-        service.deleteConfigurationById(30L);
-
-        verify(defaulterRepository).deleteByCarVersionId(1L);
-        verify(customizerRepository).deleteById(20L);
-        verify(configurationRepository).deleteById(30L);
     }
 
     @Test
-    void shouldThrowWhenDependenciesMissing() {
-        CarConfigurationService service = new CarConfigurationService(
-                defaulterRepository,
-                customizerRepository,
-                configurationRepository,
-                userRepository,
-                carVersionRepository,
-                detailRepository
+    void createDefaulter_shouldCreateDefaulter() {
+        CarVersion carVersion = carVersion(10L);
+        Detail detail = compatibleDetail(20L, carVersion);
+        CarConfigurationDefaulter savedDefaulter =
+                carConfigurationDefaulter(30L, carVersion, Set.of(detail));
+
+        when(carVersionRepository.findById(10L)).thenReturn(Optional.of(carVersion));
+        when(detailRepository.findAllById(Set.of(20L))).thenReturn(List.of(detail));
+        when(defaulterRepository.save(any(CarConfigurationDefaulter.class)))
+                .thenReturn(savedDefaulter);
+
+        Long result = carConfigurationService.createDefaulter(10L, Set.of(20L));
+
+        assertEquals(30L, result);
+        verify(carVersionRepository).findById(10L);
+        verify(detailRepository).findAllById(Set.of(20L));
+        verify(defaulterRepository).save(any(CarConfigurationDefaulter.class));
+    }
+
+    @Test
+    void createDefaulter_shouldThrowWhenCarVersionNotFound() {
+        when(carVersionRepository.findById(10L)).thenReturn(Optional.empty());
+
+        assertThrows(
+                CarVersionNotFoundException.class,
+                () -> carConfigurationService.createDefaulter(10L, Set.of(20L))
         );
 
-        when(carVersionRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(CarVersionNotFoundException.class, () -> service.createDefaulter(1L, Set.of()));
+        verify(defaulterRepository, never()).save(any());
+    }
 
-        when(defaulterRepository.findById(10L)).thenReturn(Optional.empty());
-        assertThrows(DefaulterNotFoundException.class, () -> service.createCustomizer(10L, 3L));
-        assertThrows(DefaulterNotFoundException.class, () -> service.addDefaultDetail(10L, 2L));
+    @Test
+    void createCustomizer_shouldCreateCustomizer() {
+        User user = customer(1L);
+        CarVersion carVersion = carVersion(10L);
+        Detail detail = compatibleDetail(20L, carVersion);
 
-        when(customizerRepository.findById(20L)).thenReturn(Optional.empty());
-        assertThrows(CustomizerNotFoundException.class, () -> service.createCarConfiguration(20L));
-        assertThrows(CustomizerNotFoundException.class, () -> service.selectCustomRequiredDetail(20L, 2L));
-        assertThrows(CustomizerNotFoundException.class, () -> service.selectCustomOptionalDetail(20L, 2L));
-        assertThrows(CustomizerNotFoundException.class, () -> service.rejectCustomOptionalDetail(20L, 2L));
+        CarConfigurationDefaulter defaulter =
+                carConfigurationDefaulter(30L, carVersion, Set.of(detail));
+        CarConfigurationCustomizer savedCustomizer =
+                carConfigurationCustomizer(40L, user, carVersion, Set.of(detail));
 
-        when(defaulterRepository.findById(10L)).thenReturn(Optional.of(new CarConfigurationDefaulter(TestDataFactory.carVersion(1L), new HashSet<>())));
-        when(detailRepository.findById(2L)).thenReturn(Optional.empty());
-        assertThrows(DetailNotFoundException.class, () -> service.addDefaultDetail(10L, 2L));
+        when(defaulterRepository.findById(30L)).thenReturn(Optional.of(defaulter));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(customizerRepository.save(any(CarConfigurationCustomizer.class)))
+                .thenReturn(savedCustomizer);
 
-        when(defaulterRepository.findById(10L)).thenReturn(Optional.of(new CarConfigurationDefaulter(TestDataFactory.carVersion(1L), new HashSet<>())));
-        when(userRepository.findById(3L)).thenReturn(Optional.empty());
-        assertThrows(UserNotFoundException.class, () -> service.createCustomizer(10L, 3L));
+        Long result = carConfigurationService.createCustomizer(30L, 1L);
+
+        assertEquals(40L, result);
+        verify(defaulterRepository).findById(30L);
+        verify(userRepository).findById(1L);
+        verify(customizerRepository).save(any(CarConfigurationCustomizer.class));
+    }
+
+    @Test
+    void createCustomizer_shouldThrowWhenDefaulterNotFound() {
+        when(defaulterRepository.findById(30L)).thenReturn(Optional.empty());
+
+        assertThrows(
+                DefaulterNotFoundException.class,
+                () -> carConfigurationService.createCustomizer(30L, 1L)
+        );
+
+        verify(customizerRepository, never()).save(any());
+    }
+
+    @Test
+    void createCustomizer_shouldThrowWhenUserNotFound() {
+        CarConfigurationDefaulter defaulter = carConfigurationDefaulter(30L);
+
+        when(defaulterRepository.findById(30L)).thenReturn(Optional.of(defaulter));
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(
+                UserNotFoundException.class,
+                () -> carConfigurationService.createCustomizer(30L, 1L)
+        );
+
+        verify(customizerRepository, never()).save(any());
+    }
+
+    @Test
+    void createCarConfiguration_shouldCreateConfiguration() {
+        User user = customer(1L);
+        CarVersion carVersion = carVersion(10L);
+        Detail detail = compatibleDetail(20L, carVersion);
+
+        CarConfigurationCustomizer customizer =
+                carConfigurationCustomizer(30L, user, carVersion, Set.of(detail));
+        CarConfiguration savedConfiguration =
+                carConfiguration(40L, user, carVersion, Set.of(detail));
+
+        when(customizerRepository.findById(30L)).thenReturn(Optional.of(customizer));
+        when(configurationRepository.save(any(CarConfiguration.class))).thenReturn(savedConfiguration);
+
+        Long result = carConfigurationService.createCarConfiguration(30L);
+
+        assertEquals(40L, result);
+        verify(customizerRepository).findById(30L);
+        verify(configurationRepository).save(any(CarConfiguration.class));
+    }
+
+    @Test
+    void createCarConfiguration_shouldThrowWhenCustomizerNotFound() {
+        when(customizerRepository.findById(30L)).thenReturn(Optional.empty());
+
+        assertThrows(
+                CustomizerNotFoundException.class,
+                () -> carConfigurationService.createCarConfiguration(30L)
+        );
+
+        verify(configurationRepository, never()).save(any());
+    }
+
+    @Test
+    void findDefaulterByCarVersionId_shouldReturnDefaulter() {
+        CarConfigurationDefaulter defaulter = carConfigurationDefaulter(1L);
+
+        when(defaulterRepository.findByCarVersionId(10L)).thenReturn(Optional.of(defaulter));
+
+        Optional<CarConfigurationDefaulter> result =
+                carConfigurationService.findDefaulterByCarVersionId(10L);
+
+        assertEquals(Optional.of(defaulter), result);
+    }
+
+    @Test
+    void findCustomizerById_shouldReturnCustomizer() {
+        CarConfigurationCustomizer customizer = carConfigurationCustomizer(1L);
+
+        when(customizerRepository.findById(1L)).thenReturn(Optional.of(customizer));
+
+        Optional<CarConfigurationCustomizer> result =
+                carConfigurationService.findCustomizerById(1L);
+
+        assertEquals(Optional.of(customizer), result);
+    }
+
+    @Test
+    void findConfigurationById_shouldReturnConfiguration() {
+        CarConfiguration configuration = carConfiguration(1L);
+
+        when(configurationRepository.findById(1L)).thenReturn(Optional.of(configuration));
+
+        Optional<CarConfiguration> result =
+                carConfigurationService.findConfigurationById(1L);
+
+        assertEquals(Optional.of(configuration), result);
+    }
+
+    @Test
+    void findAllDefaulters_shouldReturnAllDefaulters() {
+        CarConfigurationDefaulter defaulter = carConfigurationDefaulter(1L);
+
+        when(defaulterRepository.findAll()).thenReturn(List.of(defaulter));
+
+        List<CarConfigurationDefaulter> result = carConfigurationService.findAllDefaulters();
+
+        assertEquals(List.of(defaulter), result);
+    }
+
+    @Test
+    void findAllCustomizers_shouldReturnAllCustomizers() {
+        CarConfigurationCustomizer customizer = carConfigurationCustomizer(1L);
+
+        when(customizerRepository.findAll()).thenReturn(List.of(customizer));
+
+        List<CarConfigurationCustomizer> result = carConfigurationService.findAllCustomizers();
+
+        assertEquals(List.of(customizer), result);
+    }
+
+    @Test
+    void findAllConfigurations_shouldReturnAllConfigurations() {
+        CarConfiguration configuration = carConfiguration(1L);
+
+        when(configurationRepository.findAll()).thenReturn(List.of(configuration));
+
+        List<CarConfiguration> result = carConfigurationService.findAllConfigurations();
+
+        assertEquals(List.of(configuration), result);
+    }
+
+    @Test
+    void addDefaultDetail_shouldAddRequiredDetail() {
+        CarVersion carVersion = carVersion(10L);
+
+        Detail existingDetail = new Detail(
+                "Base Engine",
+                "ENGINE",
+                price(),
+                new HashSet<>(Set.of(carVersion))
+        );
+        withId(existingDetail, 20L);
+
+        Detail newDetail = new Detail(
+                "Premium Salon",
+                "SALON",
+                price(),
+                new HashSet<>(Set.of(carVersion))
+        );
+        withId(newDetail, 21L);
+
+        CarConfigurationDefaulter defaulter =
+                carConfigurationDefaulter(30L, carVersion, Set.of(existingDetail));
+
+        when(defaulterRepository.findById(30L)).thenReturn(Optional.of(defaulter));
+        when(detailRepository.findById(21L)).thenReturn(Optional.of(newDetail));
+
+        carConfigurationService.addDefaultDetail(30L, 21L);
+
+        assertTrue(defaulter.getRequiredDetails().contains(newDetail));
+        verify(defaulterRepository).findById(30L);
+        verify(detailRepository).findById(21L);
+    }
+
+    @Test
+    void addDefaultDetail_shouldThrowWhenDetailTypeAlreadyExists() {
+        CarVersion carVersion = carVersion(10L);
+
+        Detail existingDetail = new Detail(
+                "Base Package",
+                "PACKAGE",
+                price(),
+                new HashSet<>(Set.of(carVersion))
+        );
+        withId(existingDetail, 20L);
+
+        Detail duplicateDetail = new Detail(
+                "Premium Package",
+                "PACKAGE",
+                price(),
+                new HashSet<>(Set.of(carVersion))
+        );
+        withId(duplicateDetail, 21L);
+
+        CarConfigurationDefaulter defaulter =
+                carConfigurationDefaulter(30L, carVersion, Set.of(existingDetail));
+
+        when(defaulterRepository.findById(30L)).thenReturn(Optional.of(defaulter));
+        when(detailRepository.findById(21L)).thenReturn(Optional.of(duplicateDetail));
+
+        assertThrows(
+                ru.lebedev.dealership.domain.exceptions.DuplicateDefaultDetailTypeException.class,
+                () -> carConfigurationService.addDefaultDetail(30L, 21L)
+        );
+
+        verify(defaulterRepository).findById(30L);
+        verify(detailRepository).findById(21L);
+    }
+
+    @Test
+    void addDefaultDetail_shouldThrowWhenDefaulterNotFound() {
+        when(defaulterRepository.findById(30L)).thenReturn(Optional.empty());
+
+        assertThrows(
+                DefaulterNotFoundException.class,
+                () -> carConfigurationService.addDefaultDetail(30L, 21L)
+        );
+    }
+
+    @Test
+    void addDefaultDetail_shouldThrowWhenDetailNotFound() {
+        CarConfigurationDefaulter defaulter = carConfigurationDefaulter(30L);
+
+        when(defaulterRepository.findById(30L)).thenReturn(Optional.of(defaulter));
+        when(detailRepository.findById(21L)).thenReturn(Optional.empty());
+
+        assertThrows(
+                DetailNotFoundException.class,
+                () -> carConfigurationService.addDefaultDetail(30L, 21L)
+        );
+    }
+
+    @Test
+    void selectCustomRequiredDetail_shouldReplaceRequiredDetail() {
+        User user = customer(1L);
+        CarVersion carVersion = carVersion(10L);
+        Detail oldRequired = compatibleDetail(20L, carVersion);
+        Detail newRequired = compatibleDetail(21L, carVersion);
+
+        CarConfigurationCustomizer customizer =
+                carConfigurationCustomizer(30L, user, carVersion, Set.of(oldRequired));
+
+        when(customizerRepository.findById(30L)).thenReturn(Optional.of(customizer));
+        when(detailRepository.findById(21L)).thenReturn(Optional.of(newRequired));
+
+        carConfigurationService.selectCustomRequiredDetail(30L, 21L);
+
+        assertTrue(customizer.getRequiredDetails().contains(newRequired));
+        assertFalse(customizer.getRequiredDetails().contains(oldRequired));
+    }
+
+    @Test
+    void selectCustomRequiredDetail_shouldThrowWhenCustomizerNotFound() {
+        when(customizerRepository.findById(30L)).thenReturn(Optional.empty());
+
+        assertThrows(
+                CustomizerNotFoundException.class,
+                () -> carConfigurationService.selectCustomRequiredDetail(30L, 21L)
+        );
+    }
+
+    @Test
+    void selectCustomOptionalDetail_shouldAddOptionalDetail() {
+        User user = customer(1L);
+        CarVersion carVersion = carVersion(10L);
+
+        Detail required = new Detail(
+                "Base Engine",
+                "ENGINE",
+                price(),
+                new HashSet<>(Set.of(carVersion))
+        );
+        Detail optional = new Detail(
+                "Premium Salon",
+                "SALON",
+                price(),
+                new HashSet<>(Set.of(carVersion))
+        );
+        withId(required, 20L);
+        withId(optional, 21L);
+
+        CarConfigurationCustomizer customizer =
+                carConfigurationCustomizer(30L, user, carVersion, Set.of(required));
+
+        when(customizerRepository.findById(30L)).thenReturn(Optional.of(customizer));
+        when(detailRepository.findById(21L)).thenReturn(Optional.of(optional));
+
+        carConfigurationService.selectCustomOptionalDetail(30L, 21L);
+
+        assertTrue(customizer.getOptionalDetails().contains(optional));
+    }
+
+    @Test
+    void rejectCustomOptionalDetail_shouldRemoveOptionalDetail() {
+        User user = customer(1L);
+        CarVersion carVersion = carVersion(10L);
+
+        Detail required = new Detail(
+                "Base Engine",
+                "ENGINE",
+                price(),
+                new HashSet<>(Set.of(carVersion))
+        );
+        Detail optional = new Detail(
+                "Premium Salon",
+                "SALON",
+                price(),
+                new HashSet<>(Set.of(carVersion))
+        );
+        withId(required, 20L);
+        withId(optional, 21L);
+
+        CarConfigurationCustomizer customizer =
+                carConfigurationCustomizer(30L, user, carVersion, Set.of(required));
+        customizer.selectOptionalDetail(optional);
+
+        when(customizerRepository.findById(30L)).thenReturn(Optional.of(customizer));
+        when(detailRepository.findById(21L)).thenReturn(Optional.of(optional));
+
+        carConfigurationService.rejectCustomOptionalDetail(30L, 21L);
+
+        assertFalse(customizer.getOptionalDetails().contains(optional));
+    }
+
+    @Test
+    void deleteDefaulterByCarId_shouldDeleteByCarVersionId() {
+        carConfigurationService.deleteDefaulterByCarId(10L);
+
+        verify(defaulterRepository).deleteByCarVersionId(10L);
+    }
+
+    @Test
+    void deleteCustomizerById_shouldDeleteCustomizer() {
+        carConfigurationService.deleteCustomizerById(30L);
+
+        verify(customizerRepository).deleteById(30L);
+    }
+
+    @Test
+    void deleteConfigurationById_shouldDeleteConfiguration() {
+        carConfigurationService.deleteConfigurationById(40L);
+
+        verify(configurationRepository).deleteById(40L);
     }
 }

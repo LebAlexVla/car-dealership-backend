@@ -7,6 +7,9 @@ import ru.lebedev.dealership.domain.BaseEntity;
 @Table(name = "users")
 public class User extends BaseEntity {
 
+    @Column(name = "keycloak_id", unique = true)
+    private String keycloakId;
+
     @Column(nullable = false)
     private String name;
 
@@ -20,7 +23,8 @@ public class User extends BaseEntity {
     protected User() {
     }
 
-    public User(String name, UserType type, String phone) {
+    public User(String keycloakId, String name, UserType type, String phone) {
+        this.keycloakId = keycloakId;
         this.name = name;
         this.type = type;
         this.phone = phone;
@@ -36,5 +40,9 @@ public class User extends BaseEntity {
 
     public String getPhone() {
         return phone;
+    }
+
+    public String getKeycloakId() {
+        return keycloakId;
     }
 }
