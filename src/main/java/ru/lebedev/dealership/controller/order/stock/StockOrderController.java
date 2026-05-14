@@ -83,7 +83,7 @@ public class StockOrderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) {
         stockOrderService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

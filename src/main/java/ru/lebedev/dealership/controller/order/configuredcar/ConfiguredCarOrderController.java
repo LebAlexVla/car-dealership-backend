@@ -10,7 +10,7 @@ import ru.lebedev.dealership.controller.order.configuredcar.mapper.ConfiguredCar
 import java.util.List;
 
 @RestController
-@RequestMapping("/congigured-order")
+@RequestMapping("/configured-order")
 public class ConfiguredCarOrderController {
     private final ConfiguredCarOrderService configuredCarOrderService;
     private final ConfiguredCarOrderMapper configuredCarOrderMapper;
@@ -84,7 +84,7 @@ public class ConfiguredCarOrderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) {
         configuredCarOrderService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

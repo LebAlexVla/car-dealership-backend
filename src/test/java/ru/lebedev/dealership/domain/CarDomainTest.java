@@ -1,17 +1,20 @@
 package ru.lebedev.dealership.domain;
 
 import org.junit.jupiter.api.Test;
+import ru.lebedev.dealership.TestDataFactory;
 import ru.lebedev.dealership.domain.car.entities.CarHead;
 import ru.lebedev.dealership.domain.car.entities.CarVersion;
 import ru.lebedev.dealership.domain.car.vo.Price;
 import ru.lebedev.dealership.domain.detail.Detail;
-import ru.lebedev.dealership.support.TestDataFactory;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CarDomainTest {
 
@@ -65,6 +68,7 @@ class CarDomainTest {
     void carConfigurationShouldCountPriceAndReturnDetailsCopy() {
         CarVersion carVersion = TestDataFactory.carVersion(1L);
         Detail detail = TestDataFactory.detail(2L, "Matrix", "light", carVersion);
+
         var config = new ru.lebedev.dealership.domain.carconfiguration.CarConfiguration(
                 TestDataFactory.user(1L),
                 carVersion,
@@ -75,6 +79,7 @@ class CarDomainTest {
 
         var details = config.getDetails();
         details.clear();
+
         assertEquals(1, config.getDetails().size());
     }
 }

@@ -1,15 +1,20 @@
 package ru.lebedev.dealership.domain;
 
 import org.junit.jupiter.api.Test;
+import ru.lebedev.dealership.TestDataFactory;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfigurationCustomizer;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfigurationDefaulter;
-import ru.lebedev.dealership.domain.exceptions.*;
-import ru.lebedev.dealership.support.TestDataFactory;
+import ru.lebedev.dealership.domain.exceptions.DuplicateDefaultDetailTypeException;
+import ru.lebedev.dealership.domain.exceptions.IncompatibleDetailException;
+import ru.lebedev.dealership.domain.exceptions.NoSuchOptionalDetailException;
+import ru.lebedev.dealership.domain.exceptions.WrongOptionalDetailException;
+import ru.lebedev.dealership.domain.exceptions.WrongRequiredDetailException;
 
 import java.util.HashSet;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CarConfigurationDomainTest {
 
@@ -33,7 +38,9 @@ class CarConfigurationDomainTest {
         CarConfigurationCustomizer customizer = defaulter.create(TestDataFactory.user(1L));
 
         assertEquals(1, customizer.getRequiredDetails().size());
+
         defaulter.removeRequiredDetail("audio");
+
         assertEquals(1, customizer.getRequiredDetails().size());
     }
 
@@ -58,6 +65,7 @@ class CarConfigurationDomainTest {
         assertEquals(2, customizer.build().getDetails().size());
 
         customizer.rejectOptionalDetail(optional);
+
         assertEquals(0, customizer.getOptionalDetails().size());
     }
 
@@ -77,8 +85,10 @@ class CarConfigurationDomainTest {
 
         assertThrows(IncompatibleDetailException.class, () -> customizer.selectRequiredDetail(incompatible));
         assertThrows(IncompatibleDetailException.class, () -> customizer.selectOptionalDetail(incompatible));
-        assertThrows(WrongRequiredDetailException.class,
-                () -> customizer.selectRequiredDetail(TestDataFactory.detail(4L, "Matrix", "lights", car)));
+        assertThrows(
+                WrongRequiredDetailException.class,
+                () -> customizer.selectRequiredDetail(TestDataFactory.detail(4L, "Matrix", "lights", car))
+        );
         assertThrows(WrongOptionalDetailException.class, () -> customizer.selectOptionalDetail(requiredAgain));
         assertThrows(NoSuchOptionalDetailException.class, () -> customizer.rejectOptionalDetail(requiredAgain));
     }

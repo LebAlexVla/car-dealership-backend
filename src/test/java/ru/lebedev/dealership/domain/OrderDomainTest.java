@@ -1,23 +1,28 @@
 package ru.lebedev.dealership.domain;
 
 import org.junit.jupiter.api.Test;
+import ru.lebedev.dealership.TestDataFactory;
 import ru.lebedev.dealership.domain.carconfiguration.CarConfiguration;
 import ru.lebedev.dealership.domain.exceptions.OrderStatusTransitionException;
 import ru.lebedev.dealership.domain.order.configuredcar.ConfiguredCarOrder;
 import ru.lebedev.dealership.domain.order.configuredcar.ConfiguredCarOrderStatus;
 import ru.lebedev.dealership.domain.order.stock.StockOrder;
 import ru.lebedev.dealership.domain.order.stock.StockOrderStatus;
-import ru.lebedev.dealership.support.TestDataFactory;
 
-import java.util.Set;
+import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OrderDomainTest {
 
     @Test
     void stockOrderShouldFollowHappyPathAndAllowCancel() {
-        StockOrder order = new StockOrder(TestDataFactory.user(1L), TestDataFactory.carVersion(1L));
+        StockOrder order = new StockOrder(
+                TestDataFactory.user(1L),
+                TestDataFactory.carVersion(1L)
+        );
 
         order.approve();
         assertEquals(StockOrderStatus.WAITING_FOR_PAYMENT, order.getStatus());
@@ -34,7 +39,10 @@ class OrderDomainTest {
 
     @Test
     void stockOrderShouldRejectIllegalTransition() {
-        StockOrder order = new StockOrder(TestDataFactory.user(1L), TestDataFactory.carVersion(1L));
+        StockOrder order = new StockOrder(
+                TestDataFactory.user(1L),
+                TestDataFactory.carVersion(1L)
+        );
 
         assertThrows(OrderStatusTransitionException.class, order::pay);
     }
@@ -44,7 +52,7 @@ class OrderDomainTest {
         CarConfiguration configuration = new CarConfiguration(
                 TestDataFactory.user(1L),
                 TestDataFactory.carVersion(1L),
-                Set.of()
+                new HashSet<>()
         );
         ConfiguredCarOrder order = new ConfiguredCarOrder(configuration);
 
@@ -70,10 +78,13 @@ class OrderDomainTest {
 
     @Test
     void configuredOrderShouldRejectIllegalTransition() {
-        ConfiguredCarOrder order = new ConfiguredCarOrder(
-                new CarConfiguration(TestDataFactory.user(1L), TestDataFactory.carVersion(1L), Set.of())
+        CarConfiguration configuration = new CarConfiguration(
+                TestDataFactory.user(1L),
+                TestDataFactory.carVersion(1L),
+                new HashSet<>()
         );
+        ConfiguredCarOrder order = new ConfiguredCarOrder(configuration);
 
-        assertThrows(OrderStatusTransitionException.class, order::deliver);
+        assertThrows(OrderStatusTransitionException.class, order::pay);
     }
 }

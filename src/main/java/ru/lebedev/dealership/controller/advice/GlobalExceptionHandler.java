@@ -23,6 +23,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getMessage());
     }
 
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ResponseEntity<String> handleAccessDenied() {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Forbidden");
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException() {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal error");
